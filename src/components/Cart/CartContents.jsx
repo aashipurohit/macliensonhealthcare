@@ -10,39 +10,39 @@ const CartContents = () => {
 const cartProducts =[
 {
 productId: 1,
-name: "Crosin",
+name: "tabletsrx",
 quantity: 1,
 price: 230,
 type: "Tablet",
-brand:"Crocin Advance ",
-image: assets.crosin 
+brand:"tabletsrx ",
+image: assets.tabletsrx
 },
 {
 productId: 2,
-name: "Paracetamol",
+name: "tabletsrx",
 quantity: 1,
 price: 630,
 type: "Tablet",
-brand:"Calpol  by GSK  ",
-image: assets.paracetamol
+brand:"tabletsrx  ",
+image: assets.tabletsrx
 },
 {
 productId: 3,
-name: "Vitamin Syrup",
+name: "tabletsrx",
 quantity: 1,
 price: 730,
-type: "Syrup",
-brand:"Zincovit Syrup ",
-image: assets.syrup
+type: "tabletsrx",
+brand:"tabletsrx ",
+image: assets.tabletsrx
 },
 {
 productId: 4,
-name: "Vitamin-E Capsule",
+name: "tabletsrx",
 quantity: 1,
 price: 530,
-type: "Capsule",
-brand:"Evit  by Torrent Pharma",
-image: assets.ecapsule
+type: "tabletsrx",
+brand:"tabletsrx",
+image: assets.tabletsrx
 }
 ];
 return (

@@ -4,27 +4,27 @@ import { toast } from "sonner";
 
 const productVariants = {
   "1 kg": {
-    price: 15000,
+    price: 0,
     originalPrice: "₹15467"
   },
   "500gm": {
-    price: 7500,
+    price: 0,
     originalPrice: "₹7820"
   }
 };
 
 const selectedProduct = {
-    name: "Whey Protein",
+    name: "Tablet",
     description: "Unflavored whey protein supplement designed to support protein needs during recovery, illness, or malnutrition",
     brand: "Beneprotein",
     quantity: ["1 kg", "500gm"],
     images: [{
-        url: assets.beneprotein_bs,
-        altText: "Whey Protein",
+        url: assets.tabletsrx,
+        altText: "tablets",
     },
     {
-        url: assets.beneprotein_back_bs,
-        altText: "Whey Protein Back",
+        url: assets.tabletsrx,
+        altText: "tablets",
     }],
 };
 

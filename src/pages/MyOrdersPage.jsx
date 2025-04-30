@@ -18,7 +18,7 @@ const MyOrdersPage = () => {
                 orderItems: [
                     {
                             name: "Product 1",
-                            image: assets.ecapsule, 
+                            image: assets.tabletsrx, 
                     },
                 ],
                 totalPrice: 100,
@@ -31,7 +31,7 @@ const MyOrdersPage = () => {
                 orderItems: [
                     {
                             name: "Product 2",
-                            image: assets.crosin, 
+                            image: assets.tabletsrx, 
                     },
                 ],
                 totalPrice: 100,
