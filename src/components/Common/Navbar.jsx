@@ -71,12 +71,12 @@ const Navbar = () => {
   {/* Add this login link */}
   <Link 
   to="/admin" 
-  className="bg-black text-white px-2  rounded-md text-sm font-medium hover:bg-gray-800 transition">
+  className="hidden md:block bg-black text-white px-2  rounded-md text-sm font-medium hover:bg-gray-800 transition">
     Admin
     </Link>
   <Link 
             to="/login" 
-            className="bg-black text-white px-2  rounded-md text-sm font-medium hover:bg-gray-800 transition"
+            className="hidden md:block bg-black text-white px-2  rounded-md text-sm font-medium hover:bg-gray-800 transition"
           >
             Login
           </Link>
@@ -137,6 +137,14 @@ const Navbar = () => {
 
     <Link to="#" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
     CONTACT US
+    </Link>
+
+    {/* Show these only in mobile drawer */}
+    <Link to="/admin" onClick={toggleNavDrawer} className="block bg-black text-white px-2 py-1 rounded text-sm font-medium hover:bg-gray-800">
+      Admin
+    </Link>
+    <Link to="/login" onClick={toggleNavDrawer} className="block bg-black text-white px-2 py-1 rounded text-sm font-medium hover:bg-gray-800">
+      Login
     </Link>
 
     
