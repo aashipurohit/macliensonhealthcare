@@ -115,27 +115,27 @@ const Navbar = () => {
 <div className="p-4">
   <h2 className="text-xl font-semisolid mb-4">Menu</h2>
   <nav className="space-y-4 ">
-    <Link to="#" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
+    <Link to="/" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
     HOME
     </Link>
 
-    <Link to="#" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
+    <Link to="/about" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
   ABOUT US
     </Link>
 
-    <Link to="#" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
+    <Link to="/collections/all" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
    PRODUCTS
     </Link>
 
-    <Link to="#" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
+    <Link to="/certifications" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
     CERTIFICATIONS
     </Link>
 
-    <Link to="#" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
+    <Link to="/career" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
     CAREER
     </Link>
 
-    <Link to="#" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
+    <Link to="/contact" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
     CONTACT US
     </Link>
 
