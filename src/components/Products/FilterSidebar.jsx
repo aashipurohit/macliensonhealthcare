@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaTimes } from 'react-icons/fa';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 const FilterSidebar = ({ onFilterChange }) => {
   const [filters, setFilters] = useState({
@@ -8,12 +8,41 @@ const FilterSidebar = ({ onFilterChange }) => {
     subcategory: 'all'
   });
 
+  const [expandedSections, setExpandedSections] = useState({
+    category: true,
+    type: true,
+    subcategory: true
+  });
+
   const filterOptions = {
-    categories: ['all', 'Unisex', 'Women'],
-    types: ['all', 'Supplement', 'Analgesic', 'Protein Supplement', 
-            'Gastrointestinal', 'Laxative', 'Vitamin Supplement', 
-            'Multivitamin', 'Antihistamine', 'Disinfectant'],
-    subcategories: ['all', 'Analgesic', 'Supplement', 'Protein Supplement']
+    categories: [
+      { value: 'all', label: 'All Categories' },
+      { value: 'Women', label: "Women's Health" },
+      { value: 'Unisex', label: 'Unisex Products' }
+    ],
+    types: [
+      { value: 'all', label: 'All Types' },
+      { value: 'Nutritional Supplement', label: 'Nutritional Supplements' },
+      { value: 'Herbal Supplement', label: 'Herbal Supplements' },
+      { value: 'Analgesic', label: 'Analgesics' }
+    ],
+    subcategories: {
+      'Women': [
+        { value: 'all', label: 'All Women\'s Products' },
+        { value: 'Nutritional Supplement', label: 'Nutritional Supplements' },
+        { value: 'Herbal Supplement', label: 'Herbal Supplements' }
+      ],
+      'default': [
+        { value: 'all', label: 'All Subcategories' }
+      ]
+    }
+  };
+
+  const toggleSection = (section) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
   };
 
   const handleFilterChange = (filterType, value) => {
@@ -36,75 +65,88 @@ const FilterSidebar = ({ onFilterChange }) => {
     onFilterChange(resetFilters);
   };
 
+  const getCurrentSubcategories = () => {
+    return filterOptions.subcategories[filters.category] || 
+           filterOptions.subcategories['default'];
+  };
+
   return (
-    <div className="h-full overflow-y-auto p-4 bg-white">
-      {/* Header with clear button */}
-      <div className="flex items-center justify-between mb-6 pb-4 border-b">
-        <h3 className="text-lg font-bold text-gray-800">Filters</h3>
+    <div className="w-72 h-full overflow-y-auto p-6 bg-white border-r border-gray-300 shadow-sm">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6 pb-3 border-b border-gray-300">
+        <h2 className="text-xl font-semibold text-gray-800">Filter Products</h2>
         <button 
           onClick={clearAllFilters}
-          className="flex items-center justify-center p-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-800 transition-colors"
-          title="Clear all filters"
+          className="text-sm text-blue-600 hover:underline"
         >
-          <FaTimes className="text-xs" />
+          Clear all
         </button>
       </div>
 
-      {/* Category Filter */}
-      <div className="mb-6">
-        <h4 className="font-semibold text-gray-700 mb-3 text-sm">Category</h4>
-        <div className="space-y-2 pl-1">
-          {filterOptions.categories.map(category => (
-            <div key={category} className="flex items-center gap-3">
-              <input
-                type="radio"
-                id={`category-${category}`}
-                name="category"
-                checked={filters.category === category}
-                onChange={() => handleFilterChange('category', category)}
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
-              />
-              <label 
-                htmlFor={`category-${category}`}
-                className="text-sm text-gray-700 capitalize"
-              >
-                {category === 'all' ? 'All Categories' : category}
-              </label>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* Filter Group Component */}
+      {[
+        { name: 'category', title: 'Category', options: filterOptions.categories },
+        { name: 'type', title: 'Product Type', options: filterOptions.types }
+      ].map(({ name, title, options }) => (
+        <div key={name} className="mb-6">
+          <div 
+            className="flex items-center justify-between cursor-pointer"
+            onClick={() => toggleSection(name)}
+          >
+            <h4 className="text-md font-medium text-gray-700">{title}</h4>
+            {expandedSections[name] ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}
+          </div>
 
-      {/* Type Filter */}
-      <div className="mb-6">
-        <h4 className="font-semibold text-gray-700 mb-3 text-sm">Type</h4>
-        <div className="space-y-2 pl-1">
-          {filterOptions.types.map(type => (
-            <div key={type} className="flex items-center gap-3">
-              <input
-                type="radio"
-                id={`type-${type}`}
-                name="type"
-                checked={filters.type === type}
-                onChange={() => handleFilterChange('type', type)}
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
-              />
-              <label 
-                htmlFor={`type-${type}`}
-                className="text-sm text-gray-700 capitalize"
-              >
-                {type === 'all' ? 'All Types' : type}
-              </label>
+          {expandedSections[name] && (
+            <div className="space-y-3 mt-4 pl-1">
+              {options.map(({ value, label }) => (
+                <label key={value} className="flex items-center gap-3 text-sm text-gray-800">
+                  <input
+                    type="radio"
+                    name={name}
+                    checked={filters[name] === value}
+                    onChange={() => handleFilterChange(name, value)}
+                    className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                  />
+                  {label}
+                </label>
+              ))}
             </div>
-          ))}
+          )}
         </div>
-      </div>
+      ))}
 
-      {/* Horizontal divider */}
-      <div className="border-t border-gray-200 my-4"></div>
+      {/* Subcategory Section (Only if category is selected) */}
+      {filters.category !== 'all' && (
+        <div className="mb-6">
+          <div 
+            className="flex items-center justify-between cursor-pointer"
+            onClick={() => toggleSection('subcategory')}
+          >
+            <h4 className="text-md font-medium text-gray-700">Subcategory</h4>
+            {expandedSections.subcategory ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}
+          </div>
+
+          {expandedSections.subcategory && (
+            <div className="space-y-3 mt-4 pl-1">
+              {getCurrentSubcategories().map(({ value, label }) => (
+                <label key={value} className="flex items-center gap-3 text-sm text-gray-800">
+                  <input
+                    type="radio"
+                    name="subcategory"
+                    checked={filters.subcategory === value}
+                    onChange={() => handleFilterChange('subcategory', value)}
+                    className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                  />
+                  {label}
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
 
-export default FilterSidebar;
-
+export default FilterSidebar

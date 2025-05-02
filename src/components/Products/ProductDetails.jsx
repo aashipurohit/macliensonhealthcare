@@ -3,28 +3,29 @@ import { assets } from "../../assets/assets";
 import { toast } from "sonner";
 
 const productVariants = {
-  "1 kg": {
+  "500 ml": {
     price: 0,
     originalPrice: "₹15467"
   },
-  "500gm": {
+  "200 ml": {
     price: 0,
     originalPrice: "₹7820"
   }
 };
 
 const selectedProduct = {
-    name: "Tablet",
-    description: "Unflavored whey protein supplement designed to support protein needs during recovery, illness, or malnutrition",
-    brand: "Beneprotein",
-    quantity: ["1 kg", "500gm"],
+    name: "Flavona Forte Syrup",
+    description: "Flavona Forte Syrup is an advanced Ayurvedic formula crafted for women's wellness, helping to correct hormonal imbalance, boost vitality, and enhance overall well-being.",
+
+    brand: "Maclienson Healthcare",
+    quantity: ["500 ml", "200 ml"],
     images: [{
-        url: assets.tabletsrx,
-        altText: "tablets",
+        url: assets.flavona_forte_sy,
+        altText: "flavona_forte_sy",
     },
     {
-        url: assets.tabletsrx,
-        altText: "tablets",
+        url: assets.flavona_forte_sy_b,
+        altText: "flavona_forte_sy_b",
     }],
 };
 

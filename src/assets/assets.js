@@ -33,8 +33,14 @@ import logo_maclienson from './logo_maclienson.png';
 // import taxim_o_c from './taxim_o_c.png';
 import logo_maclienson_br from './logo_maclienson_br.png';
 import tabletsrx from './tabletsrx.png';
+import macnurish_p from './macnurish_p.png';
+import nurturmac from './nurturmac.png';
+import syndrova_met_sr_t from './syndrova_met_sr_t.png';
+import flavona_forte_sy from './flavona_forte_sy.png';
+import flavona_forte_sy_b from './flavona_forte_sy_b.png';
+       
 
-
+    
 
 
 
@@ -72,54 +78,60 @@ export const assets = {
   // azithral_500,
   // alprazolam_c,
   // taxim_o_c,
-  tabletsrx
+  tabletsrx,
+  macnurish_p,
+  nurturmac,
+  syndrova_met_sr_t,
+  flavona_forte_sy,
+  flavona_forte_sy_b
   
 };
 
 export const products = [
   {
     id: "p27",
-    name: "tabletsrx",
+    name: " Macnurish",
     price: 0,
-    image: tabletsrx,
+    image:  macnurish_p,
     category: "Women",
-    subcategory: "Analgesic",
+    subcategory: "Nutritional Supplement",
     date: "2025-04-10",
     bestseller: true,
-    description: "tabletsrx  effective for treating fever and mild to moderate pain."
+    description: "Macnurish Sachet is a sugar-free prenatal supplement that supports fetal development and maternal health with key nutrients like L-Arginine, Lycopene, L-Methyl Folate, and Zinc.",
+    
   },
   {
     id: "p28",
-    name: "tabletsrx",
+    name: "Nurturmac",
     price: 0,
-    image: tabletsrx,
+    image: nurturmac,
     category: "Women",
-    subcategory: "Analgesic",
+    subcategory: "Nutritional Supplement",
     date: "2025-04-10",
     bestseller: true,
-    description: "tabletsrx  effective for treating fever and mild to moderate pain."
+    description:" Nurturmac is a prenatal softgel capsule enriched with L-Methylfolate, Vitamin B6, B12, Biotin, and DHA to support maternal health and fetal development."
   },
   {
     id: "p29",
-    name: "tabletsrx",
+    name: "SYNDROVA-MET SR Tablets",
     price: 0,
-    image: tabletsrx,
+    image: syndrova_met_sr_t,
     category: "Women",
-    subcategory: "Analgesic",
+    subcategory: "Nutritional Supplement",
     date: "2025-04-10",
     bestseller: true,
-    description: "tabletsrx  effective for treating fever and mild to moderate pain."
+    description: "Manage your health with Syndrova-Met SR, a sustained-release tablet containing Myo Inositol and Metformin Hydrochloride."
   },
   {
     id: "p30",
-    name: "tabletsrx",
+    name: "Flavona forte Syrup",
     price: 0,
-    image: tabletsrx,
+    image: flavona_forte_sy,
     category: "Women",
-    subcategory: "Analgesic",
+    subcategory: "Herbal Supplement",
     date: "2025-04-10",
     bestseller: true,
-    description: "tabletsrx  effective for treating fever and mild to moderate pain."
+    description: "Flavona Forte Syrup is an advanced Ayurvedic formula crafted for women's wellness, helping to correct hormonal imbalance, boost vitality, and enhance overall well-being."
   },
   {
     id: "p31",
