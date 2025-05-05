@@ -4,6 +4,9 @@ import logo_maclienson from './logo_maclienson.png';
 // import paracetamol from './paracetamol.png';
  import syrup from './syrup.png';
  import main_p from './main_p.png';
+ import main_c2 from './main_c2.png';
+ import main_c3 from './main_c3.png';
+ import main_c4 from './main_c4.png';
  import main_pw from './main_pw.webp';
 // import syrup_m from './syrup_m.png';
 // import syrup_m_2 from './syrup_m_2.png';
@@ -54,7 +57,10 @@ export const assets = {
   syrup,
   // syrup_m,
   main_p,
- main_pw,
+  main_c2,
+  main_c3,
+  main_c4,
+  main_pw,
   // syrup_m_2,
   main_c,
   // protien_c,
