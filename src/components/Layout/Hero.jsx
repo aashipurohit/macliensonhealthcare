@@ -5,7 +5,7 @@ import { assets } from "../../assets/assets"; // your local asset import
 
 const heroSlides = [
   {
-    image: assets.main_c,
+    image: assets.main_cp,
     headline: "Maclienson Healthcare Pvt. Ltd.",
     subtext: "Macliens at your Service ."
   },

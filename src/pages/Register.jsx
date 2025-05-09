@@ -96,6 +96,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { Toaster, toast } from "sonner";
+//import {registerUser } from "../redux/slices/authSlice";
+// import { useDispatch} from "react-redux";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -106,6 +108,7 @@ const Register = () => {
     });
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
+  //  const dispatch= useDispatch
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -131,6 +134,7 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+       // dispatch(registerUser({name , email , password, confirmPassword}));
         if (validateForm()) {
             toast.success("Registration successful!");
             setTimeout(() => {

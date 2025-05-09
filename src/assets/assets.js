@@ -10,14 +10,14 @@ import logo_maclienson from './logo_maclienson.png';
  import main_pw from './main_pw.webp';
 // import syrup_m from './syrup_m.png';
 // import syrup_m_2 from './syrup_m_2.png';
- import main_c from './main_c.png';
+ import main_cp from './main_cp.png';
 // import protien_c from './protien_c.png';
 // import tablet_c from './tablet_c.png';
 // import capsule_c from './capsule_c.png';
 // import syrup_c from './syrup_c.png';
  import sanitizer_c from './sanitizer_c.png';
  import medicine_cat from './medicine_cat.png';
- import health_cat from './health_cat.png';
+ import healthcare_cat from './healthcare_cat.png';
 // import paraffine_500 from './paraffine_500.png';
 // import B12_neuro_cat from './B12_neuro_cat.png';
 // import pan_d_cat from './pan_d_cat.png';
@@ -62,14 +62,14 @@ export const assets = {
   main_c4,
   main_pw,
   // syrup_m_2,
-  main_c,
+  main_cp,
   // protien_c,
   // tablet_c,
   // capsule_c,
   // syrup_c,
    sanitizer_c,
   medicine_cat,
-   health_cat,
+   healthcare_cat,
   // paraffine_500,
   // B12_neuro_cat,
   // pan_d_cat,

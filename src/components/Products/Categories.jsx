@@ -31,7 +31,7 @@ const Categories = () => {
 
            <div className="relative flex-1">
             <img 
-            src={assets.health_cat}
+            src={assets.healthcare_cat}
              alt="Healthcare Essentials"
              className="w-full h-[700px] object-cover" />
              <div className="absolute bottom-8 left-8 bg-white bg-opacity-90 p-4">

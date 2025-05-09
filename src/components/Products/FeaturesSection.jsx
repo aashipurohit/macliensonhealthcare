@@ -4,7 +4,7 @@ import { HiArrowPathRoundedSquare } from 'react-icons/hi2';
 import { HiOutlineCreditCard } from 'react-icons/hi2';
 const FeaturesSection = () => {
     return (
-      <section className="py-16 px-4 bg-white">
+      <section className="py-16 px-4 bg-rose-50">
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           {/* Feature 1 */}
           <div className="flex flex-col items-center">
