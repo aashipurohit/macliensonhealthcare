@@ -32,7 +32,7 @@ const Navbar = () => {
     <>
       <nav className="container mx-auto flex items-center justify-between py-4 px-6">
         {/*Left-Logo */}
-        <div className="ml-auto md:ml-[-70px]">
+        <div className="pl-4 md:pl-6 lg:pl-8">
           <Link to="/" className= "text-2xl font-medium" >
           <img
   src={assets.logo_maclienson_br}
