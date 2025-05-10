@@ -1,75 +1,78 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { assets } from "../../assets/assets"; // your local asset import
+import { assets } from "../../assets/assets";
 
 const heroSlides = [
   {
     image: assets.main_cp,
     headline: "Maclienson Healthcare Pvt. Ltd.",
-    subtext: "Macliens at your Service ."
+    subtext: "Macliens at your Service.",
   },
   {
     image: assets.main_c3,
     headline: "Your Health, Our Priority",
-    subtext: "Delivering trusted health solutions with care and precision."
+    subtext: "Delivering trusted health solutions with care and precision.",
   },
   {
     image: assets.main_c2,
     headline: "Experience Modern Healthcare",
-    subtext: "A step ahead in medical excellence and innovation."
-  }
+    subtext: "A step ahead in medical excellence and innovation.",
+  },
 ];
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [showText, setShowText] = useState(false);
   const timerRef = useRef(null);
+  const textTimerRef = useRef(null);
 
-  // Start the automatic slide change after 5 seconds
-  const startTimer = () => {
-    timerRef.current = setInterval(() => {
+  const startTimers = () => {
+    setShowText(false);
+
+    // Show text after 1 second
+    textTimerRef.current = setTimeout(() => {
+      setShowText(true);
+    }, 1000);
+
+    // Move to next slide after 5 seconds
+    timerRef.current = setTimeout(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
     }, 5000);
   };
 
-  // Stop the timer when the component is unmounted or when the user manually changes the slide
-  const clearAutoTimer = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
+  const clearTimers = () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (textTimerRef.current) clearTimeout(textTimerRef.current);
   };
 
   useEffect(() => {
-    startTimer(); // start the timer when the component mounts
-    return () => clearAutoTimer(); // cleanup on unmount
-  }, []);
+    startTimers();
+    return () => clearTimers();
+  }, [currentSlide]);
 
-  // Change to the previous slide
   const goToPrevious = () => {
-    clearAutoTimer(); // stop the auto timer when user manually navigates
-    setCurrentSlide((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1));
-    startTimer(); // restart the timer for the new slide
+    clearTimers();
+    setCurrentSlide((prev) =>
+      prev === 0 ? heroSlides.length - 1 : prev - 1
+    );
   };
 
-  // Change to the next slide
   const goToNext = () => {
-    clearAutoTimer(); // stop the auto timer when user manually navigates
+    clearTimers();
     setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    startTimer(); // restart the timer for the new slide
   };
 
-  // Change slide when a bubble dot is clicked
   const goToSlide = (index) => {
-    clearAutoTimer(); // stop the auto timer when user clicks a bubble
+    clearTimers();
     setCurrentSlide(index);
-    startTimer(); // restart the timer for the new slide
   };
 
   const {  headline, subtext } = heroSlides[currentSlide];
 
   return (
     <section className="relative h-[calc(100vh-80px)] overflow-hidden">
-      {/* Background Image Container for Smooth Sliding */}
+      {/* Background Images */}
       <div className="absolute inset-0 flex transition-transform duration-1000 ease-in-out">
         {heroSlides.map((slide, index) => (
           <div
@@ -91,19 +94,20 @@ const Hero = () => {
         ))}
       </div>
 
-      {/* Overlay Content */}
-      <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-center items-center text-white px-4 text-center z-10">
-        <h1 className="text-3xl md:text-5xl font-bold mb-4">{headline}</h1>
-        <p className="text-base md:text-lg mb-6 max-w-2xl">{subtext}</p>
-        <Link
-          to="/products"
-          className="bg-white text-black px-6 py-3 rounded-md text-base font-medium hover:bg-gray-200 transition"
-        >
-          Buy Now
-        </Link>
+      {/* Overlay with delayed text */}
+      <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-end items-center text-white px-4 pb-32 text-center z-10">
+        {showText && (
+          <div
+            key={currentSlide}
+            className="max-w-4xl opacity-0 translate-y-8 animate-fadeInUp"
+          >
+            <h1 className="text-3xl md:text-5xl font-bold mb-4">{headline}</h1>
+            <p className="text-base md:text-lg mb-6">{subtext}</p>
+          </div>
+        )}
       </div>
 
-      {/* Navigation Arrows */}
+      {/* Arrows */}
       <button
         onClick={goToPrevious}
         className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white z-20 bg-black bg-opacity-40 hover:bg-opacity-70 p-2 rounded-full transition"
@@ -117,7 +121,7 @@ const Hero = () => {
         <ChevronRight size={32} />
       </button>
 
-      {/* Dots (Bubble navigation) */}
+      {/* Dots */}
       <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2">
         {heroSlides.map((_, index) => (
           <button

@@ -32,34 +32,34 @@ const Navbar = () => {
     <>
       <nav className="container mx-auto flex items-center justify-between py-4 px-6">
         {/*Left-Logo */}
-        <div className="ml-[-4px]">
+        <div className="ml-auto md:ml-[-70px]">
           <Link to="/" className= "text-2xl font-medium" >
           <img
   src={assets.logo_maclienson_br}
   alt="Maclienson Logo"
-  className="h-14 w-auto"
+  className="h-20 w-auto"
 />
 
           </Link>
         </div>
         {/* Center -Navigation Links*/}
         <div className="hidden md:flex space-x-6">
-            <Link to="/" className="text-gray-700 hover:text-black text-sm font-medium uppercase">
+            <Link to="/" className="text-gray-700 hover:text-black text-base font-bold uppercase">
             HOME 
             </Link>
-            <Link to="/about" className="text-gray-700 hover:text-black text-sm font-medium uppercase">
+            <Link to="/about" className="text-gray-700 hover:text-black text-base font-bold uppercase">
             ABOUT US
             </Link>
-            <Link to="/collections/all" className="text-gray-700 hover:text-black text-sm font-medium uppercase">
+            <Link to="/collections/all" className="text-gray-700 hover:text-black text-base font-bold uppercase">
             PRODUCTS
             </Link>
-            <Link to="certifications" className="text-gray-700 hover:text-black text-sm font-medium uppercase">
+            <Link to="certifications" className="text-gray-700 hover:text-black text-base font-bold uppercase">
             CERTIFICATIONS
             </Link>
-            <Link to="/career" className="text-gray-700 hover:text-black text-sm font-medium uppercase">
+            <Link to="/career" className="text-gray-700 hover:text-black text-base font-bold uppercase">
             CAREER
             </Link>
-            <Link to="/contact" className="text-gray-700 hover:text-black text-sm font-medium uppercase">
+            <Link to="/contact" className="text-gray-700 hover:text-black text-base font-bold uppercase">
             CONTACT US
             </Link>
             
@@ -71,12 +71,12 @@ const Navbar = () => {
   {/* Add this login link */}
   <Link 
   to="/admin" 
-  className="hidden md:block bg-black text-white px-2  rounded-md text-sm font-medium hover:bg-gray-800 transition">
+  className="hidden md:block bg-rose-400 text-black px-4 py-2  rounded-md text-base font-medium hover:bg-gray-800  hover:text-white transition">
     Admin
     </Link>
   <Link 
             to="/login" 
-            className="hidden md:block bg-black text-white px-2  rounded-md text-sm font-medium hover:bg-gray-800 transition"
+            className="hidden md:block bg-rose-400 text-black px-4 py-2  rounded-md text-base font-medium hover:bg-gray-800 hover:text-white transition"
           >
             Login
           </Link>

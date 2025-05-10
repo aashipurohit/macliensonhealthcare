@@ -1,9 +1,11 @@
 import React from 'react'
 import { HiShoppingBag  } from 'react-icons/hi'; 
-import { HiArrowPathRoundedSquare } from 'react-icons/hi2';
+import { HiCheckBadge } from 'react-icons/hi2';
 import { HiOutlineCreditCard } from 'react-icons/hi2';
 const FeaturesSection = () => {
     return (
+      <>
+
       <section className="py-16 px-4 bg-rose-50">
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           {/* Feature 1 */}
@@ -19,11 +21,11 @@ const FeaturesSection = () => {
           {/* Feature 2 */}
 <div className="flex flex-col items-center">
   <div className="p-4 rounded-full mb-4">
-    <HiArrowPathRoundedSquare className="text-xl" />
+    <HiCheckBadge className="text-xl" />
   </div>
-  <h4 className="tracking-tighter mb-2">45 DAYS RETURN</h4>
+  <h4 className="tracking-tighter mb-2">QUALITY ASSURED</h4>
   <p className="text-gray-600 text-sm tracking-tighter">
-    Money back guarantee
+    Premium products guaranteed
   </p>
 </div>
 
@@ -40,6 +42,7 @@ const FeaturesSection = () => {
 
         </div>
       </section>
+      </>
     );
   };
   

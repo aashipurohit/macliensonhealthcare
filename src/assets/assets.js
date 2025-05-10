@@ -2,7 +2,13 @@ import logo_maclienson from './logo_maclienson.png';
 // import crosin from './crosin.png';
 // import ecapsule from './ecapsule.png';
 // import paracetamol from './paracetamol.png';
- import syrup from './syrup.png';
+ import vision from './vision.png';
+ import vision_1 from './vision_1.png';
+ import mission_1 from './mission_1.png';
+ import mission_2 from './mission_2.png';
+ import values_1 from './values_1.png';
+ import values_2 from './values_2.png';
+ import values_3 from './values_3.png';
  import main_p from './main_p.png';
  import main_c2 from './main_c2.png';
  import main_c3 from './main_c3.png';
@@ -15,9 +21,7 @@ import logo_maclienson from './logo_maclienson.png';
 // import tablet_c from './tablet_c.png';
 // import capsule_c from './capsule_c.png';
 // import syrup_c from './syrup_c.png';
- import sanitizer_c from './sanitizer_c.png';
- import medicine_cat from './medicine_cat.png';
- import healthcare_cat from './healthcare_cat.png';
+ 
 // import paraffine_500 from './paraffine_500.png';
 // import B12_neuro_cat from './B12_neuro_cat.png';
 // import pan_d_cat from './pan_d_cat.png';
@@ -34,13 +38,18 @@ import logo_maclienson from './logo_maclienson.png';
 // import nexito_10_c from './nexito_10_c.png';
 // import alprazolam_c from './alprazolam_c.png';
 // import taxim_o_c from './taxim_o_c.png';
+import sanitizer_c from './sanitizer_c.png';
+ import medicine_cat from './medicine_cat.png';
+ import healthcare_cat from './healthcare_cat.png';
 import logo_maclienson_br from './logo_maclienson_br.png';
 import tabletsrx from './tabletsrx.png';
 import macnurish_p from './macnurish_p.png';
+import syrup from './syrup.png';
 import nurturmac from './nurturmac.png';
 import syndrova_met_sr_t from './syndrova_met_sr_t.png';
 import flavona_forte_sy from './flavona_forte_sy.png';
 import flavona_forte_sy_b from './flavona_forte_sy_b.png';
+
        
 
     
@@ -81,6 +90,13 @@ export const assets = {
   featured,
   login_img ,
   register_img,
+  vision,
+  vision_1,
+  mission_1,
+  mission_2,
+  values_1,
+  values_2,
+  values_3,
   // azithral_500,
   // alprazolam_c,
   // taxim_o_c,

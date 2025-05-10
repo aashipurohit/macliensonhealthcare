@@ -15,42 +15,42 @@ const NewArrivals = () => {
     {
       _id: "1",
       name: "Nurturmac ",
-      price: 0,
+      //price: 0,
       quantity: "10x10 Capsules",
       image: assets.nurturmac,
     },
     {
       _id: "2",
       name: "Macnurish",
-      price: 0,
+      //price: 0,
       quantity: "5 gm Sachets",
       image: assets.macnurish_p,
     },
     {
       _id: "4",
       name: "SYNDROVA-MET SR",
-      price: 0,
+     // price: 0,
       quantity: "10 Tablets",
       image: assets.syndrova_met_sr_t,
     },
     {
       _id: "6",
       name: "Flavona Forte",
-      price: 0,
+     // price: 0,
       quantity: "10 Tablets",
       image: assets.flavona_forte_sy,
     },
     {
       _id: "7",
       name: "tabletsrx",
-      price: 120,
+     // price: 120,
       quantity: "tabletsrx",
       image: assets.tabletsrx,
     },
     {
       _id: "8",
       name: "tabletsrx",
-      price: 120,
+      //price: 120,
       quantity: "10 Tablets",
       image: assets.tabletsrx,
     },
@@ -162,7 +162,8 @@ const NewArrivals = () => {
               <Link to={`/product/${product._id}`} className="block">
                 <h4 className="text-lg font-semibold">{product.name}</h4>
                 <p className="text-sm">
-                  ₹{product.price} - {product.quantity}
+                  {/* ₹{product.price} - */}
+                  {product.quantity} 
                 </p>
               </Link>
             </div>

@@ -21,11 +21,11 @@ const Topbar = () => {
           </a>
         </div>
        <div className="text-sm text-center flex-grow">
-        <span>Next-Gen Pharma for a Healthier Tomorrow</span>
+        <span className="text-2xl font-bold">Maclienson HealthCare</span>
        </div>
-       <div className="text-sm hidden md:block ">
+       <div className="text-lg hidden md:block ">
         <a href="tel: +91 1234567890 " className="hover:text-gray-300">
-          +91 1234567890
+          +91 8770751559
         </a>
 
        </div>
