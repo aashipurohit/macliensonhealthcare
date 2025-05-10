@@ -12,7 +12,10 @@ import logo_maclienson from './logo_maclienson.png';
  import rh_a1 from './rh_a1.jpg';
  import rh_a2 from './rh_a2.jpg';
  import rh_a3 from './rh_a3.png';
-  import rh_a4 from './rh_a4.jpg'
+ import rh_a4 from './rh_a4.jpg';
+  import digdis_1 from './digdis_1.jpg';
+   import digdis_2 from './digdis_2.jpg';
+    import digdis_3 from './digdis_3.png';
  import main_p from './main_p.png';
  import main_c2 from './main_c2.png';
  import main_c3 from './main_c3.png';
@@ -105,6 +108,9 @@ export const assets = {
   rh_a2,
   rh_a3,
   rh_a4,
+  digdis_1,
+  digdis_2,
+  digdis_3,
   // azithral_500,
   // alprazolam_c,
   // taxim_o_c,

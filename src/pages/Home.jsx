@@ -7,6 +7,7 @@ import ProductDetails from "../components/Products/ProductDetails";
 import FeaturedCollection from "../components/Products/FeaturedCollection";
 import FeaturesSection from "../components/Products/FeaturesSection";
 import ResearchHighlights from "../components/Layout/ResearchHighlights";
+import DigDis from "../components/Layout/DigDis";
 
 const Home = () => {
   return (
@@ -22,6 +23,7 @@ const Home = () => {
        <FeaturedCollection />
          <VisionMissionSection />
          <ResearchHighlights />
+         <DigDis />
        <FeaturesSection />
       
        
