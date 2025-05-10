@@ -9,6 +9,10 @@ import logo_maclienson from './logo_maclienson.png';
  import values_1 from './values_1.png';
  import values_2 from './values_2.png';
  import values_3 from './values_3.png';
+ import rh_a1 from './rh_a1.jpg';
+ import rh_a2 from './rh_a2.jpg';
+ import rh_a3 from './rh_a3.png';
+  import rh_a4 from './rh_a4.jpg'
  import main_p from './main_p.png';
  import main_c2 from './main_c2.png';
  import main_c3 from './main_c3.png';
@@ -97,6 +101,10 @@ export const assets = {
   values_1,
   values_2,
   values_3,
+  rh_a1,
+  rh_a2,
+  rh_a3,
+  rh_a4,
   // azithral_500,
   // alprazolam_c,
   // taxim_o_c,

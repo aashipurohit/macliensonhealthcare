@@ -6,6 +6,7 @@ import NewArrivals from "../components/Products/NewArrivals";
 import ProductDetails from "../components/Products/ProductDetails";
 import FeaturedCollection from "../components/Products/FeaturedCollection";
 import FeaturesSection from "../components/Products/FeaturesSection";
+import ResearchHighlights from "../components/Layout/ResearchHighlights";
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
 
        <FeaturedCollection />
          <VisionMissionSection />
+         <ResearchHighlights />
        <FeaturesSection />
       
        
