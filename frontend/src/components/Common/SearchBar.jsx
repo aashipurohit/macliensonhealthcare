@@ -29,21 +29,31 @@ setIsOpen(false);
            onChange={(e) => setSearchTerm(e.target.value)}
            className="bg-gray-100 px-4 pl-2 pr-12 rounded-lg focus:outLine-none w-full placeholder:text-gray-700 " />
         {/*Search icon*/}
-        <button type="submit" className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800">
+        <button 
+        type="submit"
+         aria-label="Search"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800">
             <HiMagnifyingGlass className="h-6 w-6"/>
         </button>
         </div>
 {/*close button */}
 <button 
 type="button"
+aria-label="Search"
  onClick={handleSearchToggle} 
  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800">
    
     <HiMiniXMark className="h-6 w-6"/>
 </button>
      </form>) :(
-    <button onClick={handleSearchToggle} className="ml-2">
-        <HiMagnifyingGlass className="h-6 w-6" />
+    <button
+     onClick={handleSearchToggle} 
+     className="ml-2"
+      aria-label="Toggle search bar"
+     >
+        <HiMagnifyingGlass
+         className="h-6 w-6"
+          aria-hidden="true" />
     </button>
     )
     }

@@ -1,0 +1,11 @@
+{
+  "name": "maclienson",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently \"cd backend && npm start\" \"cd frontend && npm run dev\""
+  },
+  "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "concurrently": "^8.2.2"
+  }
+}

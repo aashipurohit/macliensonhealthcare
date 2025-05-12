@@ -1,5 +1,5 @@
-{"homepage": "https://aashipurohit.github.io/maclienson_pharma",
-
+{
+  "homepage": "https://aashipurohit.github.io/maclienson_pharma",
   "name": "frontend",
   "private": true,
   "version": "0.0.0",
@@ -11,20 +11,31 @@
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
-    
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2",
+    "@reduxjs/toolkit": "^2.8.0",
+    "framer-motion": "^12.10.5",
+    "lucide-react": "^0.507.0",
+    "razorpay": "^2.9.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.5.3",
     "sonner": "^2.0.3"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
+    "@eslint/js": "^9.26.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
-    "eslint": "^9.21.0",
+    "eslint": "^9.26.0",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "gh-pages": "^6.3.0",
@@ -32,5 +43,17 @@
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "vite": "^6.2.0"
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aashipurohit/macliensonhealthcare.git"
+  },
+  "keywords": [],
+  "author": "Aashi Purohit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aashipurohit/macliensonhealthcare/issues"
   }
 }
