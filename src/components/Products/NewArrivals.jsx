@@ -111,7 +111,7 @@ const NewArrivals = () => {
   };
 
   return (
-    <section>
+    <section className="py-16 bg-rose-50">
       <div className="container mx-auto text-center mb-10 relative">
         <h2 className="text-3xl font-bold mb-4">Explore New Arrivals</h2>
         <p className="text-lg text-gray-600 mb-8">
@@ -150,15 +150,17 @@ const NewArrivals = () => {
       >
         {newArrivals.map((product) => (
           <div
-            key={product._id}
-            className="min-w-[250px] sm:min-w-[300px] relative bg-white rounded-lg overflow-hidden shadow-md"
-          >
+           key={product._id}
+            className="min-w-[280px] sm:min-w-[340px] h-[450px] relative bg-rose-50 rounded-xl overflow-hidden shadow-lg flex flex-col"
+              >
+
             <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-64 object-contain p-4"
+            src={product.image}
+            alt={product.name}
+            className="w-full h-[500px] object-contain p-2"
             />
-            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-left px-3 py-2">
+           <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white text-left px-4 py-3">
+
               <Link to={`/product/${product._id}`} className="block">
                 <h4 className="text-lg font-semibold">{product.name}</h4>
                 <p className="text-sm">

@@ -7,7 +7,7 @@ const DigDis = () => {
       title: 'Women Care',
       icon: '🌸',
       description: 'Specialized supplements for hormonal balance, prenatal care, and women-specific health needs',
-      image: assets.digdis_1, 
+      image: assets.digdis_w, 
       features: [
         'Prenatal vitamins',
         'Hormonal support',
@@ -47,7 +47,7 @@ const DigDis = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-3">Digital Dispensary</h2>
-          <p className="text-lg text-rose-700 max-w-2xl mx-auto">
+          <p className="text-lg text-rose-700cbse  max-w-2xl mx-auto">
             Premium quality supplements tailored to your specific health needs
           </p>
         </div>

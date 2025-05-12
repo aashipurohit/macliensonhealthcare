@@ -9,7 +9,7 @@ const ResearchHighlights = () => {
   const allArticles = [
     {
   id: 1,
-  image: assets.rh_a1,
+  image: assets.rh_myo,
   title: 'The Comparative Effects of Myo-Inositol and Metformin in PCOS Treatment',
   description: 'Clinical trial comparing Myo-Inositol and Metformin efficacy in normal-weight PCOS patients, showing significant improvements in hormonal and metabolic parameters with both treatments.',
   fullContent: (

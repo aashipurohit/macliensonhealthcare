@@ -88,21 +88,31 @@ const Login = () => {
             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
           </div>
 
-          <button type="submit" className="w-full bg-black text-white p-2 rounded-lg font-semibold hover:bg-gray-800 transition">
+          <button 
+             type="submit" 
+            className="w-full bg-black text-white p-2 rounded-lg font-semibold hover:bg-gray-800 transition"
+            aria-label="Sign in to your account"
+             >
             Sign In
           </button>
 
           <p className="mt-6 text-center text-sm">
             Don't have an account? <br />
-            <Link to="/register" className="text-blue-500">Register</Link>
+            <Link 
+               to="/register" 
+               className="text-rose-500"
+                aria-label="Register a new account"
+                 >
+                Register
+               </Link>
           </p>
         </form>
       </div>
 
       <div className="hidden md:block w-1/2 bg-white">
         <div className="h-full flex flex-col justify-center items-center p-8">
-          {Boolean(assets.login_img?.trim()) && (
-  <img src={assets.login_img} alt="Login Image"
+          {Boolean(assets.login_2?.trim()) && (
+  <img src={assets.login_2} alt="Login Image"
   onError={(e) => {
     e.target.style.display = 'none'; // Hide if image fails to load
   }} className="..." />

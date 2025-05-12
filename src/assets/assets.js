@@ -8,14 +8,18 @@ import logo_maclienson from './logo_maclienson.png';
  import mission_2 from './mission_2.png';
  import values_1 from './values_1.png';
  import values_2 from './values_2.png';
- import values_3 from './values_3.png';
+ import login_2 from './login_2.png';
  import rh_a1 from './rh_a1.jpg';
  import rh_a2 from './rh_a2.jpg';
  import rh_a3 from './rh_a3.png';
  import rh_a4 from './rh_a4.jpg';
-  import digdis_1 from './digdis_1.jpg';
-   import digdis_2 from './digdis_2.jpg';
-    import digdis_3 from './digdis_3.png';
+import digdis_1 from './digdis_1.jpg';
+import digdis_2 from './digdis_2.jpg';
+import digdis_3 from './digdis_3.png';
+import rh_myo from './rh_myo.png';
+import digdis_w from './digdis_w.png';
+import main_c5 from './main_c5.jpg';
+import main_c6 from './main_c6.png';
  import main_p from './main_p.png';
  import main_c2 from './main_c2.png';
  import main_c3 from './main_c3.png';
@@ -77,6 +81,8 @@ export const assets = {
   main_c3,
   main_c4,
   main_pw,
+  main_c5,
+  main_c6,
   // syrup_m_2,
   main_cp,
   // protien_c,
@@ -103,14 +109,16 @@ export const assets = {
   mission_2,
   values_1,
   values_2,
-  values_3,
+  login_2,
   rh_a1,
   rh_a2,
   rh_a3,
   rh_a4,
+  rh_myo,
   digdis_1,
   digdis_2,
   digdis_3,
+  digdis_w,
   // azithral_500,
   // alprazolam_c,
   // taxim_o_c,

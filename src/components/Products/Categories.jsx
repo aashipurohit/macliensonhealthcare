@@ -18,13 +18,13 @@ const Categories = () => {
 
 
 
-    <section className="navbar
+    {/* <section className="navbar
      py-16 px-4 lg:px-0">
         <div className="container mx-auto flex flex-col md:flex-row gap-8">
-           
+            */}
             {/*  Medicine  */}
          
-         <div className="relative flex-1">
+         {/* <div className="relative flex-1">
             <img 
             src={assets.medicine_cat}
              alt="Medicine"
@@ -40,11 +40,11 @@ const Categories = () => {
                     Shop Now
                 </Link>
              </div>
-         </div>
+         </div> */}
 
            {/*Healthcare Essentials*/}
 
-           <div className="relative flex-1">
+           {/* <div className="relative flex-1">
             <img 
             src={assets.healthcare_cat}
              alt="Healthcare Essentials"
@@ -59,15 +59,15 @@ const Categories = () => {
                 >
                     Shop Now
                 </Link>
-             </div>
-         </div>
+             </div> */}
+         {/* </div>
 
           
 
 
         </div>
 
-    </section>
+    </section> */}
     </>
   );
 };

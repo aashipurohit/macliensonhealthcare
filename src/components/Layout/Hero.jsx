@@ -5,12 +5,12 @@ import { assets } from "../../assets/assets";
 
 const heroSlides = [
   {
-    image: assets.main_cp,
+    image: assets.main_c5,
     headline: "Maclienson Healthcare Pvt. Ltd.",
     subtext: "Macliens at your Service.",
   },
   {
-    image: assets.main_c3,
+    image: assets.main_c6,
     headline: "Your Health, Our Priority",
     subtext: "Delivering trusted health solutions with care and precision.",
   },
@@ -71,7 +71,7 @@ const Hero = () => {
   const {  headline, subtext } = heroSlides[currentSlide];
 
   return (
-    <section className="relative h-[calc(100vh-80px)] overflow-hidden">
+    <section className="relative h-[calc(120vh-300px)] overflow-hidden">
       {/* Background Images */}
       <div className="absolute inset-0 flex transition-transform duration-1000 ease-in-out">
         {heroSlides.map((slide, index) => (
@@ -88,14 +88,15 @@ const Hero = () => {
             <img
               src={slide.image}
               alt={`Hero Slide ${index + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover "
             />
           </div>
         ))}
       </div>
 
       {/* Overlay with delayed text */}
-      <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-end items-center text-white px-4 pb-32 text-center z-10">
+      <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-end text-white px-4 pb-50 text-center z-10">
+
         {showText && (
           <div
             key={currentSlide}

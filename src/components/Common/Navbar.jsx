@@ -95,8 +95,13 @@ const Navbar = () => {
 <SearchBar/>
 </div>
 
-<button onClick={toggleNavDrawer} className="md:hidden">
-  <HiBars3BottomRight className="h-6 w-6 text-gray-700" />
+<button 
+onClick={toggleNavDrawer} 
+className="md:hidden"
+aria-label={navDrawerOpen ? "Close navigation menu" : "Open navigation menu"}
+  aria-expanded={navDrawerOpen}
+  aria-controls="mobile-menu">
+  <HiBars3BottomRight className="h-6 w-6 text-gray-700" aria-hidden="true" />
 </button>
 </div>
 
@@ -104,7 +109,9 @@ const Navbar = () => {
       <CartDrawer drawerOpen={drawerOpen} toggleCartDrawer={toggleCartDrawer}/>
 
       {/* Mobile Navigation */}
-      <div className={`fixed top-0 left-0 w-3/4 sm:w-1/2 md:w-1/3 h-full bg-white shadow-lg transform transition-transform duration-300 z-50 ${
+      <div
+      id= "mobile-menu"
+       className={`fixed top-0 left-0 w-3/4 sm:w-1/2 md:w-1/3 h-full bg-white shadow-lg transform transition-transform duration-300 z-50 ${
         navDrawerOpen ? "translate-x-0 " : "-translate-x-full"}`}
         >
           <div className="flex justify-end p-4">
