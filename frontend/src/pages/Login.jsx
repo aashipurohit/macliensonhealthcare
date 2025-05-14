@@ -41,6 +41,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
+      console.log("Form is valid, dispatching action...");
       dispatch(loginUser(formData));
       toast.success("Login successful!");
       setTimeout(() => {

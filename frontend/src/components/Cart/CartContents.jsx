@@ -77,7 +77,7 @@ brand:{product.brand}
 </div> 
 <div>
 <p>₹ {product.price.toLocaleString()}</p>
-<button>
+<button aria-label="Delete" >
 <RiDeleteBin3Line className="h-6 w-6 mt-2 text-red-600"/>
 </button>
 </div>

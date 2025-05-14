@@ -71,13 +71,13 @@ const FilterSidebar = ({ onFilterChange }) => {
   };
 
   return (
-    <div className="w-72 h-full overflow-y-auto p-6 bg-white border-r border-gray-300 shadow-sm">
+    <div className="w-80 h-full p-6 bg-white border-r border-gray-200 shadow-lg sticky top-0 z-10">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6 pb-3 border-b border-gray-300">
+      <div className="flex items-center justify-between mb-6 pb-3 border-b border-gray-200">
         <h2 className="text-xl font-semibold text-gray-800">Filter Products</h2>
         <button 
           onClick={clearAllFilters}
-          className="text-sm text-blue-600 hover:underline"
+          className="text-sm text-blue-600 hover:text-blue-800 hover:underline transition-colors"
         >
           Clear all
         </button>
@@ -90,17 +90,21 @@ const FilterSidebar = ({ onFilterChange }) => {
       ].map(({ name, title, options }) => (
         <div key={name} className="mb-6">
           <div 
-            className="flex items-center justify-between cursor-pointer"
+            className="flex items-center justify-between cursor-pointer hover:bg-gray-50 p-2 rounded"
             onClick={() => toggleSection(name)}
           >
             <h4 className="text-md font-medium text-gray-700">{title}</h4>
-            {expandedSections[name] ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}
+            {expandedSections[name] ? (
+              <FaChevronUp size={14} className="text-gray-500" />
+            ) : (
+              <FaChevronDown size={14} className="text-gray-500" />
+            )}
           </div>
 
           {expandedSections[name] && (
-            <div className="space-y-3 mt-4 pl-1">
+            <div className="space-y-3 mt-4 pl-2">
               {options.map(({ value, label }) => (
-                <label key={value} className="flex items-center gap-3 text-sm text-gray-800">
+                <label key={value} className="flex items-center gap-3 text-sm text-gray-800 hover:bg-gray-50 p-2 rounded cursor-pointer">
                   <input
                     type="radio"
                     name={name}
@@ -108,7 +112,7 @@ const FilterSidebar = ({ onFilterChange }) => {
                     onChange={() => handleFilterChange(name, value)}
                     className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                   />
-                  {label}
+                  <span>{label}</span>
                 </label>
               ))}
             </div>
@@ -120,17 +124,21 @@ const FilterSidebar = ({ onFilterChange }) => {
       {filters.category !== 'all' && (
         <div className="mb-6">
           <div 
-            className="flex items-center justify-between cursor-pointer"
+            className="flex items-center justify-between cursor-pointer hover:bg-gray-50 p-2 rounded"
             onClick={() => toggleSection('subcategory')}
           >
             <h4 className="text-md font-medium text-gray-700">Subcategory</h4>
-            {expandedSections.subcategory ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}
+            {expandedSections.subcategory ? (
+              <FaChevronUp size={14} className="text-gray-500" />
+            ) : (
+              <FaChevronDown size={14} className="text-gray-500" />
+            )}
           </div>
 
           {expandedSections.subcategory && (
-            <div className="space-y-3 mt-4 pl-1">
+            <div className="space-y-3 mt-4 pl-2">
               {getCurrentSubcategories().map(({ value, label }) => (
-                <label key={value} className="flex items-center gap-3 text-sm text-gray-800">
+                <label key={value} className="flex items-center gap-3 text-sm text-gray-800 hover:bg-gray-50 p-2 rounded cursor-pointer">
                   <input
                     type="radio"
                     name="subcategory"
@@ -138,7 +146,7 @@ const FilterSidebar = ({ onFilterChange }) => {
                     onChange={() => handleFilterChange('subcategory', value)}
                     className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                   />
-                  {label}
+                  <span>{label}</span>
                 </label>
               ))}
             </div>
@@ -149,4 +157,4 @@ const FilterSidebar = ({ onFilterChange }) => {
   );
 };
 
-export default FilterSidebar
+export default FilterSidebar;

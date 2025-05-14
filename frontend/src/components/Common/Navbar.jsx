@@ -80,9 +80,10 @@ const Navbar = () => {
           >
             Login
           </Link>
-  <Link to="/profile" className="hover:text-black">
+  <Link to="/profile" className="hover:text-black" aria-label="Go to Profile">
   <HiOutlineUser className="h-6 w-6 text-gray-700" />
-  </Link>
+</Link>
+
   <button
    onClick={toggleCartDrawer} className="relative hover:text-black">
     <HiOutlineShoppingBag className="h-6 w-6 text-gray-700"  />
@@ -115,7 +116,9 @@ aria-label={navDrawerOpen ? "Close navigation menu" : "Open navigation menu"}
         navDrawerOpen ? "translate-x-0 " : "-translate-x-full"}`}
         >
           <div className="flex justify-end p-4">
-            <button onClick={toggleNavDrawer}>
+            <button 
+            aria-label="Close" 
+            onClick={toggleNavDrawer}>
             <IoMdClose className = "h-6 w-6 text-gray-600"/>
             </button>
           </div>

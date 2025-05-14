@@ -29,6 +29,7 @@ export const loginUser = createAsyncThunk(
     `${import.meta.env.VITE_BACKEND_URL}/api/users/login`,
     userData
     );
+    console.log(response); // Check if the response is coming back as expected
 
     localStorage.setItem("userInfo", JSON.stringify(response.data.user));
     localStorage.setItem("userToken", response.data.token);

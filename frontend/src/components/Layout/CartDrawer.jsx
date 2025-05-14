@@ -21,8 +21,11 @@ const CartDrawer = ({
     shadow-lg transform transition-transform duration-300 flex flex-col z-50 
     ${drawerOpen ? "translate-x-0" : "translate-x-full"}`}>
       {/* Close Button */}
-      <div className="flex justify-end p-4">
-        <button onClick={toggleCartDrawer}>
+      <div
+       className="flex justify-end p-4">
+        <button
+        aria-label="Close" 
+         onClick={toggleCartDrawer}>
           <IoMdClose className="h-6 w-6 text-gray-600"/> 
         </button>
       </div>
