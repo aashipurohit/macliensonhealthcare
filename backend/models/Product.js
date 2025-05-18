@@ -34,10 +34,14 @@ const productSchema = new mongoose.Schema({
   brand: {
     type: String,  
   },
-  collections: {  
-    type: String,
+  collections: [
+  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Collection",
     required: true,
-  },
+  }
+],
+
   images: [{
     url: {
       type: String,
@@ -80,15 +84,7 @@ const productSchema = new mongoose.Schema({
    metaKeywords: {
     type: String,
    },
-   dimensions: {
-    length: Number,
-    width: Number,
-    height: Number,
-   },
-   weight: {
-    type: String,  // Changed from Number to String
-    trim: true
-  }
+   
 },
 {timestamps: true}
 );

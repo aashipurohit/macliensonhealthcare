@@ -41,7 +41,7 @@ const ProductDetailModal = ({ product, similarProducts, onClose, onAddToCart, on
                 {product.category}
               </div>
               {product.prescriptionRequired && (
-                <div className="absolute top-2 right-2 bg-red-100 text-red-800 text-xs px-2 py-1 rounded">
+                <div className="absolute top-2 right-2 bg-rose-100 text-red-800 text-xs px-2 py-1 rounded">
                   Prescription Required
                 </div>
               )}

@@ -20,6 +20,8 @@ import UserManagement from "./components/Admin/UserManagement";
 import ProductManagement from "./components/Admin/ProductManagement";
 import EditProductPage from "./components/Admin/EditProductPage";
 import OrderManagement from "./components/Admin/OrderManagement";
+//import ProductDetails from "../components/Products/ProductDetails";
+//import ProtectedRoute from "./components/Common/ProtectedRoute";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -31,6 +33,7 @@ const App = () => {
         <Toaster position="top-right" />
         <Routes>
           <Route path="/" element={<UserLayout />}>
+           <Route path="/products/:productId" element={<ProductDetails />} />
             <Route path="/" index element={<Home />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/certifications" element={<Certifications />} />   
@@ -45,8 +48,14 @@ const App = () => {
             <Route path="checkout" element ={ <Checkout/>} /> 
             <Route path="/order-confirmation" element={<OrderConfirmationPage />} />   
             </Route>
-          <Route path="/admin" element = {<AdminLayout />} >
-          {/*Admin Layout */}
+
+            {/*Admin Layout */}
+          <Route path="/admin" 
+           element ={
+          //  <ProtectedRoute role="admin">
+          <AdminLayout />
+          // </ProtectedRoute>
+            } >
           <Route index element= {<AdminHomePage />} />
           <Route path="users" element={<UserManagement />} />
           <Route path="products" element={<ProductManagement />} />

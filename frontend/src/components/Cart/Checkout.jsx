@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { assets } from "../../assets/assets";
+import { useDispatch, useSelector } from "react-redux";
 
 // Mock cart data
 const cart = {
@@ -48,6 +49,10 @@ const loadRazorpay = () => {
 
 const Checkout = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {cart,error} = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.auth);
+
   const [loading, setLoading] = useState(false);
   const [shippingAddress, setShippingAddress] = useState({
     firstName: "",

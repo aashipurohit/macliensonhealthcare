@@ -1,8 +1,11 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import { useDispatch } from "react-redux";
 
 const OrderConfirmation = () => {
+const dispatch = useDispatch();
+
+  
   const location = useLocation();
   const navigate = useNavigate();
   const { orderDetails } = location.state || {};

@@ -3,14 +3,16 @@ import Hero from '../components/Layout/Hero';
 import VisionMissionSection from '../components/Layout/VisionMissionSection';
 import Categories from "../components/Products/Categories";
 import NewArrivals from "../components/Products/NewArrivals";
-import ProductDetails from "../components/Products/ProductDetails";
+//import ProductDetails from "../components/Products/ProductDetails";
 // import FeaturedCollection from "../components/Products/FeaturedCollection";
 import FeaturesSection from "../components/Products/FeaturesSection";
 import ResearchHighlights from "../components/Layout/ResearchHighlights";
 import DigDis from "../components/Layout/DigDis";
 import NewLaunch from "../components/Layout/NewLaunch";
+//import {useDispatch} from "react-redux";
 
 const Home = () => {
+  
   return (
     <div>
      
@@ -18,8 +20,6 @@ const Home = () => {
      <Categories />
      <NewArrivals />
      <NewLaunch />
-     {/*Best Seller */}
-       <ProductDetails />
 
        {/* <FeaturedCollection /> */}
          <VisionMissionSection />

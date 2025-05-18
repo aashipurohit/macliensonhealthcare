@@ -6,9 +6,7 @@ import SearchBar from '../Common/SearchBar';
 import CartDrawer from '../Layout/CartDrawer';
 import  { useState } from 'react';
 import { IoMdClose } from "react-icons/io";
-
-
-
+import { useSelector } from "react-redux";
 
 
 
@@ -17,7 +15,13 @@ const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const [navDrawerOpen, setNavDrawer] = useState(false);
+   
+  const {cart} = useSelector((state) => state.cart);
 
+  const {user} = useSelector((state) => state.auth); // Add this line to get user data
+
+  const cartItemCount = 
+  cart?.products?.reduce((total, product) => total + product.quantity, 0) || 0;
 
 
     const toggleCartDrawer = () => {
@@ -68,28 +72,34 @@ const Navbar = () => {
 {/*Right - Icons */}
 
 <div className="flex items-center space-x-4">
-  {/* Add this login link */}
+  {/* Admin Button - Only show if user is admin */}
+          {user?.role === 'admin' && (
+            
   <Link 
   to="/admin" 
   className="hidden md:block bg-rose-400 text-black px-4 py-2  rounded-md text-base font-medium hover:bg-gray-800  hover:text-white transition">
     Admin
     </Link>
-  <Link 
-            to="/login" 
-            className="hidden md:block bg-rose-400 text-black px-4 py-2  rounded-md text-base font-medium hover:bg-gray-800 hover:text-white transition"
-          >
-            Login
-          </Link>
-  <Link to="/profile" className="hover:text-black" aria-label="Go to Profile">
-  <HiOutlineUser className="h-6 w-6 text-gray-700" />
-</Link>
+          )}
+      {user ? (
+            <Link to="/profile" className="hover:text-black" aria-label="Go to Profile">
+              <HiOutlineUser className="h-6 w-6 text-gray-700" />
+            </Link>
+          ) : (
+            <Link 
+              to="/login" 
+              className="hidden md:block bg-rose-400 text-black px-4 py-2 rounded-md text-base font-medium hover:bg-gray-800 hover:text-white transition"
+            >
+              Login
+            </Link>
+          )}
 
   <button
    onClick={toggleCartDrawer} className="relative hover:text-black">
     <HiOutlineShoppingBag className="h-6 w-6 text-gray-700"  />
-    <span className="absolute -top-1  bg-cyan-950 text-white text-xs rounded-full px-2 py-0.5">
-    4
-  </span>
+    {cartItemCount > 0 && (<span className="absolute -top-1  bg-cyan-950 text-white text-xs rounded-full px-2 py-0.5">
+    {cartItemCount}
+  </span>)}
   </button>
 {/*Search*/}
 <div className="overflow-hidden">
@@ -149,10 +159,16 @@ aria-label={navDrawerOpen ? "Close navigation menu" : "Open navigation menu"}
     CONTACT US
     </Link>
 
-    {/* Show these only in mobile drawer */}
-    <Link to="/admin" onClick={toggleNavDrawer} className="block bg-black text-white px-2 py-1 rounded text-sm font-medium hover:bg-gray-800">
-      Admin
-    </Link>
+   {/* Conditionally show Admin in mobile menu */}
+          {user?.role === 'admin' && (
+            <Link 
+              to="/admin" 
+              onClick={toggleNavDrawer} 
+              className="block bg-black text-white px-2 py-1 rounded text-sm font-medium hover:bg-gray-800"
+            >
+              Admin
+            </Link>
+          )}
     <Link to="/login" onClick={toggleNavDrawer} className="block bg-black text-white px-2 py-1 rounded text-sm font-medium hover:bg-gray-800">
       Login
     </Link>
