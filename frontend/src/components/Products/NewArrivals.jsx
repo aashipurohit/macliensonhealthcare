@@ -356,12 +356,7 @@ const NewArrivals = () => {
         onMouseLeave={handleMouseUpOrLeave}
       >
         {/* Hide scrollbar for Chrome/Safari */}
-        <style jsx>{`
-          div::-webkit-scrollbar {
-            display: none;
-          }
-        `}</style>
-
+        
         {newArrivals.map((product) => (
           <div
             key={product._id}

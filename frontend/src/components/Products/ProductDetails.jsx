@@ -269,6 +269,11 @@ const ProductDetails = () => {
   const [error, setError] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
 
+const [quantity, setQuantity] = useState(1);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [cartError, setCartError] = useState(null);
+  
+
   useEffect(() => {
     const fetchProductData = async () => {
       try {
@@ -314,6 +319,53 @@ const ProductDetails = () => {
     setRating(5);
   };
 
+   const handleAddToCart = async () => {
+    if (!product) return;
+
+    setIsAddingToCart(true);
+    setCartError(null);
+     
+    try {
+      const cartItem = {
+        productId: product._id,
+        name: product.name,
+        image: product.images[0]?.url,
+        price: product.price,
+        quantity: quantity
+      };
+
+      // Check if user is authenticated
+      const token = localStorage.getItem('userToken');
+      const config = token ? {
+        headers: { Authorization: `Bearer ${token}` }
+      } : {};
+       
+      const endpoint = token 
+        ? `${import.meta.env.VITE_BACKEND_URL}/api/cart`
+        : `${import.meta.env.VITE_BACKEND_URL}/api/cart/guest`;
+
+      // For guest users, generate or use existing guestId
+      const guestId = localStorage.getItem('guestId') || crypto.randomUUID();
+      if (!token) {
+        localStorage.setItem('guestId', guestId);
+        cartItem.guestId = guestId;
+      }
+
+      const response = await axios.post(endpoint, cartItem, config);
+      
+      // Show success feedback
+      alert(`${product.name} added to cart!`);
+      
+    } catch (err) {
+      setCartError(err.response?.data?.error || 'Failed to add to cart');
+      console.error('Add to cart error:', err);
+    } finally {
+      setIsAddingToCart(false);
+    }
+
+  };
+
+
   if (loading) {
     return <div className="container mx-auto px-4 py-8 text-center">Loading product details...</div>;
   }
@@ -327,10 +379,10 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-rose-50">
       <button 
         onClick={() => navigate(-1)}
-        className="flex items-center text-blue-600 hover:text-blue-800 mb-6"
+        className="flex items-center text-rose-600 hover:text-rose-800 mb-6"
       >
         <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -340,7 +392,7 @@ const ProductDetails = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
         {/* Product Image Gallery */}
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-rose-100 rounded-lg shadow-md p-6">
           <div className="mb-4">
             <img 
               src={product.images[0]?.url || '/placeholder-product.jpg'} 
@@ -353,7 +405,7 @@ const ProductDetails = () => {
           </div>
           <div className="grid grid-cols-4 gap-2">
             {product.images.map((image, index) => (
-              <div key={index} className="border rounded p-1 cursor-pointer hover:border-blue-500">
+              <div key={index} className="border rounded p-1 cursor-pointer hover:border-rose-500">
                 <img 
                   src={image.url} 
                   alt={image.altText || `${product.name} thumbnail ${index + 1}`}
@@ -386,10 +438,10 @@ const ProductDetails = () => {
               </div>
               <span className="text-gray-600 text-sm">({product.numReviews || reviews.length} reviews)</span>
             </div>
-            <p className="text-2xl font-bold text-blue-600 mb-6">₹{product.price.toLocaleString()}</p>
+            <p className="text-2xl font-bold text-rose-600 mb-6">₹{product.price.toLocaleString()}</p>
             
             <div className="flex flex-wrap gap-2 mb-6">
-              <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
+              <span className="px-3 py-1 bg-blue-100 text-rose-800 text-sm font-medium rounded-full">
                 {product.category}
               </span>
               {product.subcategory && (
@@ -412,19 +464,59 @@ const ProductDetails = () => {
               )}
             </div>
 
-            <button 
-              className={`w-full font-bold py-3 px-4 rounded-lg transition-colors ${
-                product.countInStock > 0 
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white' 
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              }`}
-              disabled={product.countInStock <= 0}
-            >
-              {product.countInStock > 0 ? 'Add to Cart' : 'Not Available'}
-            </button>
-          </div>
+
+      {/* Updated Add to Cart section */}
+        <div className="flex items-center mb-6">
+          {product.countInStock > 0 && (
+            <div className="mr-4">
+              <label htmlFor="quantity" className="block text-sm font-medium text-gray-700 mb-1">
+                Quantity
+              </label>
+              <select
+                id="quantity"
+                value={quantity}
+                onChange={(e) => setQuantity(parseInt(e.target.value))}
+                className="border border-gray-300 rounded-md px-3 py-2"
+              >
+                {[...Array(Math.min(10, product.countInStock)).keys()].map((x) => (
+                  <option key={x + 1} value={x + 1}>
+                    {x + 1}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+           <button
+            className={`w-full font-bold py-3 px-4 rounded-lg transition-colors ${
+              product.countInStock > 0
+                ? 'bg-rose-600 hover:bg-rose-700 text-white'
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            }`}
+            disabled={product.countInStock <= 0 || isAddingToCart}
+            onClick={handleAddToCart}
+          >
+            {isAddingToCart ? (
+              <span className="flex items-center justify-center">
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Adding...
+              </span>
+            ) : (
+              product.countInStock > 0 ? 'Add to Cart' : 'Out of Stock'
+            )}
+          </button>
         </div>
+
+        {cartError && (
+          <p className="text-red-500 mb-4">{cartError}</p>
+        )}
       </div>
+      </div> 
+</div> 
+
 
       {/* Tabs */}
       <div className="border-b border-gray-200 mb-6">
@@ -432,7 +524,7 @@ const ProductDetails = () => {
           <button
             className={`py-4 px-1 border-b-2 font-medium text-sm ${
               activeTab === 'description' 
-                ? 'border-blue-500 text-blue-600' 
+                ? 'border-rose-500 text-rose-600' 
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
             }`}
             onClick={() => setActiveTab('description')}
@@ -442,7 +534,7 @@ const ProductDetails = () => {
           <button
             className={`py-4 px-1 border-b-2 font-medium text-sm ${
               activeTab === 'details' 
-                ? 'border-blue-500 text-blue-600' 
+                ? 'border-rose-500 text-rose-600' 
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
             }`}
             onClick={() => setActiveTab('details')}
@@ -452,7 +544,7 @@ const ProductDetails = () => {
           <button
             className={`py-4 px-1 border-b-2 font-medium text-sm ${
               activeTab === 'reviews' 
-                ? 'border-blue-500 text-blue-600' 
+                ? 'border-rose-500 text-rose-600' 
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
             }`}
             onClick={() => setActiveTab('reviews')}
@@ -554,7 +646,7 @@ const ProductDetails = () => {
                   <textarea
                     id="review"
                     rows="4"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500"
                     value={review}
                     onChange={(e) => setReview(e.target.value)}
                     required
@@ -562,7 +654,7 @@ const ProductDetails = () => {
                 </div>
                 <button
                   type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
+                  className="bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 px-4 rounded transition-colors"
                 >
                   Submit Review
                 </button>
@@ -580,7 +672,7 @@ const ProductDetails = () => {
             {relatedProducts.map((relatedProduct) => (
               <div 
                 key={relatedProduct._id} 
-                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                className="bg-rose-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
                 onClick={() => navigate(`/product/${relatedProduct._id}`)}
               >
                 <div className="relative pb-[100%]">
@@ -601,7 +693,7 @@ const ProductDetails = () => {
                     {relatedProduct.subcategory || relatedProduct.category}
                   </p>
                   <div className="flex justify-between items-center">
-                    <span className="text-lg font-bold text-blue-600">
+                    <span className="text-lg font-bold text-rose-600">
                       ₹{relatedProduct.price.toLocaleString()}
                     </span>
                     {relatedProduct.countInStock > 0 ? (

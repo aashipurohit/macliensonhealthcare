@@ -84,14 +84,12 @@ const productsSlice = createSlice({
     error: null,
     filters: {
     category: "",
-    size: "",
-    color: "",
     brand: "",
     minPrice: "",
     maxPrice: "",
     sortBy: "",
     search: "",
-    collection: "",
+    collections: "",
 
     },
     },
@@ -108,7 +106,7 @@ const productsSlice = createSlice({
     maxPrice: "",
     sortBy: "",
     search: "",
-    collection: "",
+    collections: "",
     
 }
     },
