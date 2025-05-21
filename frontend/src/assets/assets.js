@@ -24,6 +24,7 @@ import main_c6 from './main_c6.png';
  import main_c2 from './main_c2.png';
  import main_c3 from './main_c3.png';
  import main_c4 from './main_c4.png';
+ import main_c7 from './main_c7.jpeg';
  import main_pw from './main_pw.webp';
 // import syrup_m from './syrup_m.png';
 // import syrup_m_2 from './syrup_m_2.png';
@@ -83,6 +84,7 @@ export const assets = {
   main_pw,
   main_c5,
   main_c6,
+  main_c7,
   // syrup_m_2,
   main_cp,
   // protien_c,

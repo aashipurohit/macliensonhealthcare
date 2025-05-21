@@ -216,23 +216,23 @@ const NewArrivals = () => {
   const [error, setError] = useState(null);
 
   // Fetch new arrivals data
-  useEffect(() => {
-    const fetchNewArrivals = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/products/new-arrivals`
-        );
-        setNewArrivals(response.data);
-      } catch (err) {
-        setError(err.message);
-        console.error("Failed to fetch new arrivals:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+ useEffect(() => {
+  const fetchNewArrivals = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/products/new-arrivals`
+      );
+      setNewArrivals(response.data);
+      setLoading(false); // ✅ Add this line
+    } catch (error) {
+      console.error(error);
+      setError("Failed to load new arrivals."); // ✅ Optional: Better error message
+      setLoading(false); // ✅ Even on error, stop loading
+    }
+  };
 
-    fetchNewArrivals();
-  }, []);
+  fetchNewArrivals();
+}, []);
 
   // Scroll functions
   const scroll = (direction) => {

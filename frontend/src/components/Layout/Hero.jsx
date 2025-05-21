@@ -5,9 +5,9 @@ import { assets } from "../../assets/assets";
 
 const heroSlides = [
   {
-    image: assets.main_c5,
-    headline: "Maclienson Healthcare Pvt. Ltd.",
-    subtext: "Macliens at your Service.",
+    image: assets.main_c7,
+    headline: "Experience Modern Healthcare",
+    subtext: "A step ahead in medical excellence and innovation.",
   },
   {
     image: assets.main_c6,
@@ -16,8 +16,8 @@ const heroSlides = [
   },
   {
     image: assets.main_c2,
-    headline: "Experience Modern Healthcare",
-    subtext: "A step ahead in medical excellence and innovation.",
+    headline: "Maclienson Healthcare Pvt. Ltd.",
+    subtext: "Macliens at your Service.",
   },
 ];
 
