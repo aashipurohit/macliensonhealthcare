@@ -469,9 +469,12 @@ const [quantity, setQuantity] = useState(1);
         <div className="flex items-center mb-6">
           {product.countInStock > 0 && (
             <div className="mr-4">
-              <label htmlFor="quantity" className="block text-sm font-medium text-gray-700 mb-1">
-                Quantity
-              </label>
+                <div className="flex items-center gap-2 mb-1">
+        <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">
+          Quantity
+        </label>
+        <span className="text-xs text-gray-500">{product.quantity}</span>
+      </div>
               <select
                 id="quantity"
                 value={quantity}

@@ -222,17 +222,22 @@ const NewArrivals = () => {
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/products/new-arrivals`
       );
-      setNewArrivals(response.data);
-      setLoading(false); // ✅ Add this line
+      // Sort again client-side if needed (double protection)
+      const sorted = response.data.sort((a, b) => 
+        new Date(b.date) - new Date(a.date)
+      );
+      setNewArrivals(sorted);
     } catch (error) {
-      console.error(error);
-      setError("Failed to load new arrivals."); // ✅ Optional: Better error message
-      setLoading(false); // ✅ Even on error, stop loading
+      console.error("Failed to fetch new arrivals:", error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   fetchNewArrivals();
 }, []);
+
 
   // Scroll functions
   const scroll = (direction) => {
@@ -342,64 +347,59 @@ const NewArrivals = () => {
 
       {/* Product cards */}
       <div
-        ref={scrollRef}
-        className={`container mx-auto overflow-x-scroll flex space-x-6 pb-4 ${
-          isDragging ? "cursor-grabbing" : "cursor-grab"
-        }`}
-        style={{
-          scrollbarWidth: "none", // Hide scrollbar for Firefox
-          msOverflowStyle: "none", // Hide scrollbar for IE
-        }}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUpOrLeave}
-        onMouseLeave={handleMouseUpOrLeave}
-      >
-        {/* Hide scrollbar for Chrome/Safari */}
-        
-        {newArrivals.map((product) => (
-          <div
-            key={product._id}
-            className="min-w-[280px] sm:min-w-[340px] h-[450px] flex-shrink-0 relative bg-white rounded-xl overflow-hidden shadow-lg flex flex-col transition-transform hover:scale-[1.02]"
-          >
-            {/* Product image */}
-            <div className="h-[320px] p-4 flex items-center justify-center bg-gray-50">
-              <img
-                src={product.images[0]?.url || '/placeholder-product.jpg'}
-                alt={product.images[0]?.altText || product.name}
-                className="max-h-full max-w-full object-contain"
-                onError={(e) => {
-                  e.target.src = '/placeholder-product.jpg';
-                }}
-              />
-            </div>
+  ref={scrollRef}
+  className={`container mx-auto overflow-x-auto flex space-x-6 pb-4 snap-x ${
+    isDragging ? "cursor-grabbing" : "cursor-grab"
+  }`}
+  style={{
+    scrollbarWidth: "none",
+    msOverflowStyle: "none",
+  }}
+>
+  {newArrivals.map((product) => (
+    <div
+      key={product._id}
+      className="w-[280px] flex-shrink-0 snap-start bg-white rounded-xl shadow-lg flex flex-col" // Fixed width here
+    >
+      {/* Product image - Fixed aspect ratio container */}
+      <div className="relative pt-[75%] bg-gray-50"> {/* 4:3 aspect ratio */}
+        <img
+          src={product.images[0]?.url || '/placeholder-product.jpg'}
+          alt={product.images[0]?.altText || product.name}
+          className="absolute top-0 left-0 w-full h-full object-contain p-4"
+          onError={(e) => {
+            e.target.src = '/placeholder-product.jpg';
+          }}
+        />
+      </div>
 
-            {/* Product info */}
-            <div className="p-4 flex-grow flex flex-col">
-              <Link 
-                to={`/product/${product._id}`} 
-                className="group block flex-grow"
-              >
-                <h3 className="text-lg font-semibold mb-2 group-hover:text-rose-600 transition line-clamp-2">
-                  {product.name}
-                </h3>
-                <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                  {product.description}
-                </p>
-              </Link>
-              
-              <div className="mt-auto">
-                <p className="text-lg font-bold text-rose-700">
-                  ₹{product.price.toLocaleString()}
-                </p>
-                {product.countInStock > 0 ? (
-                  <p className="text-sm text-green-600">In Stock ({product.countInStock})</p>
-                ) : (
-                  <p className="text-sm text-red-600">Out of Stock</p>
-                )}
-              </div>
-            </div>
-          </div>
+      {/* Product info - Consistent padding */}
+      <div className="p-4 flex-grow flex flex-col">
+        <Link 
+          to={`/product/${product._id}`} 
+          className="group block flex-grow"
+        >
+          <h3 className="text-lg font-semibold mb-2 group-hover:text-rose-600 transition line-clamp-2">
+            {product.name}
+          </h3>
+          <p className="text-gray-600 text-sm mb-3 line-clamp-3">
+            {product.description}
+          </p>
+        </Link>
+        
+        <div className="mt-auto">
+          <p className="text-lg font-bold text-rose-700">
+            ₹{product.price.toLocaleString()}
+          </p>
+          {product.countInStock > 0 ? (
+            <p className="text-sm text-green-600">In Stock ({product.countInStock})</p>
+          ) : (
+            <p className="text-sm text-red-600">Out of Stock</p>
+          )}
+        </div>
+      </div>
+    </div>
+
         ))}
       </div>
     </section>
