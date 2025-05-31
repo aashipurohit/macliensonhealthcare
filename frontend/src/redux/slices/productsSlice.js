@@ -7,7 +7,7 @@ export const fetchProductsByFilters = createAsyncThunk(
   async ({
     collections,
     minPrice,
-    maxPrice,
+    maxPrice, 
     sortBy,
     search,
     category,
@@ -83,7 +83,9 @@ const productsSlice = createSlice({
     loading: false,
     error: null,
     filters: {
-    category: "",
+    category: [],
+    subcategory: [],
+    prescriptionRequired: null,
     brand: "",
     minPrice: "",
     maxPrice: "",
@@ -92,6 +94,8 @@ const productsSlice = createSlice({
     collections: "",
 
     },
+    allSubcategories: [],
+  allBrands: []
     },
 
     reducers: {
@@ -100,17 +104,23 @@ const productsSlice = createSlice({
     },
     clearFilters: (state) => {
     state.filters = {
-    category: "",
+    category: [],
+    subcategory: [],
     brand: "",
     minPrice: "",
     maxPrice: "",
     sortBy: "",
     search: "",
     collections: "",
+    prescriptionRequired: null,
     
 }
     },
+    clearSelectedProduct: (state) => {
+      state.selectedProduct = null;
+      state.similarProducts = [];
 },
+    },
 
 extraReducers: (builder) => {
     builder
@@ -181,5 +191,5 @@ extraReducers: (builder) => {
 
     });
 
-    export const { setFilters, clearFilters } = productsSlice.actions;
+    export const { setFilters, clearFilters, clearSelectedProduct } = productsSlice.actions;
     export default productsSlice.reducer;

@@ -216,20 +216,19 @@ const NewArrivals = () => {
   const [error, setError] = useState(null);
 
   // Fetch new arrivals data
- useEffect(() => {
+useEffect(() => {
   const fetchNewArrivals = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/products/new-arrivals`
       );
-      // Sort again client-side if needed (double protection)
-      const sorted = response.data.sort((a, b) => 
-        new Date(b.date) - new Date(a.date)
-      );
-      setNewArrivals(sorted);
-    } catch (error) {
-      console.error("Failed to fetch new arrivals:", error);
-      setError(error.message);
+      // Remove the client-side sorting - trust the backend
+      setNewArrivals(response.data);
+      setError(null);
+    } catch (err) {
+      console.error("Failed to fetch new arrivals:", err);
+      setError(err.response?.data?.message || err.message);
     } finally {
       setLoading(false);
     }
@@ -364,7 +363,7 @@ const NewArrivals = () => {
       {/* Product image - Fixed aspect ratio container */}
       <div className="relative pt-[75%] bg-gray-50"> {/* 4:3 aspect ratio */}
         <img
-          src={product.images[0]?.url || '/placeholder-product.jpg'}
+          src={product.images[0]?.url.replace('/upload/', '/upload/f_auto,q_auto,w_300/')}
           alt={product.images[0]?.altText || product.name}
           className="absolute top-0 left-0 w-full h-full object-contain p-4"
           onError={(e) => {

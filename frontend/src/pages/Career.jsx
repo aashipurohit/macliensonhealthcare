@@ -198,10 +198,16 @@ const Career = () => {
           </Box>
           <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
-              <Typography variant="body1" paragraph sx={{ 
-                fontSize: '1.1rem',
-                color: theme.palette.text.primary // Black
-              }}>
+              <Typography
+                variant="body1"
+                sx={{
+                  fontSize: '1.1rem',
+
+                  // Black
+                  color: theme.palette.text.primary,
+
+                  marginBottom: "16px"
+                }}>
                 At Maclienson Healthcare, we believe our people are our greatest asset. We foster an environment where:
               </Typography>
               <Box component="ul" sx={{ 
@@ -478,12 +484,18 @@ const Career = () => {
           }}>
             Grow With Us
           </Typography>
-          <Typography variant="body1" paragraph sx={{ 
-            maxWidth: 700,
-            margin: '0 auto',
-            color: theme.palette.text.primary, // Black
-            fontSize: '1.1rem'
-          }}>
+          <Typography
+            variant="body1"
+            sx={{
+              maxWidth: 700,
+              margin: '0 auto',
+
+              // Black
+              color: theme.palette.text.primary,
+
+              fontSize: '1.1rem',
+              marginBottom: "16px"
+            }}>
             We invest in your professional development through mentorship programs, 
             leadership training, and opportunities to work on cutting-edge healthcare solutions.
           </Typography>
@@ -512,11 +524,13 @@ const Career = () => {
           }}>
             Ready to make an impact in healthcare?
           </Typography>
-          <Typography variant="body1" paragraph sx={{ 
-            color: theme.palette.text.secondary, // Dark gray
-            mb: 4,
-            fontSize: '1.1rem'
-          }}>
+          <Typography
+            variant="body1"
+            sx={{ 
+              color: theme.palette.text.secondary, // Dark gray
+              mb: 4,
+              fontSize: '1.1rem'
+            }}>
             We're always looking for passionate individuals to join our mission.
           </Typography>
           <Button 

@@ -227,10 +227,13 @@ const Certifications = () => {
               Our Quality Commitment
             </Typography>
           </Box>
-          <Typography variant="body1" paragraph sx={{ 
-            color: theme.palette.text.primary,
-            fontSize: '1.1rem'
-          }}>
+          <Typography
+            variant="body1"
+            sx={{
+              color: theme.palette.text.primary,
+              fontSize: '1.1rem',
+              marginBottom: "16px"
+            }}>
             At Maclienson Healthcare, quality isn't just a certification - it's our culture. We go beyond compliance to implement:
           </Typography>
           <Box component="ul" sx={{ 
@@ -355,11 +358,13 @@ const Certifications = () => {
           }}>
             Need certification documentation?
           </Typography>
-          <Typography variant="body1" paragraph sx={{ 
-            color: theme.palette.text.secondary,
-            mb: 4,
-            fontSize: '1.1rem'
-          }}>
+          <Typography
+            variant="body1"
+            sx={{ 
+              color: theme.palette.text.secondary,
+              mb: 4,
+              fontSize: '1.1rem'
+            }}>
             Our quality assurance team can provide official copies of any certification.
           </Typography>
           <Button 

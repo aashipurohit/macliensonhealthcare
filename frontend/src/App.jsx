@@ -43,7 +43,9 @@ const App = () => {
             <Route path="login" element={<Login/>}/>
             <Route path="register" element={<Register/>}/>
             <Route path="profile" element={<Yprofile/>}/>
+
             <Route path="collections/:collection" element={<ProductsPage/>} />
+            
             <Route path="product/:id" element={<ProductDetails />} />  
             <Route path="checkout" element ={ <Checkout/>} /> 
             <Route path="/order-confirmation" element={<OrderConfirmationPage />} />   

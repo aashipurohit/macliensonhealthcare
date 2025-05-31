@@ -375,11 +375,13 @@ const ContactUs = () => {
           }}>
             Prefer to speak directly?
           </Typography>
-          <Typography variant="body1" paragraph sx={{ 
-            color: theme.palette.text.secondary,
-            mb: 4,
-            fontSize: '1.1rem'
-          }}>
+          <Typography
+            variant="body1"
+            sx={{ 
+              color: theme.palette.text.secondary,
+              mb: 4,
+              fontSize: '1.1rem'
+            }}>
             Call our customer care team at +91 22 1234 5678
           </Typography>
           <Button 
