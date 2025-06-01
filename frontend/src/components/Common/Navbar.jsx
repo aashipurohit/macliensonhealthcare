@@ -41,6 +41,7 @@ const Navbar = () => {
           <img
   src={assets.logo_maclienson_br}
   alt="Maclienson Logo"
+  
   className="h-20 w-auto"
 />
 

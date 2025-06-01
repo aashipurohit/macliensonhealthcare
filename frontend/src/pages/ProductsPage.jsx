@@ -1242,13 +1242,21 @@ const ProductsPage = () => {
   const [priceRange, setPriceRange] = useState([MIN_PRICE, MAX_PRICE]);
   const [sortBy, setSortBy] = useState('newest');
 
+  useEffect(() => {
+    if (mobileOpen) {
+      
+      const firstFocusable = document.querySelector('.MuiDrawer-paper button, .MuiDrawer-paper input');
+      firstFocusable?.focus();
+    }
+  }, [mobileOpen]);
+
  const activeFilterCount = [
     ...(filters.category || []),
     ...(filters.subcategory || []),
     filters.prescriptionRequired !== null ? 1 : 0,
     searchTerm ? 1 : 0,
     priceRange[0] > MIN_PRICE || priceRange[1] < MAX_PRICE ? 1 : 0
-  ].reduce((a, b) => a + b, 0);
+  ].filter(Boolean).length;
 
   useEffect(() => {
     const fetchData = setTimeout(() => {
@@ -1483,8 +1491,13 @@ const ProductsPage = () => {
                 '&:hover': {
                   borderColor: pink[800],
                   backgroundColor: pink[50]
-                }
+                },
+
+                overflow: 'hidden',
+               whiteSpace: 'nowrap',
+               textOverflow: 'ellipsis'
               }}
+              aria-label="Open filters"
             >
               Filters
             </Button>
@@ -1522,7 +1535,12 @@ const ProductsPage = () => {
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
-          ModalProps={{ keepMounted: true }}
+          ModalProps={{
+             keepMounted: true,
+            disableEnforceFocus: false,
+            disableAutoFocus: false,
+             disableRestoreFocus: false
+           }}
           sx={{
             display: { xs: 'block', md: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 280 }
@@ -1536,6 +1554,13 @@ const ProductsPage = () => {
           flexGrow: 1,
           pl: !isMobile ? 2 : 0
         }}>
+          <div
+           id="main-content" 
+             aria-hidden={mobileOpen ? 'true' : 'false'}
+             style={{ pointerEvents: mobileOpen ? 'none' : 'auto' }}
+             >
+
+           </div>
           <Box sx={{ mb: 3 }}>
             {activeFilterCount > 0 && (
               <>
@@ -1663,7 +1688,7 @@ const ProductsPage = () => {
                         component="img"
                         image={product.images?.[0]?.url || '/default-medicine.jpg'}
                         alt={product.images?.[0]?.altText || product.name}
-                        loading="lazy" 
+                        loading={isMobile ? 'lazy' : 'eager'} 
                         sx={{
                           position: 'absolute',
                           top: 0,
@@ -1730,3 +1755,5 @@ const ProductsPage = () => {
 };
 
 export default ProductsPage;
+
+
