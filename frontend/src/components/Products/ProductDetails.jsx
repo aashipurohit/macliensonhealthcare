@@ -256,7 +256,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../../redux/slices/cartSlice';
+//import { addToCart } from '../../redux/slices/cartSlice';
 
 const ProductDetails = () => {
   const { productId } = useParams();
