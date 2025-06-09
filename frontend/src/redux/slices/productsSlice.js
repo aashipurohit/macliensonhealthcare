@@ -165,7 +165,7 @@ extraReducers: (builder) => {
     const index = state.products.findIndex(
         (product) => product._id === updateProduct._id );
        if (index !== -1) {
-        state.products[index] = updatedProduct;
+        state.products[index] = updateProduct;
        }
 
     })

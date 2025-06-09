@@ -15,6 +15,7 @@ export default [
       globals: globals.node,
       sourceType: 'commonjs',
     },
+    
     rules: {
       ...js.configs.recommended.rules,
     },

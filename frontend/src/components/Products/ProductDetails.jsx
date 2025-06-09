@@ -252,14 +252,18 @@
 // };
 
 // export default ProductDetail;
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../../redux/slices/cartSlice';
 
 const ProductDetails = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.auth);
+
   const [activeTab, setActiveTab] = useState('description');
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(5);
@@ -268,11 +272,9 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
-
-const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(1);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [cartError, setCartError] = useState(null);
-  
 
   useEffect(() => {
     const fetchProductData = async () => {
@@ -289,7 +291,7 @@ const [quantity, setQuantity] = useState(1);
         );
         setRelatedProducts(relatedResponse.data);
 
-        // Fetch reviews (you might want to get these from your backend)
+        // Fetch reviews
         setReviews([
           { id: 1, name: 'Sarah Johnson', rating: 5, comment: 'Excellent product! Really helped with my needs.', date: '2025-03-15' },
           { id: 2, name: 'Michael Chen', rating: 4, comment: 'Good quality, would recommend to others.', date: '2025-02-28' },
@@ -319,51 +321,80 @@ const [quantity, setQuantity] = useState(1);
     setRating(5);
   };
 
-   const handleAddToCart = async () => {
-    if (!product) return;
+  // const handleAddToCart = async () => {
+  //   if (!product) return;
 
-    setIsAddingToCart(true);
-    setCartError(null);
-     
-    try {
-      const cartItem = {
-        productId: product._id,
-        name: product.name,
-        image: product.images[0]?.url,
-        price: product.price,
-        quantity: quantity
-      };
+  //   if (quantity > product.countInStock) {
+  //     setCartError(`Only ${product.countInStock} items available`);
+  //     return;
+  //   }
 
-      // Check if user is authenticated
-      const token = localStorage.getItem('userToken');
-      const config = token ? {
-        headers: { Authorization: `Bearer ${token}` }
-      } : {};
-       
-      const endpoint = token 
-        ? `${import.meta.env.VITE_BACKEND_URL}/api/cart`
-        : `${import.meta.env.VITE_BACKEND_URL}/api/cart/guest`;
+  //   setIsAddingToCart(true);
+  //   setCartError(null);
 
-      // For guest users, generate or use existing guestId
-      const guestId = localStorage.getItem('guestId') || crypto.randomUUID();
-      if (!token) {
-        localStorage.setItem('guestId', guestId);
-        cartItem.guestId = guestId;
-      }
+  //   try {
+  //     const cartItem = {
+  //       product: product._id,
+  //       name: product.name,
+  //       image: product.images[0]?.url,
+  //       price: product.price,
+  //       quantity: quantity,
+  //       countInStock: product.countInStock
+  //     };
 
-      const response = await axios.post(endpoint, cartItem, config);
+  //     // Dispatch the addToCart action
+  //     await dispatch(addToCart(cartItem)).unwrap();
+
+  //     // Show success feedback
+  //     alert(`${product.name} added to cart!`);
       
-      // Show success feedback
-      alert(`${product.name} added to cart!`);
-      
-    } catch (err) {
-      setCartError(err.response?.data?.error || 'Failed to add to cart');
-      console.error('Add to cart error:', err);
-    } finally {
-      setIsAddingToCart(false);
-    }
+  //   } catch (err) {
+  //     setCartError(err.message || 'Failed to add to cart');
+  //     console.error('Add to cart error:', err);
+  //   } finally {
+  //     setIsAddingToCart(false);
+  //   }
+  // };
 
-  };
+
+  const handleAddToCart = async () => {
+  if (!product) return;
+
+  if (quantity > product.countInStock) {
+    setCartError(`Only ${product.countInStock} items available`);
+    return;
+  }
+
+  setIsAddingToCart(true);
+  setCartError(null);
+
+  try {
+    const cartData = {
+      productId: product._id,
+      quantity: Number(quantity),
+      ...(userInfo ? { userId: userInfo._id } : { guestId: localStorage.getItem('guestId') || null })
+    };
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/api/cart`,
+      cartData,
+      userInfo ? {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`
+        }
+      } : {}
+    );
+
+    dispatch({ type: 'cart/updateCart', payload: response.data.cart });
+    alert(`${product.name} added to cart!`);
+  } catch (err) {
+    const errorMsg = err.response?.data?.message || 'Failed to add to cart';
+    setCartError(errorMsg);
+    console.error('Add to cart error:', err.response?.data || err);
+  } finally {
+    setIsAddingToCart(false);
+  }
+};
 
 
   if (loading) {

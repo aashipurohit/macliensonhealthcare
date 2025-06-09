@@ -106,8 +106,9 @@ const NewLaunchSection = () => {
 
             {/* Price */}
             <div className="text-3xl font-bold text-gray-900">
-              ₹500
+              ₹69
             </div>
+            <div className=" text-2xl font-semibold text-gray-900"> /sachet </div>
 
             {/* Enhanced Description */}
             <ProductDescription />

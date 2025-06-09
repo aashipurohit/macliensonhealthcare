@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserLayout from "./components/Layout/UserLayout";
 import Home from "./pages/Home";
@@ -23,13 +23,25 @@ import OrderManagement from "./components/Admin/OrderManagement";
 //import ProductDetails from "../components/Products/ProductDetails";
 //import ProtectedRoute from "./components/Common/ProtectedRoute";
 
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import store from "./redux/store";
+import { fetchCart } from "./redux/slices/cartSlice"; // ✅ import this
+
+ const CartInitializer = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [dispatch]);
+
+  return null;
+};
 
 const App = () => {
   return (
       <Provider store={store}>
       <BrowserRouter future={{v7_startTransition: true, v7_relativeSplaPath: true}}>
+         <CartInitializer /> {/* ✅ Dispatch cart fetch at top-level */}
         <Toaster position="top-right" />
         <Routes>
           <Route path="/" element={<UserLayout />}>
