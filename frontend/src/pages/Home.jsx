@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Hero from '../components/Layout/Hero';
 import VisionMissionSection from '../components/Layout/VisionMissionSection';
 import Categories from "../components/Products/Categories";
@@ -10,7 +10,7 @@ import FeaturesSection from "../components/Products/FeaturesSection";
 import ResearchHighlights from "../components/Layout/ResearchHighlights";
 import DigDis from "../components/Layout/DigDis";
 import NewLaunch from "../components/Layout/NewLaunch";
-import { useDispatch , useSelector} from "react-redux";
+
 
 const Home = () => {
   // const dispatch = useDispatch();
@@ -49,6 +49,7 @@ const Home = () => {
      <Categories />
      <NewArrivals />
      <NewLaunch />
+     <DigDis />
 
      {/* Best Seller
      <h2 className="text-3xl text-center font-bold mb-4">Best Seller</h2>
@@ -66,7 +67,7 @@ const Home = () => {
        {/* <FeaturedCollection /> */}
          <VisionMissionSection />
          <ResearchHighlights />
-         <DigDis />
+         
        <FeaturesSection />
       
        
