@@ -1232,7 +1232,7 @@ const ProductsPage = () => {
     prescriptionRequired: null
   },
   allSubcategories = [], 
-  allBrands = [] 
+  //allBrands = [] 
 } = useSelector((state) => state.products);
 
   const isMobile = useMediaQuery('(max-width:900px)');
