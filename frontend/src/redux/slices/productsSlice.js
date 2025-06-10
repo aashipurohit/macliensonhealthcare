@@ -1,6 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+export const fetchNewArrivals = createAsyncThunk(
+  'products/fetchNewArrivals',
+  async () => {
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products/new-arrivals`);
+    return response.data;
+  }
+);
+
 //  Fetch products with filters
 export const fetchProductsByFilters = createAsyncThunk(
   "products/fetchByFilters",
@@ -78,6 +86,7 @@ const productsSlice = createSlice({
     name: "products",
     initialState: {
     products: [],
+    newArrivals: [],
     selectedProduct: null, // Store the details of the single Product
     similarProducts: [],
     loading: false,
@@ -124,6 +133,21 @@ const productsSlice = createSlice({
 
 extraReducers: (builder) => {
     builder
+
+    .addCase(fetchNewArrivals.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(fetchNewArrivals.fulfilled, (state, action) => {
+      state.loading = false;
+      state.newArrivals = action.payload; // Add this to your initialState
+    })
+    .addCase(fetchNewArrivals.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    })
+
+
     // handle fetching products with filter
     .addCase(fetchProductsByFilters.pending, (state) => {
     state.loading = true;

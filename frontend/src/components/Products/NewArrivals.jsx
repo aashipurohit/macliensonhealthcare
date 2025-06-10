@@ -347,6 +347,10 @@ useEffect(() => {
       {/* Product cards */}
       <div
   ref={scrollRef}
+  onMouseDown={handleMouseDown}
+  onMouseMove={handleMouseMove}
+  onMouseUp={handleMouseUpOrLeave}
+  onMouseLeave={handleMouseUpOrLeave}
   className={`container mx-auto overflow-x-auto flex space-x-6 pb-4 snap-x ${
     isDragging ? "cursor-grabbing" : "cursor-grab"
   }`}
@@ -355,6 +359,7 @@ useEffect(() => {
     msOverflowStyle: "none",
   }}
 >
+
   {newArrivals.map((product) => (
     <div
       key={product._id}

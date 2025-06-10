@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { assets } from '../../assets/assets';
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { fetchProductDetails, updateProduct } from '../../redux/slices/productsSlice'; // Adjust path if needed
+
 
 const EditProductPage = () => {
 
@@ -28,7 +31,7 @@ const {
     images: [assets.tabletsrx, assets.tabletsrx],
   });
 
-  const [ uploading, setUploading] = useState(false); // Image Uploading state
+  const [  setUploading] = useState(false); // Image Uploading state
 
   useEffect(() => {
     if (id) {
