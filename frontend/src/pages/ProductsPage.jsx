@@ -1719,7 +1719,7 @@ const ProductsPage = () => {
                           {formatINR(product.price)}
                         </Typography>
                         <Chip
-                          label={product.prescriptionRequired ? 'Rx Only' : 'OTC'}
+                          label={product.prescriptionRequired ? 'Rx Only' : 'Rx'}
                           size="small"
                           sx={{ 
                             backgroundColor: product.prescriptionRequired ? pink[100] : '#e8f5e9',
