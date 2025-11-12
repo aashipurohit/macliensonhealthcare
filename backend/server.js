@@ -2,6 +2,10 @@ const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
 const cors = require("cors");
+const sitemapRoute = require("./routes/sitemapRoute");
+
+
+const morgan = require("morgan"); // For better request logging
 
 const connectDB = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
@@ -45,6 +49,7 @@ app.use("/api", subscribeRoutes);
 app.use("/api/admin/users", adminRoutes);
 app.use("/api/admin/products", productAdminRoutes);
 app.use("/api/admin/orders", adminOrderRoutes);
+app.use("/", sitemapRoute);
 
 
 
@@ -53,3 +58,4 @@ app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 
 });
+

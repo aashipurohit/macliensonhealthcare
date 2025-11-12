@@ -1161,6 +1161,7 @@
 // src/pages/ProductsPage.jsx
 
 import React, { useEffect, useState } from 'react';
+import { Helmet } from "react-helmet-async";  
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchProductsByFilters,
@@ -1468,6 +1469,20 @@ const ProductsPage = () => {
   );
 
   return (
+    <>
+         <Helmet>
+      <title>Buy Medicines & Healthcare Products Online | Maclienson Healthcare</title>
+      <meta
+        name="description"
+        content="Browse genuine medicines, supplements, and healthcare products at Maclienson Healthcare. Trusted pharmaceutical store with quality and care."
+      />
+      <meta
+        name="keywords"
+        content="Maclienson Healthcare, buy medicines online, healthcare, pharma, supplements, pharmacy India, skincare, health products"
+      />
+      <link rel="canonical" href="https://www.macliensonhealthcare.com/products" />
+    </Helmet>
+    
     <Container maxWidth="xl" sx={{ my: 4, backgroundColor: '#fafafa' }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
         <Typography variant="h4" sx={{ fontWeight: 600, color: pink[600] }}>
@@ -1751,6 +1766,7 @@ const ProductsPage = () => {
         </Box>
       </Box>
     </Container>
+    </>
   );
 };
 

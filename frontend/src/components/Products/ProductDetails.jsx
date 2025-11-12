@@ -253,6 +253,7 @@
 
 // export default ProductDetail;
 import React, { useState, useEffect } from 'react';
+import { Helmet } from "react-helmet-async";
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -411,6 +412,65 @@ const ProductDetails = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 bg-rose-50">
+      {product && (
+  <Helmet>
+    <title>{`${product.name} | Maclienson Healthcare`}</title>
+    <meta 
+      name="description" 
+      content={product.shortDescription || product.description?.slice(0, 150) || "Buy high-quality pharmaceutical and healthcare products at Maclienson Healthcare."} 
+    />
+    <meta 
+      name="keywords" 
+      content={`${product.category}, ${product.subcategory || ""}, ${product.name}, Maclienson Healthcare`} 
+    />
+    <link rel="canonical" href={window.location.href} />
+
+    {/* Open Graph for social sharing */}
+    <meta property="og:type" content="product" />
+    <meta property="og:title" content={`${product.name} | Maclienson Healthcare`} />
+    <meta property="og:description" content={product.shortDescription || product.description?.slice(0, 150)} />
+    <meta property="og:image" content={product.images?.[0]?.url || '/placeholder-product.jpg'} />
+    <meta property="og:url" content={window.location.href} />
+    <meta property="og:site_name" content="Maclienson Healthcare" />
+
+    {/* Twitter Card */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${product.name} | Maclienson Healthcare`} />
+    <meta name="twitter:description" content={product.shortDescription || product.description?.slice(0, 150)} />
+    <meta name="twitter:image" content={product.images?.[0]?.url || '/placeholder-product.jpg'} />
+
+    {/* Schema.org JSON-LD for Google Rich Snippets */}
+    <script type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": product.name,
+        "image": product.images?.map(img => img.url) || [],
+        "description": product.description,
+        "sku": product.sku || product._id,
+        "brand": {
+          "@type": "Brand",
+          "name": "Maclienson Healthcare"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": product.rating || 4.5,
+          "reviewCount": product.numReviews || reviews.length || 1
+        },
+        "offers": {
+          "@type": "Offer",
+          "url": window.location.href,
+          "priceCurrency": "INR",
+          "price": product.price,
+          "availability": product.countInStock > 0
+            ? "https://schema.org/InStock"
+            : "https://schema.org/OutOfStock"
+        }
+      })}
+    </script>
+  </Helmet>
+)}
+
       <button 
         onClick={() => navigate(-1)}
         className="flex items-center text-rose-600 hover:text-rose-800 mb-6"
@@ -699,53 +759,82 @@ const ProductDetails = () => {
       </div>
 
       {/* Related Products */}
-      {relatedProducts.length > 0 && (
-        <div className="mb-8">
-          <h3 className="text-xl font-semibold mb-6">You May Also Like</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {relatedProducts.map((relatedProduct) => (
-              <div 
-                key={relatedProduct._id} 
-                className="bg-rose-100 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
-                onClick={() => navigate(`/product/${relatedProduct._id}`)}
-              >
-                <div className="relative pb-[100%]">
-                  <img
-                    src={relatedProduct.images[0]?.url || '/placeholder-product.jpg'}
-                    alt={relatedProduct.images[0]?.altText || relatedProduct.name}
-                    className="absolute h-full w-full object-contain p-4"
-                    onError={(e) => {
-                      e.target.src = '/placeholder-product.jpg';
-                    }}
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-1 line-clamp-2">
-                    {relatedProduct.name}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-2">
-                    {relatedProduct.subcategory || relatedProduct.category}
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg font-bold text-rose-600">
-                      ₹{relatedProduct.price.toLocaleString()}
-                    </span>
-                    {relatedProduct.countInStock > 0 ? (
-                      <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
-                        In Stock
-                      </span>
-                    ) : (
-                      <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">
-                        Out of Stock
-                      </span>
-                    )}
-                  </div>
-                </div>
+  {relatedProducts.length > 0 && (
+  <div className="mb-12">
+    <h3 className="text-2xl font-bold text-gray-800 mb-6 pb-2 border-b border-gray-200">
+      You May Also Like
+    </h3>
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      {relatedProducts.map((relatedProduct) => (
+        <div 
+          key={relatedProduct._id}
+          className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden border border-gray-100 cursor-pointer group"
+          onClick={() => {
+            navigate(`/product/${relatedProduct._id}`);
+            window.scrollTo(0, 0); // Scroll to top when navigating
+          }}
+        >
+          {/* Product Image */}
+          <div className="relative pt-[100%] bg-gray-50">
+            <img
+              src={relatedProduct.images[0]?.url || '/placeholder-product.jpg'}
+              alt={relatedProduct.name}
+              className="absolute top-0 left-0 w-full h-full object-contain p-4 transition-transform duration-300 group-hover:scale-105"
+              onError={(e) => {
+                e.target.src = '/placeholder-product.jpg';
+              }}
+            />
+            {relatedProduct.bestseller && (
+              <span className="absolute top-2 left-2 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded">
+                Bestseller
+              </span>
+            )}
+          </div>
+
+          {/* Product Info */}
+          <div className="p-4">
+            <h4 className="font-medium text-gray-900 mb-1 line-clamp-2">
+              {relatedProduct.name}
+            </h4>
+            <div className="flex items-center mb-2">
+              <div className="flex text-yellow-400 mr-1">
+                {[...Array(5)].map((_, i) => (
+                  <svg 
+                    key={i} 
+                    className="w-4 h-4" 
+                    fill={i < (relatedProduct.rating || 0) ? "currentColor" : "none"} 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                  </svg>
+                ))}
               </div>
-            ))}
+              <span className="text-gray-500 text-xs">
+                ({relatedProduct.numReviews || 0})
+              </span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-lg font-bold text-rose-600">
+                ₹{relatedProduct.price.toLocaleString()}
+              </span>
+              {relatedProduct.countInStock > 0 ? (
+                <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                  In Stock
+                </span>
+              ) : (
+                <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">
+                  Out of Stock
+                </span>
+              )}
+            </div>
           </div>
         </div>
-      )}
+      ))}
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

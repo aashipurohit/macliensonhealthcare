@@ -156,11 +156,181 @@
 
 // export default Login;
 
+// import React, { useState } from 'react';
+// import { Link, useNavigate, useLocation } from 'react-router-dom';
+// import { useDispatch } from 'react-redux';
+// import { Toaster, toast } from 'sonner';
+// import { loginUser } from '../redux/slices/authSlice';
+// import { assets } from '../assets/assets';
+
+// const Login = () => {
+//   const dispatch = useDispatch();
+//   const navigate = useNavigate();
+//   const location = useLocation();
+
+//   const [formData, setFormData] = useState({
+//     email: '',
+//     password: ''
+//   });
+  
+//   const [errors, setErrors] = useState({});
+//   const [isSubmitting, setIsSubmitting] = useState(false);
+
+//   const redirect = new URLSearchParams(location.search).get('redirect') || '/';
+//   const isCheckoutRedirect = redirect.includes('checkout');
+
+//   const validateForm = () => {
+//     const newErrors = {};
+//     const { email, password } = formData;
+
+//     if (!email.trim()) {
+//       newErrors.email = 'Email is required';
+//     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+//       newErrors.email = 'Please enter a valid email';
+//     }
+
+//     if (!password) {
+//       newErrors.password = 'Password is required';
+//     } else if (password.length < 6) {
+//       newErrors.password = 'Password must be at least 6 characters';
+//     }
+
+//     setErrors(newErrors);
+//     return Object.keys(newErrors).length === 0;
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     if (!validateForm()) return;
+
+//     setIsSubmitting(true);
+    
+//     try {
+//       await dispatch(loginUser(formData)).unwrap();
+//       toast.success('Login successful');
+//       navigate(isCheckoutRedirect ? '/checkout' : redirect);
+//     } catch (error) {
+//       toast.error(error?.message || 'Login failed. Please try again.');
+//     } finally {
+//       setIsSubmitting(false);
+//     }
+//   };
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData(prev => ({ ...prev, [name]: value }));
+//   };
+
+//   return (
+//     <div className="flex min-h-screen bg-gray-50">
+//       <Toaster position="top-center" richColors />
+      
+//       {/* Left Column - Form */}
+//       <div className="w-full md:w-1/2 flex items-center justify-center p-6">
+//         <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-sm border border-gray-200">
+//           <div className="text-center mb-8">
+//             <img 
+//               src={assets.logo_maclienson_br} 
+//               alt="Company Logo" 
+//               className="h-12 mx-auto mb-4"
+//             />
+//             <h1 className="text-2xl font-bold text-gray-900">Welcome back</h1>
+//             <p className="text-gray-600 mt-2">
+//               Enter your credentials to access your account
+//             </p>
+//           </div>
+
+//           <form onSubmit={handleSubmit} noValidate>
+//             <div className="mb-4">
+//               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+//                 Email address
+//               </label>
+//               <input
+//                 type="email"
+//                 id="email"
+//                 name="email"
+//                 value={formData.email}
+//                 onChange={handleChange}
+//                 autoComplete="email"
+//                 className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+//                   errors.email ? 'border-red-500' : 'border-gray-300'
+//                 }`}
+//               />
+//               {errors.email && (
+//                 <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+//               )}
+//             </div>
+
+//             <div className="mb-6">
+//               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+//                 Password
+//               </label>
+//               <input
+//                 type="password"
+//                 id="password"
+//                 name="password"
+//                 value={formData.password}
+//                 onChange={handleChange}
+//                 autoComplete="current-password"
+//                 className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+//                   errors.password ? 'border-red-500' : 'border-gray-300'
+//                 }`}
+//               />
+//               {errors.password && (
+//                 <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+//               )}
+//             </div>
+
+//             <button
+//               type="submit"
+//               disabled={isSubmitting}
+//               className={`w-full bg-rose-600 text-white py-2 px-4 rounded-md hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 ${
+//                 isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+//               }`}
+//             >
+//               {isSubmitting ? 'Signing in...' : 'Sign in'}
+//             </button>
+//           </form>
+
+//           <div className="mt-6 text-center text-sm text-gray-600">
+//             Don't have an account?{' '}
+//             <Link
+//               to={`/register?redirect=${encodeURIComponent(redirect)}`}
+//               className="font-medium text-rose-600 hover:text-rose-500"
+//             >
+//               Create one
+//             </Link>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Right Column - Image */}
+//       <div className="hidden md:block w-1/2 bg-gray-50
+//       ">
+//         <div className="h-full flex items-center justify-center p-12">
+//           <img
+//             src={assets.login_2}
+//             alt="Login illustration"
+//             className="max-w-full h-auto object-contain"
+//             onError={(e) => {
+//               e.target.style.display = 'none';
+//             }}
+//           />
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Login;
+
+
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Toaster, toast } from 'sonner';
 import { loginUser } from '../redux/slices/authSlice';
+import { mergeCart, fetchCart } from '../redux/slices/cartSlice';
 import { assets } from '../assets/assets';
 
 const Login = () => {
@@ -175,6 +345,7 @@ const Login = () => {
   
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isMergingCart, setIsMergingCart] = useState(false);
 
   const redirect = new URLSearchParams(location.search).get('redirect') || '/';
   const isCheckoutRedirect = redirect.includes('checkout');
@@ -199,27 +370,88 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!validateForm()) return;
 
-    setIsSubmitting(true);
+  setIsSubmitting(true);
+  
+  try {
+    // 1. Login the user
+    const loginResult = await dispatch(loginUser(formData)).unwrap();
     
-    try {
-      await dispatch(loginUser(formData)).unwrap();
-      toast.success('Login successful');
-      navigate(isCheckoutRedirect ? '/checkout' : redirect);
-    } catch (error) {
-      toast.error(error?.message || 'Login failed. Please try again.');
-    } finally {
-      setIsSubmitting(false);
+    // Debug: Verify login results
+    console.log('Login successful, user ID:', loginResult._id);
+    
+    // 2. Check for guest cart
+    const guestId = localStorage.getItem('guestId');
+    console.log('Guest cart ID:', guestId); // Should show "guest_1751550822990"
+    
+    if (guestId) {
+      try {
+        setIsMergingCart(true);
+        
+        // Debug: Verify pre-merge state
+        console.log('Pre-merge cart contents:', {
+          guestCart: {
+            _id: "68668b8a3f6c7c1ea1ca83c2",
+            products: [{ 
+              productId: "6849bc75e74d3efed96e7268", 
+              name: "Flavona Forte Syrup",
+              quantity: 1
+            }]
+          },
+          userToken: loginResult.token
+        });
+
+        // 3. Execute merge
+        const mergeResult = await dispatch(mergeCart()).unwrap();
+        console.log('Merge result:', mergeResult);
+        
+        if (mergeResult.cart) {
+          // 4. Verify the product was merged
+          const hasFlavonaSyrup = mergeResult.cart.products.some(
+            p => p.productId === "6849bc75e74d3efed96e7268"
+          );
+          console.log('Product merged:', hasFlavonaSyrup);
+          
+          await dispatch(fetchCart());
+          localStorage.removeItem('guestId');
+          
+          toast.success('Flavona Forte Syrup added to your account');
+        }
+      } catch (mergeError) {
+        console.error('Merge failed details:', {
+          error: mergeError,
+          guestId,
+          userId: loginResult._id
+        });
+        toast.warning('Could not merge your Flavona Forte Syrup');
+      } finally {
+        setIsMergingCart(false);
+      }
     }
-  };
+
+    navigate(isCheckoutRedirect ? '/checkout' : redirect);
+    
+  } catch (error) {
+    console.error('Login error:', {
+      input: formData,
+      error: error.response?.data || error.message
+    });
+    toast.error(error?.response?.data?.message || 'Login failed');
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
+
+  const isLoading = isSubmitting || isMergingCart;
 
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -283,12 +515,18 @@ const Login = () => {
 
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isLoading}
               className={`w-full bg-rose-600 text-white py-2 px-4 rounded-md hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 ${
-                isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                isLoading ? 'opacity-70 cursor-not-allowed' : ''
               }`}
             >
-              {isSubmitting ? 'Signing in...' : 'Sign in'}
+              {isLoading ? (
+                <>
+                  {isMergingCart ? 'Merging your cart...' : 'Signing in...'}
+                </>
+              ) : (
+                'Sign in'
+              )}
             </button>
           </form>
 
@@ -305,8 +543,7 @@ const Login = () => {
       </div>
 
       {/* Right Column - Image */}
-      <div className="hidden md:block w-1/2 bg-gray-50
-      ">
+      <div className="hidden md:block w-1/2 bg-gray-50">
         <div className="h-full flex items-center justify-center p-12">
           <img
             src={assets.login_2}
@@ -323,6 +560,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-

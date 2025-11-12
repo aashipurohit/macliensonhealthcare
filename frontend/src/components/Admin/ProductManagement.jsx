@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchAdminProducts } from '../../redux/slices/adminSlice';  
+import { fetchAdminProducts , deleteProduct } from '../../redux/slices/adminProductSlice';
+
+
 
 
 const ProductManagement = () => {
     const dispatch = useDispatch();
-    const { products, loading, error } = useSelector(
+    const { products = [], loading, error } = useSelector(
     (state) => state.adminProducts
 );
     
@@ -40,6 +42,15 @@ const handleDelete = (id) => {
   return (
     <div className="max-w-7xl mx-auto p-6" >
         <h2 className="text-2xl font-bold mb-6" >Product Management</h2>
+
+    
+<Link 
+  to="/admin/products/new"
+  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 mb-4"
+>
+  Add New Product
+</Link>
+
         <div className="overflow-x-auto shadow-md sm:rounded-lg" >
             <table className="min-w-full text-left text-gray-500" >
                 <thead className="bg-gray-100 text-xs uppercase text-gray-700" >
@@ -61,7 +72,7 @@ const handleDelete = (id) => {
                               {product.name}
                             </td>
                             <td className="p-4" >₹{product.price}</td>
-                            <td className="p-4" >₹{product.sku}</td>
+                            <td className="p-4" >{product.sku}</td>
                             <td className="p-4" >
                                 <Link to={`/admin/products/${product._id}/edit`}
                                 className="bg-yellow-500 text-white px-2 py-1 rounded mr-2 hover:bg-yellow-600">

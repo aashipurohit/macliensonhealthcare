@@ -14,6 +14,7 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+
   discountPrice: {
     type: Number,
   },
@@ -25,10 +26,10 @@ const productSchema = new mongoose.Schema({
   sku: {
     type: String,
     unique: true,
-    required: false,
+    sparse: true,
   },
   category: {
-    type: String,
+    type: [String],
     required: true,
   },
   brand: {
@@ -84,9 +85,34 @@ const productSchema = new mongoose.Schema({
    metaKeywords: {
     type: String,
    },
+   quantity: {
+    type: String,
+    required: true,
+   },
+
+
+
+   subcategory: {
+    type: String,
+    required: false
+  },
+  specifications: {
+    type: Map,
+    of: String
+  },
+  prescriptionRequired: {
+    type: Boolean,
+    default: false
+  },
+  bestseller: {
+    type: Boolean,
+    default: false
+  },
    
 },
 {timestamps: true}
 );
+
+productSchema.index({ isPublished: 1, createdAt: -1 });
 
 module.exports = mongoose.model("Product", productSchema);

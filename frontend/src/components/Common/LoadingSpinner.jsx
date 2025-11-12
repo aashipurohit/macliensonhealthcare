@@ -8,4 +8,4 @@ const LoadingSpinner = () => {
   );
 };
 
-export default LoadingSpinner; // This is the default export
+export default LoadingSpinner; 

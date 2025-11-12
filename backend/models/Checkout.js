@@ -11,7 +11,7 @@ const checkoutItemSchema = new mongoose.Schema({
         required: true,
     },
     image: {
-        type: String, // will not cause any problem as in Product.js each item can have multiple images but in checkout only 1 image will be displayed 
+        type: String, 
         required: true,
     },
     price: {

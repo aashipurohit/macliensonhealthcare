@@ -4,6 +4,32 @@ const { protect, admin } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
+
+// @route GET /api/products/new-arrivals
+// @desc Retrieve latest products with featured items first
+// @access Public
+router.get("/new-arrivals", async (req, res) => {
+  try {
+    // First get new arrivals sorted by date
+    let newArrivals = await Product.find({ isPublished: true })
+      .sort({ isFeatured: -1, createdAt: -1 }) // or { date: -1 } if you're using a custom date field
+      .limit(8)
+      .select('name description price images countInStock category isFeatured');
+    
+    // Then sort to put featured products first while maintaining date order
+    // newArrivals.sort((a, b) => {
+    //   if (a.isFeatured && !b.isFeatured) return -1;
+    //   if (!a.isFeatured && b.isFeatured) return 1;
+    //   return 0; // maintain original order if both have same featured status
+    // });
+
+    res.json(newArrivals);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+});
+
 // @route   POST /api/products
 // @desc    Create a product
 // @access  Private/Admin
@@ -71,73 +97,175 @@ router.post("/", protect, admin, async (req, res) => {
   }
 });
 
+// // @route   GET /api/products
+// // @desc    Get all products (with optional filters)
+// // @access  Public
+// router.get("/", async (req, res) => {
+//   try {
+//     const { 
+//       collections, 
+//       minPrice, 
+//       maxPrice, 
+//       sortBy, 
+//       search, 
+//       category, 
+//       brand, 
+//       limit 
+//     } = req.query;
+
+//     let query = { isPublished: true };
+
+//     // Price Filtering (Fixed)
+//     if (minPrice || maxPrice) {
+//       query.price = {};
+//       if (minPrice) query.price.$gte = parseFloat(minPrice);
+//       if (maxPrice) query.price.$lte = parseFloat(maxPrice);
+//     }
+
+//     // Other filters (unchanged)
+//     if (collections && collections.toLowerCase() !== "all") {
+//       query.collections = collections;
+//     }
+    
+//     if (category && category.toLowerCase() !== "all") {
+//       query.category = { $regex: new RegExp(category, "i") };
+//     }
+
+//     if (brand) {
+//       query.brand = { $in: brand.split(",") };
+//     }
+
+//     if (search) {
+//       query.$or = [
+//         { name: { $regex: search, $options: "i" } },
+//         { description: { $regex: search, $options: "i" } },
+//       ];
+//     }
+
+//     // Sorting
+//     let sort = {};
+//     if (sortBy) {
+//       switch (sortBy) {
+//         case "priceAsc": sort = { price: 1 }; break;
+//         case "priceDesc": sort = { price: -1 }; break;
+//         case "popularity": sort = { rating: -1 }; break;
+//       }
+//     }
+
+//     // Execute query
+//     let productsQuery = Product.find(query).sort(sort);
+//     if (limit && Number(limit) > 0) {
+//       productsQuery = productsQuery.limit(Number(limit));
+//     }
+
+//     const products = await productsQuery.exec();
+//     res.json(products);
+
+//   } catch (error) {
+//     console.error("Error fetching products:", error);
+//     res.status(500).json({ 
+//       message: "Server Error",
+//       error: error.message 
+//     });
+//   }
+// });
+
+
+
+
 // @route   GET /api/products
-// @desc    Get all products (with optional filters)
+// @desc    Get all products (with advanced filtering)
 // @access  Public
 router.get("/", async (req, res) => {
   try {
     const { 
-      collections, 
+      category,        // comma-separated string (e.g. "Women,Sports Nutrition")
+      subcategory,     // comma-separated string
+      prescription,    // "true" or "false"
       minPrice, 
-      maxPrice, 
-      sortBy, 
-      search, 
-      category, 
-      brand, 
-      limit 
+      maxPrice,
+      sortBy,          // "priceAsc", "priceDesc", "newest", "rating"
+      limit,
+      search
     } = req.query;
 
     let query = { isPublished: true };
 
-    // Price Filtering (Fixed)
+    // Category filter (OR logic)
+    if (category) {
+      query.category = { $in: category.split(',') }; // Changed from $regex to $in
+    }
+
+    // Subcategory filter (OR logic)
+    if (subcategory) {
+      query.subcategory = { $in: subcategory.split(',') };
+    }
+
+    // Prescription filter
+    if (prescription !== undefined) {
+      query.prescriptionRequired = prescription === 'true';
+    }
+
+    // Price range filter
     if (minPrice || maxPrice) {
       query.price = {};
-      if (minPrice) query.price.$gte = parseFloat(minPrice);
-      if (maxPrice) query.price.$lte = parseFloat(maxPrice);
+      if (minPrice) query.price.$gte = Number(minPrice);
+      if (maxPrice) query.price.$lte = Number(maxPrice);
     }
 
-    // Other filters (unchanged)
-    if (collections && collections.toLowerCase() !== "all") {
-      query.collections = collections;
-    }
-    
-    if (category && category.toLowerCase() !== "all") {
-      query.category = { $regex: new RegExp(category, "i") };
-    }
-
-    if (brand) {
-      query.brand = { $in: brand.split(",") };
-    }
-
+    // Search functionality
     if (search) {
       query.$or = [
-        { name: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } },
+        { name: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } },
+        { category: { $regex: search, $options: 'i' } }
       ];
     }
 
-    // Sorting
+    // Enhanced Sorting
     let sort = {};
-    if (sortBy) {
-      switch (sortBy) {
-        case "priceAsc": sort = { price: 1 }; break;
-        case "priceDesc": sort = { price: -1 }; break;
-        case "popularity": sort = { rating: -1 }; break;
-      }
+    switch (sortBy) {
+      case 'priceAsc': sort = { price: 1 }; break;
+      case 'priceDesc': sort = { price: -1 }; break;
+      case 'newest': sort = { createdAt: -1 }; break;
+      case 'rating': sort = { rating: -1 }; break;
+      case 'popularity': sort = { rating: -1 }; break; // Alias for rating
+      default: sort = { createdAt: -1 }; // Default to newest first
     }
 
     // Execute query
     let productsQuery = Product.find(query).sort(sort);
-    if (limit && Number(limit) > 0) {
-      productsQuery = productsQuery.limit(Number(limit));
-    }
+    if (limit) productsQuery = productsQuery.limit(Number(limit));
 
     const products = await productsQuery.exec();
-    res.json(products);
+    
+    // Get filter metadata for UI
+    const categories = await Product.distinct('category', { isPublished: true });
+    const subcategories = await Product.distinct('subcategory', { isPublished: true });
+    const priceRange = await Product.aggregate([
+      { $match: { isPublished: true } },
+      { $group: { 
+          _id: null, 
+          min: { $min: "$price" }, 
+          max: { $max: "$price" } 
+      }}
+    ]);
+
+    res.json({
+      success: true,
+      products,
+      metadata: {
+        categories,
+        subcategories,
+        minPrice: priceRange[0]?.min || 0,
+        maxPrice: priceRange[0]?.max || 1000
+      }
+    });
 
   } catch (error) {
     console.error("Error fetching products:", error);
     res.status(500).json({ 
+      success: false,
       message: "Server Error",
       error: error.message 
     });
@@ -228,19 +356,36 @@ try {
 
 });
 
+// // @route GET /api/products/new-arrivals
+// // @desc Retrieve latest 8 products - Creation date
+// // @access Public
+// router.get("/new-arrivals", async (req, res) => {
+//   try {
+//     //Fetch latest 8 products 
+//     const newArrivals = await Product.find().sort({createdAt: -1}).limit(8);
+//     res.json(newArrivals);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Server Error");
+//   }
+// });
+
 // @route GET /api/products/new-arrivals
-// @desc Retrieve latest 8 products - Creation date
+// @desc Retrieve latest 8 products by date
 // @access Public
 router.get("/new-arrivals", async (req, res) => {
   try {
-    //Fetch latest 8 products 
-    const newArrivals = await Product.find().sort({createdAt: -1}).limit(8);
+    const newArrivals = await Product.find({ isPublished: true })
+      .sort({ createdAt: -1 }) // Sort by your custom date field (newest first)
+      .limit(8)
+      .select('name description price images countInStock category'); // Only send needed fields
     res.json(newArrivals);
   } catch (error) {
     console.error(error);
     res.status(500).send("Server Error");
   }
 });
+
 
 
 // @route GET /api/products/:id
@@ -259,6 +404,25 @@ router.get("/:id", async (req, res) => {
     res.status(500).send("Server Error");
 }
 
+});
+
+
+// Add to productRoutes.js
+router.patch('/:id/specifications', protect, admin, async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    
+    product.specifications = req.body.specifications;
+    await product.save();
+    
+    res.json(product);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
 });
 
 

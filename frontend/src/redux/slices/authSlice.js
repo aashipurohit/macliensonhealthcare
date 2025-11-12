@@ -1,3 +1,4 @@
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -21,26 +22,38 @@ const initialState = {
 };
 
 // Async Thunk for User Login
+// Async Thunk for User Login
 export const loginUser = createAsyncThunk(
-    "auth/loginUser",
-    async (userData, { rejectWithValue }) => {
+  "auth/loginUser",
+  async (userData, { rejectWithValue }) => {
     try {
-    const response = await axios.post(
-    `${import.meta.env.VITE_BACKEND_URL}/api/users/login`,
-    userData
-    );
-    console.log(response); // Check if the response is coming back as expected
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/login`,
+        userData
+      );
 
-    localStorage.setItem("userInfo", JSON.stringify(response.data.user));
-    localStorage.setItem("userToken", response.data.token);
-    
-    return response.data.user; // Return the user object from the response
+      console.log(response); // Check if the response is coming back as expected
+
+      // ✅ Combine user info and token into one object
+      const fullUserInfo = {
+        ...response.data.user,
+        token: response.data.token,
+      };
+
+      // ✅ Store the combined object in localStorage
+      localStorage.setItem("userInfo", JSON.stringify(fullUserInfo));
+
+      // (Optional) still keep token separately if other parts use it
+      localStorage.setItem("userToken", response.data.token);
+
+      // ✅ Return the full object (so Redux gets user + token)
+      return fullUserInfo;
     } catch (error) {
-        return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response?.data || error.message);
     }
-    
-    }
+  }
 );
+
 
 // Async Thunk for User Registration
 export const registerUser = createAsyncThunk(
@@ -93,7 +106,7 @@ const authSlice = createSlice({
         })
         .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.message;
+        state.error = action.payload.message || "Login Failed";
         })
         .addCase(registerUser.pending, (state) => {
             state.loading = true;
@@ -105,7 +118,7 @@ const authSlice = createSlice({
             })
             .addCase(registerUser.rejected, (state, action) => {
             state.loading = false;
-            state.error = action.payload.message;
+            state.error = action.payload.message || "Registeration Failed";
             });
 
         }

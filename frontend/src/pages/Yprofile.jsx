@@ -3,7 +3,7 @@ import MyOrdersPage from "./MyOrdersPage";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/slices/authSlice";
-import cartReducer , { clearCart } from "../redux/slices/cartSlice";
+import  { clearCart } from "../redux/slices/cartSlice";
 
 const Yprofile = () => {
   const { user } = useSelector((state) => state.auth);

@@ -110,6 +110,27 @@ export const fetchAllOrders = createAsyncThunk(
     }
 );
 
+// Delete a product (admin only)
+export const deleteProduct = createAsyncThunk(
+  "admin/deleteProduct",
+  async (id, { rejectWithValue }) => {
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/products/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
+        }
+      );
+      return id; // return deleted product ID
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Delete failed");
+    }
+  }
+);
+
+
 
 // const initialState = {
 //   users: [],
@@ -210,7 +231,20 @@ const adminSlice = createSlice({
             .addCase(fetchAllOrders.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload.message;
-            });
+            })
+            // Delete Product
+.addCase(deleteProduct.pending, (state) => {
+  state.loading = true;
+})
+.addCase(deleteProduct.fulfilled, (state, action) => {
+  state.loading = false;
+  state.products = state.products.filter((p) => p._id !== action.payload);
+})
+.addCase(deleteProduct.rejected, (state, action) => {
+  state.loading = false;
+  state.error = action.payload;
+});
+;
     },
 });
 
