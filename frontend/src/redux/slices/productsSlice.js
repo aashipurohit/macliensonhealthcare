@@ -153,10 +153,28 @@ extraReducers: (builder) => {
     state.loading = true;
     state.error = null;
     })
-    .addCase(fetchProductsByFilters.fulfilled, (state, action) => {
-    state.loading = false;
-    state.products = Array.isArray(action.payload) ? action.payload : [];
-    })
+    // In productsSlice.js - Update the fetchProductsByFilters fulfilled case
+.addCase(fetchProductsByFilters.fulfilled, (state, action) => {
+  state.loading = false;
+  
+  // Handle both array and object response formats
+  if (Array.isArray(action.payload)) {
+    state.products = action.payload;
+  } else if (action.payload.products && Array.isArray(action.payload.products)) {
+    // Handle { success: true, products: [], metadata: {} } format
+    state.products = action.payload.products;
+    
+    // Also update metadata if available
+    if (action.payload.metadata) {
+      state.allSubcategories = action.payload.metadata.subcategories || [];
+      // Store other metadata as needed
+    }
+  } else {
+    state.products = [];
+  }
+  
+  state.error = null;
+})
     .addCase(fetchProductsByFilters.rejected, (state, action) => {
         state.loading = false;
         state.error - action.error.message;
@@ -208,7 +226,7 @@ extraReducers: (builder) => {
     })
     .addCase(fetchSimilarProducts.rejected, (state, action) => {
         state.loading = false;
-        state.error - action.error.message;
+        state.error = action.error.message;
     });
 
     },
