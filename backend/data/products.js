@@ -17,7 +17,7 @@ const products = [
     collections: "Prenatal",
     // subcategory: "Nutritional Supplement",
      prescriptionRequired:"false",
-     bestseller: "True",
+     bestseller: true,
     images: [
       {
         url: "https://res.cloudinary.com/dtk66nmp1/image/upload/w_300,q_60,f_auto/v1747383647/macnurish_p_nv0j9l.png",
@@ -32,6 +32,7 @@ const products = [
     date: "2025-06-10",
     bestseller: true,
     quantity:"/Sachet",
+    user: "6914cc85668bb5d8634cfbe3"
   },
   {
     name: "Nurturmac",
@@ -60,6 +61,7 @@ const products = [
     bestseller: true,
     quantity:"/Strip",
     prescriptionRequired: "false",
+    user: "6914cc85668bb5d8634cfbe3"
     
   },
   {
@@ -89,6 +91,7 @@ const products = [
     bestseller: true,
     quantity:"/Strip",
     prescriptionRequired:"false",
+    user: "6914cc85668bb5d8634cfbe3"
   },
   {
     name: "Flavona Forte Syrup",
@@ -117,6 +120,68 @@ const products = [
     bestseller: true,
     quantity:"250 ml",
     prescriptionRequired:"false",
+    user: "6914cc85668bb5d8634cfbe3"
+  },
+  {
+    name: "URIblend",
+    description: `URIblend Syrup is a nutraceutical for urinary tract health and kidney stone prevention. 
+Cranberry Extract, D-Mannose & Potassium Magnesium Citrate Syrup. 
+Sugar-free, Cranberry flavour. 
+Suggested use: 2 teaspoonful in a glass of water, twice or thrice a day, or as prescribed by physician. 
+Not for medicinal use. Limited shelf life. Mfg. Lic No: 1222BB0000374, Batch No: G0HL-4842, Mfg. Date: OCT-2025, Exp. Date: MAR-2027. 
+Marketed by Maclienson Healthcare Pvt. Ltd., Ratlam, MP.`,
+    price: 180,
+    countInStock: 100,
+    sku: "URIBLEND-005",
+    category: ["Health"],
+    subcategory: "Nutraceutical",
+    brand: "Macliensonhealthcare",
+    collections: "Ayurvedic Care",
+    images: [
+      {
+        url: "https://res.cloudinary.com/dtk66nmp1/image/upload/v1762970352/uriblend_pzhd5d.jpg",
+        altText: "URIblend Syrup",
+      },
+    ],
+    isFeatured: true,
+    isPublished: true,
+    rating: 4.6,
+    numReviews: 10,
+    tags: ["urinary", "kidney", "sugar-free", "cranberry"],
+    quantity: "200ml",
+    prescriptionRequired: false,
+    bestseller: true,
+    user: "6914cc85668bb5d8634cfbe3"
+    
+  },
+  {
+    name: "Newtriment",
+    description: `Newtriment Syrup is a multivitamin, multimineral & L-Lysine syrup designed to support growth, appetite, and overall well-being. 
+Contains L-Lysine (promotes healthy growth & calcium absorption), multivitamins (boost energy & immunity), and multiminerals (support bones, nerves & muscles). 
+Indications: Supports growth & appetite in children, helps recovery during illness or weakness, corrects vitamin & mineral deficiencies, boosts immunity. Sugar-free, fruit flavour. 150ml.`,
+    price: 250, // you can adjust
+    countInStock: 80,
+    sku: "NEWTRIMENT-006",
+    category: ["Health"],
+    subcategory: "Nutritional Supplement",
+    brand: "Macliensonhealthcare",
+    collections: "Ayurvedic Care",
+    images: [
+      {
+        url: "https://res.cloudinary.com/dtk66nmp1/image/upload/v1762970352/newtriment_gzmses.jpg",
+        altText: "Newtriment Syrup",
+      },
+    ],
+    isFeatured: true,
+    isPublished: true,
+    rating: 4.7,
+    numReviews: 8,
+    tags: ["multivitamin", "lysine", "growth", "immunity", "children"],
+    quantity: "150ml",
+    prescriptionRequired: false,
+    bestseller: true,
+    user: "6914cc85668bb5d8634cfbe3"
+    
   },
   // Repeating tabletsrx with unique SKUs and Cloudinary URL
   ...Array.from({ length: 4 }, (_, i) => ({
@@ -146,6 +211,7 @@ const products = [
     bestseller: true,
     quantity:"/Strip",
     prescriptionRequired:"false",
+    user: "6914cc85668bb5d8634cfbe3"
   })),
 ];
 
