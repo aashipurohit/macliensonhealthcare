@@ -151,7 +151,7 @@ const ResearchHighlights = () => {
 },
    {
   id: 2,
-  image: assets.rh_a4,
+  image: assets.rh_a3,
   title: 'Is PCOS the Same as PCOD? Understanding the Key Differences',
   description: 'While often confused, PCOS and PCOD differ in severity, hormonal impact, and long-term health implications. Learn how to distinguish these conditions.',
   fullContent: (
@@ -289,7 +289,7 @@ const ResearchHighlights = () => {
 },
     {
   id: 3,
-  image: assets.rh_a3,
+  image: assets.rh_a4,
   title: 'Understanding Oligohydramnios: Causes, Risks & Management',
   description: 'Comprehensive guide to low amniotic fluid levels - diagnosis, clinical implications, and evidence-based management strategies for optimal pregnancy outcomes.',
   fullContent: (

@@ -2,29 +2,30 @@ import logo_maclienson from './logo_maclienson.png';
 // import crosin from './crosin.png';
 // import ecapsule from './ecapsule.png';
 // import paracetamol from './paracetamol.png';
- import vision from './vision.png';
- import vision_1 from './vision_1.png';
- import mission_1 from './mission_1.png';
- import mission_2 from './mission_2.png';
- import values_1 from './values_1.png';
- import values_2 from './values_2.png';
+//  import vision from './vision.png';
+//  import vision_1 from './vision_1.png';
+//  import mission_1 from './mission_1.png';
+ import mission_2 from './mission_2.jpg';
+ import values_1 from './values_1.jpg';
+ import values_2 from './values_2.jpg';
  import login_2 from './login_2.png';
  import rh_a1 from './rh_a1.jpg';
  import rh_a2 from './rh_a2.jpg';
- import rh_a3 from './rh_a3.png';
+ import rh_a3 from './rh_a3.jpg';
  import rh_a4 from './rh_a4.jpg';
+ import rh_myo from './rh_myo.jpg';
 import digdis_1 from './digdis_1.jpg';
 import digdis_2 from './digdis_2.jpg';
-import digdis_3 from './digdis_3.png';
-import rh_myo from './rh_myo.png';
-import digdis_w from './digdis_w.png';
+import digdis_3 from './digdis_3.jpg';
+
+import digdis_w from './digdis_w.jpg';
 import main_c5 from './main_c5.jpg';
-import main_c6 from './main_c6.png';
+import main_c6 from './main_c6.jpg';
  import main_p from './main_p.png';
- import main_c2 from './main_c2.png';
+ import main_c2 from './main_c2.jpg';
  import main_c3 from './main_c3.png';
  import main_c4 from './main_c4.png';
- import main_c7 from './main_c7.jpeg';
+ import main_c7 from './main_c7.jpg';
  import main_pw from './main_pw.webp';
 // import syrup_m from './syrup_m.png';
 // import syrup_m_2 from './syrup_m_2.png';
@@ -105,9 +106,9 @@ export const assets = {
   featured,
   login_img ,
   register_img,
-  vision,
-  vision_1,
-  mission_1,
+ 
+  
+ 
   mission_2,
   values_1,
   values_2,
