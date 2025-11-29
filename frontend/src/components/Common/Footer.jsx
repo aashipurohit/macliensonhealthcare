@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { TbBrandMeta } from 'react-icons/tb';
-import {IoLogoInstagram} from 'react-icons/io';
-import {RiTwitterXLine} from 'react-icons/ri';
+// import { TbBrandMeta } from 'react-icons/tb';
+// import {IoLogoInstagram} from 'react-icons/io';
+// import {RiTwitterXLine} from 'react-icons/ri';
 import {FiPhoneCall} from 'react-icons/fi';
 
 const Footer = () => {
@@ -74,7 +74,7 @@ const Footer = () => {
              Follow Us
             </h3>
             <div className="flex items-center space-x-4 mb-6">
-                <a href="https://www.facebook.com"
+                {/* <a href="https://www.facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-gray-500"
@@ -99,7 +99,7 @@ const Footer = () => {
                 aria-label="Visit twitter"
                 >
                     <RiTwitterXLine className="h-4 w-4"/>
-                </a>
+                </a> */}
             </div>
             <p className="text-gray-500">Call Us</p>
             <p>
