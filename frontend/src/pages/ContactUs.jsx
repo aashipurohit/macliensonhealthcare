@@ -1,419 +1,323 @@
-import React from 'react';
-import { 
-  Container, 
-  Typography, 
-  Box, 
-  Grid, 
-  Paper, 
+import React from "react";
+import {
+  Container,
+  Typography,
+  Box,
+  Grid,
+  Paper,
   TextField,
   Button,
-  Divider,
-  Avatar,
-  useTheme,
   ThemeProvider,
-  createTheme
-} from '@mui/material';
-import { 
+  createTheme,
+} from "@mui/material";
+import {
   Email as EmailIcon,
-  Phone as PhoneIcon,
   LocationOn as LocationIcon,
   Send as SendIcon,
   Schedule as HoursIcon,
-  Chat as SupportIcon
-} from '@mui/icons-material';
+  Chat as SupportIcon,
+  VerifiedUser as VerifiedIcon,
+  Business as BusinessIcon,
+} from "@mui/icons-material";
 
-// Consistent pastel theme
+// Corporate Pastel Theme (Trust-oriented palette)
 const pastelTheme = createTheme({
   palette: {
     primary: {
-      main: '#A8D8EA', // Pastel blue
-      light: '#D3E5EF',
-      dark: '#89C4E1',
-      contrastText: '#000000', // Black text
+      main: "#85C1E9",
+      light: "#D6EAF8",
+      dark: "#5DADE2",
+      contrastText: "#000",
     },
     secondary: {
-      main: '#F8B195', // Pastel peach
-      light: '#FCD0BD',
-      dark: '#F5926B',
-      contrastText: '#000000', // Black text
+      main: "#F5B7B1",
+      light: "#FADBD8",
+      dark: "#EC7063",
+      contrastText: "#000",
     },
     background: {
-      default: '#FAF9F6', // Cream white
-      paper: '#FFFFFF',
+      default: "#FAF9F6",
+      paper: "#FFFFFF",
     },
     text: {
-      primary: '#000000', // Black
-      secondary: '#555555', // Dark gray
+      primary: "#1A1A1A",
+      secondary: "#555",
     },
   },
   typography: {
     fontFamily: '"Quicksand", "Helvetica", "Arial", sans-serif',
+    h2: { fontWeight: 700 },
   },
 });
 
 const ContactUs = () => {
-  const theme = useTheme();
   const [formData, setFormData] = React.useState({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    message: "",
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! We will respond shortly.');
-    setFormData({ name: '', email: '', message: '' });
+    alert("Thank you for contacting us. Our team will respond shortly.");
+    setFormData({ name: "", email: "", message: "" });
   };
 
   return (
     <ThemeProvider theme={pastelTheme}>
-      <Container maxWidth="lg" sx={{ 
-        py: 8, 
-        backgroundColor: theme.palette.background.default
-      }}>
-        {/* Hero Section */}
+      <Container maxWidth="lg" sx={{ py: 10 }}>
+
+        {/* Company Identity Banner */}
+        <Paper
+          elevation={0}
+          sx={{
+            p: 4,
+            mb: 8,
+            borderRadius: 3,
+            border: "1px solid #e0e0e0",
+            background: "#FFFFFFAA",
+            textAlign: "center",
+          }}
+        >
+          <BusinessIcon sx={{ fontSize: 40, mb: 1, color: "#5DADE2" }} />
+
+          <Typography variant="h4" sx={{ fontWeight: 700 }}>
+            Maclienson Healthcare Pvt. Ltd.
+          </Typography>
+
+          <Typography variant="body1" sx={{ color: "#666", mt: 1 }}>
+            A Registered Pharmaceutical Entity · Committed to Quality & Ethics
+          </Typography>
+        </Paper>
+
+        {/* Title Section */}
         <Box textAlign="center" mb={8}>
-          <Typography 
-            variant="h2" 
-            component="h1" 
-            gutterBottom 
-            sx={{ 
-              fontWeight: 700,
-              color: theme.palette.text.primary,
-              '&:after': {
-                content: '""',
-                display: 'block',
-                width: 80,
-                height: 4,
-                backgroundColor: theme.palette.secondary.main,
-                margin: '16px auto 0',
-                borderRadius: 2
-              }
-            }}
-          >
+          <Typography variant="h2" gutterBottom>
             Contact Us
           </Typography>
-          <Typography variant="h5" sx={{ 
-            color: theme.palette.text.secondary,
-            fontStyle: 'italic',
-            mt: 2
-          }}>
-            We'd love to hear from you
+          <Typography
+            variant="h6"
+            sx={{ color: "text.secondary", maxWidth: 600, mx: "auto", mt: 2 }}
+          >
+            For verified communication and official queries, connect with our
+            corporate desk. Every message is evaluated and responded to by
+            authorized personnel only.
           </Typography>
         </Box>
 
         <Grid container spacing={6}>
           {/* Contact Form */}
           <Grid item xs={12} md={7}>
-            <Paper elevation={0} sx={{ 
-              p: 6, 
-              borderRadius: 4,
-              backgroundColor: 'rgba(255, 255, 255, 0.9)',
-              border: '1px solid #f0f0f0'
-            }}>
-              <Typography variant="h4" component="h2" sx={{ 
-                fontWeight: 600,
-                color: theme.palette.text.primary,
-                mb: 4
-              }}>
-                Send Us a Message
+            <Paper
+              elevation={0}
+              sx={{
+                p: 6,
+                borderRadius: 4,
+                border: "1px solid #e6e6e6",
+                background: "#ffffff",
+              }}
+            >
+              <Typography variant="h4" sx={{ fontWeight: 600, mb: 4 }}>
+                Send an Official Inquiry
               </Typography>
-              
+
+              <Typography
+                variant="body2"
+                sx={{ mb: 3, color: "#555", fontStyle: "italic" }}
+              >
+                All submissions are reviewed by our corporate compliance team.
+              </Typography>
+
               <form onSubmit={handleSubmit}>
                 <Grid container spacing={4}>
                   <Grid item xs={12} md={6}>
                     <TextField
                       fullWidth
-                      label="Your Name"
-                      variant="outlined"
+                      label="Full Name"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      sx={{
-                        '& .MuiOutlinedInput-root': {
-                          '& fieldset': {
-                            borderColor: theme.palette.primary.light,
-                          },
-                          '&:hover fieldset': {
-                            borderColor: theme.palette.primary.main,
-                          },
-                        }
-                      }}
                     />
                   </Grid>
+
                   <Grid item xs={12} md={6}>
                     <TextField
                       fullWidth
                       label="Email Address"
-                      variant="outlined"
-                      type="email"
                       name="email"
+                      type="email"
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      sx={{
-                        '& .MuiOutlinedInput-root': {
-                          '& fieldset': {
-                            borderColor: theme.palette.primary.light,
-                          },
-                          '&:hover fieldset': {
-                            borderColor: theme.palette.primary.main,
-                          },
-                        }
-                      }}
                     />
                   </Grid>
+
                   <Grid item xs={12}>
                     <TextField
                       fullWidth
-                      label="Your Message"
-                      variant="outlined"
-                      multiline
-                      rows={6}
+                      label="Message"
                       name="message"
+                      multiline
+                      rows={5}
                       value={formData.message}
                       onChange={handleChange}
                       required
-                      sx={{
-                        '& .MuiOutlinedInput-root': {
-                          '& fieldset': {
-                            borderColor: theme.palette.primary.light,
-                          },
-                          '&:hover fieldset': {
-                            borderColor: theme.palette.primary.main,
-                          },
-                        }
-                      }}
                     />
                   </Grid>
+
                   <Grid item xs={12}>
                     <Button
                       type="submit"
-                      variant="contained"
                       size="large"
+                      variant="contained"
                       endIcon={<SendIcon />}
                       sx={{
-                        backgroundColor: theme.palette.secondary.main,
-                        color: theme.palette.secondary.contrastText,
-                        '&:hover': {
-                          backgroundColor: theme.palette.secondary.dark
-                        }
+                        backgroundColor: "#F5B7B1",
+                        "&:hover": { backgroundColor: "#EC7063" },
+                        fontWeight: 600,
                       }}
                     >
-                      Send Message
+                      Submit Inquiry
                     </Button>
                   </Grid>
                 </Grid>
               </form>
+
+              {/* Legal Statement */}
+              <Box mt={4} p={2} borderRadius={2} bgcolor="#F8F9F9">
+                <Typography
+                  variant="caption"
+                  sx={{ color: "#666", display: "block", lineHeight: 1.6 }}
+                >
+                  <VerifiedIcon
+                    sx={{ fontSize: 18, verticalAlign: "middle", mr: 0.5 }}
+                  />
+                  By contacting us, you acknowledge that the information shared
+                  will be reviewed in accordance with our corporate policies and
+                  applicable Indian regulations.
+                </Typography>
+              </Box>
             </Paper>
           </Grid>
 
-          {/* Contact Information */}
+          {/* Contact Details */}
           <Grid item xs={12} md={5}>
-            <Paper elevation={0} sx={{ 
-              p: 6, 
-              height: '100%',
-              borderRadius: 4,
-              backgroundColor: 'rgba(248, 177, 149, 0.1)',
-              borderLeft: `4px solid ${theme.palette.secondary.main}`
-            }}>
-              <Typography variant="h4" component="h2" sx={{ 
-                fontWeight: 600,
-                color: theme.palette.text.primary,
-                mb: 4
-              }}>
-                Contact Information
+            <Paper
+              elevation={0}
+              sx={{
+                p: 5,
+                borderRadius: 4,
+                borderLeft: "4px solid #EC7063",
+                background: "#FFF4F2",
+              }}
+            >
+              <Typography variant="h4" sx={{ fontWeight: 600, mb: 4 }}>
+                Corporate Communication
               </Typography>
 
+              {/* Address */}
               <Box mb={5}>
-                <Box display="flex" alignItems="center" mb={3}>
-                  <LocationIcon sx={{ 
-                    fontSize: 30, 
-                    mr: 2,
-                    color: theme.palette.text.primary 
-                  }} />
-                  <Typography variant="h6" sx={{ 
-                    fontWeight: 600,
-                    color: theme.palette.text.primary
-                  }}>
-                    Our Headquarters
+                <Box display="flex" alignItems="center" mb={2}>
+                  <LocationIcon sx={{ fontSize: 30, mr: 2 }} />
+                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                    Registered Office
                   </Typography>
                 </Box>
-                <Typography variant="body1" sx={{ 
-                  color: theme.palette.text.primary,
-                  pl: 6
-                }}>
-                  Maclienson Healthcare Pvt Ltd<br />
+                <Typography variant="body1" sx={{ pl: 6, lineHeight: 1.8 }}>
+                  Maclienson Healthcare Pvt. Ltd.<br />
                   123 Pharma Park, Sector 22<br />
-                 Indore,Madhy Pradesh 452012<br />
+                  Indore, Madhya Pradesh 452012<br />
                   India
                 </Typography>
               </Box>
 
+              {/* Email */}
               <Box mb={5}>
-                <Box display="flex" alignItems="center" mb={3}>
-                  <PhoneIcon sx={{ 
-                    fontSize: 30, 
-                    mr: 2,
-                    color: theme.palette.text.primary 
-                  }} />
-                  <Typography variant="h6" sx={{ 
-                    fontWeight: 600,
-                    color: theme.palette.text.primary
-                  }}>
-                    Phone & Email
+                <Box display="flex" alignItems="center" mb={2}>
+                  <EmailIcon sx={{ fontSize: 30, mr: 2 }} />
+                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                    Official Email
                   </Typography>
                 </Box>
-                <Typography variant="body1" sx={{ 
-                  color: theme.palette.text.primary,
-                  pl: 6
-                }}>
-                  <Box component="span" display="block">+91 22 1234 5678</Box>
-                  <Box component="span" display="block">info@maclienson.com</Box>
-                  <Box component="span" display="block">support@maclienson.com</Box>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    pl: 6,
+                    fontWeight: 600,
+                    fontSize: "1.05rem",
+                    color: "#000",
+                  }}
+                >
+                  manish.kalpiwar@macliensonhealthcare.com
+                </Typography>
+
+                <Typography
+                  variant="caption"
+                  sx={{ pl: 6, color: "#666", mt: 1, display: "block" }}
+                >
+                  This is our verified corporate communication channel.
                 </Typography>
               </Box>
 
+              {/* Hours */}
               <Box mb={5}>
-                <Box display="flex" alignItems="center" mb={3}>
-                  <HoursIcon sx={{ 
-                    fontSize: 30, 
-                    mr: 2,
-                    color: theme.palette.text.primary 
-                  }} />
-                  <Typography variant="h6" sx={{ 
-                    fontWeight: 600,
-                    color: theme.palette.text.primary
-                  }}>
+                <Box display="flex" alignItems="center" mb={2}>
+                  <HoursIcon sx={{ fontSize: 30, mr: 2 }} />
+                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
                     Business Hours
                   </Typography>
                 </Box>
-                <Typography variant="body1" sx={{ 
-                  color: theme.palette.text.primary,
-                  pl: 6
-                }}>
-                  Monday - Friday: 9:00 AM - 6:00 PM<br />
-                  Saturday: 10:00 AM - 2:00 PM<br />
+                <Typography variant="body1" sx={{ pl: 6, lineHeight: 1.8 }}>
+                  Monday – Friday: 9:00 AM – 6:00 PM<br />
+                  Saturday: 10:00 AM – 2:00 PM<br />
                   Sunday: Closed
                 </Typography>
               </Box>
 
+              {/* Support Note */}
               <Box>
-                <Box display="flex" alignItems="center" mb={3}>
-                  <SupportIcon sx={{ 
-                    fontSize: 30, 
-                    mr: 2,
-                    color: theme.palette.text.primary 
-                  }} />
-                  <Typography variant="h6" sx={{ 
-                    fontWeight: 600,
-                    color: theme.palette.text.primary
-                  }}>
-                    Customer Support
+                <Box display="flex" alignItems="center" mb={2}>
+                  <SupportIcon sx={{ fontSize: 30, mr: 2 }} />
+                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                    Response Protocol
                   </Typography>
                 </Box>
-                <Typography variant="body1" sx={{ 
-                  color: theme.palette.text.primary,
-                  pl: 6
-                }}>
-                  Our support team is available 24/7 for emergencies.<br />
-                  Emergency line: +91 98 7654 3210
+                <Typography variant="body1" sx={{ pl: 6, color: "#444" }}>
+                  Each query is assigned to an authorized support officer.  
+                  Response time may vary depending on verification requirements.
                 </Typography>
               </Box>
             </Paper>
           </Grid>
         </Grid>
 
-        {/* Map Section */}
-        <Box mt={8} mb={4}>
-          <Typography variant="h4" component="h2" sx={{ 
-            fontWeight: 600,
-            color: theme.palette.text.primary,
-            mb: 4,
-            textAlign: 'center'
-          }}>
-            Find Us on Map
-          </Typography>
-          <Paper elevation={0} sx={{ 
-            p: 2, 
-            borderRadius: 4,
-            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-            border: '1px solid #f0f0f0',
-            height: 400
-          }}>
-            {/* Replace with your actual map embed */}
-            <Box sx={{
-              width: '100%',
-              height: '100%',
-              backgroundColor: theme.palette.primary.light,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 3,
-              color: theme.palette.text.primary
-            }}>
-              <Typography variant="h6">Map Embed Will Appear Here</Typography>
-            </Box>
-          </Paper>
+        {/* Email Button */}
+        <Box textAlign="center" mt={10}>
+          <Button
+            variant="outlined"
+            size="large"
+            href="mailto:manish.kalpiwar@macliensonhealthcare.com"
+            sx={{
+              borderColor: "#000",
+              color: "#000",
+              "&:hover": { borderColor: "#000", background: "#f6f6f6" },
+            }}
+          >
+            <EmailIcon sx={{ mr: 1 }} /> Send Email
+          </Button>
         </Box>
 
-        {/* CTA */}
-        <Box textAlign="center" mt={8}>
-          <Typography variant="h5" gutterBottom sx={{ 
-            fontWeight: 600,
-            color: theme.palette.text.primary
-          }}>
-            Prefer to speak directly?
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{ 
-              color: theme.palette.text.secondary,
-              mb: 4,
-              fontSize: '1.1rem'
-            }}>
-            Call our customer care team at +91 22 1234 5678
-          </Typography>
-          <Button 
-            variant="contained" 
-            size="large" 
-            sx={{ 
-              mr: 2,
-              backgroundColor: theme.palette.secondary.main,
-              color: theme.palette.secondary.contrastText,
-              '&:hover': {
-                backgroundColor: theme.palette.secondary.dark
-              }
-            }}
-            href="tel:+912212345678"
-          >
-            <PhoneIcon sx={{ mr: 1 }} /> Call Now
-          </Button>
-          <Button 
-            variant="outlined" 
-            size="large" 
-            sx={{ 
-              borderColor: theme.palette.text.primary,
-              color: theme.palette.text.primary,
-              '&:hover': {
-                borderColor: theme.palette.text.primary
-              }
-            }}
-            href="mailto:info@maclienson.com"
-          >
-            <EmailIcon sx={{ mr: 1 }} /> Email Us
-          </Button>
+        {/* Footer Legal Note */}
+        <Box mt={8} textAlign="center" sx={{ color: "#777", fontSize: "0.85rem" }}>
+          Maclienson Healthcare Pvt. Ltd. © All Rights Reserved ·  
+          Compliant with Indian Pharmaceutical Communication Standards
         </Box>
+
       </Container>
     </ThemeProvider>
   );
