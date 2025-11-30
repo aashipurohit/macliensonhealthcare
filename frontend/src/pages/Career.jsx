@@ -127,7 +127,7 @@ export default function Career() {
         <Box textAlign="center" mb={6}>
           <Typography variant="h3" fontWeight={700} gutterBottom>
             <WorkIcon sx={{ mr: 1, verticalAlign: "middle" }} />
-            Careers at Maclienson Healthcare
+            Career at Maclienson Healthcare
           </Typography>
           <Typography variant="h6" color="text.secondary">
             Build a purpose-driven career in an ethics-first pharmaceutical organization.
