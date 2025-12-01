@@ -38,24 +38,50 @@ const Footer = () => {
         </div>
 
         {/* Shop Links */}
-        <div className="md:pl-14">
-          <h3 className="text-lg text-gray-800 mb-4 pl-5">Shop</h3>
-          <ul className="space-y-2 text-gray-600 list-disc pl-5">
-            {["Women Care", "Sports Nutrition", "Kids Nutrition"].map((item) => (
-              <li key={item}>
-                <Link
-                  to="#"
-                  className="relative pb-1 hover:text-gray-600 transition-colors duration-300 
-                  after:content-[''] after:absolute after:bottom-0 after:left-0 
-                  after:w-0 after:h-px after:bg-gray-600 after:transition-all after:duration-300 
-                  hover:after:w-full"
-                >
-                  {item}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* Shop Links */}
+<div className="md:pl-14">
+  <h3 className="text-lg text-gray-800 mb-4 pl-5">Shop</h3>
+  <ul className="space-y-2 text-gray-600 list-disc pl-5">
+    
+    <li>
+      <Link
+        to="/digitaldispensary#womencare"
+        className="relative pb-1 hover:text-gray-600 transition-colors duration-300 
+        after:content-[''] after:absolute after:bottom-0 after:left-0 
+        after:w-0 after:h-px after:bg-gray-600 after:transition-all after:duration-300 
+        hover:after:w-full"
+      >
+        Women Care
+      </Link>
+    </li>
+
+    <li>
+      <Link
+        to="/digitaldispensary#sportsnutrition"
+        className="relative pb-1 hover:text-gray-600 transition-colors duration-300 
+        after:content-[''] after:absolute after:bottom-0 after:left-0 
+        after:w-0 after:h-px after:bg-gray-600 after:transition-all after:duration-300 
+        hover:after:w-full"
+      >
+        Sports Nutrition
+      </Link>
+    </li>
+
+    <li>
+      <Link
+        to="/digitaldispensary#kidsnutrition"
+        className="relative pb-1 hover:text-gray-600 transition-colors duration-300 
+        after:content-[''] after:absolute after:bottom-0 after:left-0 
+        after:w-0 after:h-px after:bg-gray-600 after:transition-all after:duration-300 
+        hover:after:w-full"
+      >
+        Kids Nutrition
+      </Link>
+    </li>
+
+  </ul>
+</div>
+
 
         {/* Support Links (UPDATED) */}
         <div className="md:pl-14">

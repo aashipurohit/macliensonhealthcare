@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   Container,
@@ -15,6 +14,7 @@ import {
   Link,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+
 import WorkIcon from "@mui/icons-material/Work";
 import SchoolIcon from "@mui/icons-material/School";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -22,11 +22,12 @@ import PeopleIcon from "@mui/icons-material/People";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
 import PublicIcon from "@mui/icons-material/Public";
-import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import ScienceIcon from "@mui/icons-material/Science";
 import GppGoodIcon from "@mui/icons-material/GppGood";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import CallIcon from "@mui/icons-material/Call";
 
 const theme = createTheme({
   palette: {
@@ -40,7 +41,8 @@ const theme = createTheme({
   },
 });
 
-const HR_EMAIL = "manish.kalpiwar@macliensonhealthcare.com"; 
+const HR_EMAIL = "manish.kalpiwar@macliensonhealthcare.com";
+const HR_PHONE = "8770751559";
 
 const sampleRoles = [
   {
@@ -95,7 +97,7 @@ const benefits = [
   {
     icon: <ScheduleIcon />,
     title: "Flexible Work Options",
-    description: "Hybrid or flexible schedules for eligible roles, balancing productivity and wellbeing.",
+    description: "Hybrid or flexible schedules for eligible roles.",
   },
   {
     icon: <FavoriteIcon />,
@@ -107,7 +109,7 @@ const benefits = [
 const testimonials = [
   {
     quote:
-      "Working here gave me exposure to regulated pharma development and the mentorship I needed to grow.",
+      "Working here gave me exposure to regulated pharma development and mentorship I needed to grow.",
     author: "Priya K., Senior Researcher",
     initials: "PK",
   },
@@ -123,6 +125,7 @@ export default function Career() {
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="lg" sx={{ py: 8 }}>
+
         {/* Header */}
         <Box textAlign="center" mb={6}>
           <Typography variant="h3" fontWeight={700} gutterBottom>
@@ -133,6 +136,80 @@ export default function Career() {
             Build a purpose-driven career in an ethics-first pharmaceutical organization.
           </Typography>
         </Box>
+
+        {/* 🔵 LIVE HIRING SECTION (Client Provided) */}
+        <Paper
+          sx={{
+            p: 4,
+            mb: 6,
+            borderRadius: 2,
+            borderLeft: "6px solid #85C1E9",
+            background: "#F0F8FF",
+          }}
+        >
+          <Typography variant="h4" fontWeight={700} mb={2} sx={{ color: "#2C3E50" }}>
+            📢 We Are Hiring – Gynaecology Division
+          </Typography>
+
+          <Typography variant="body1" sx={{ mb: 3 }}>
+            Maclienson Healthcare Pvt. Ltd. is inviting experienced and dynamic professionals to join
+            our expanding <strong>Gynaecology Division</strong> in Indore, Madhya Pradesh.
+          </Typography>
+
+          <Divider sx={{ my: 2 }} />
+
+          {/* Job 1 */}
+          <Box mb={3}>
+            <Typography variant="h6" fontWeight={700}>
+              1. Medical Representative (MR)
+            </Typography>
+
+            <Box sx={{ pl: 1.5, mt: 1 }}>
+              <Typography>📍 <strong>Location:</strong> Indore, Madhya Pradesh</Typography>
+              <Typography>🎓 <strong>Qualification:</strong> Science Graduate (B.Sc., B.Pharm, etc.)</Typography>
+              <Typography>🧪 <strong>Experience:</strong> Minimum 1 year in the same segment</Typography>
+            </Box>
+          </Box>
+
+          {/* Job 2 */}
+          <Box mb={3}>
+            <Typography variant="h6" fontWeight={700}>
+              2. Area Sales Manager (ASM)
+            </Typography>
+
+            <Box sx={{ pl: 1.5, mt: 1 }}>
+              <Typography>📍 <strong>Location:</strong> Indore, Madhya Pradesh</Typography>
+              <Typography>🌸 <strong>Segment Focus:</strong> Gynaecology</Typography>
+              <Typography>
+                🧪 <strong>Experience Required:</strong>
+                <br /> • Minimum 3 years as Medical Representative (M.R.)
+                <br /> • OR Minimum 1 year as Area Manager
+              </Typography>
+            </Box>
+          </Box>
+
+          <Typography variant="body1" sx={{ mt: 1 }}>
+            💰 <strong>Compensation / Salary:</strong> Negotiable & competitive as per profile.
+          </Typography>
+
+          <Box mt={3}>
+            <Button
+              variant="contained"
+              sx={{ mr: 2 }}
+              href={`mailto:${HR_EMAIL}`}
+            >
+              Apply via Email
+            </Button>
+
+            <Button
+              variant="outlined"
+              startIcon={<CallIcon />}
+              href={`tel:${HR_PHONE}`}
+            >
+              Call / WhatsApp: {HR_PHONE}
+            </Button>
+          </Box>
+        </Paper>
 
         {/* Why Join */}
         <Paper sx={{ p: 5, mb: 6, borderRadius: 2 }}>
@@ -145,7 +222,7 @@ export default function Career() {
 
           <Grid container spacing={3}>
             <Grid xs={12} md={6}>
-              <Typography  color="text.primary">
+              <Typography color="text.primary">
                 Maclienson Healthcare focuses on quality, compliance and patient-centred innovation.
                 We value integrity, continuous learning and measurable impact.
               </Typography>
@@ -153,18 +230,18 @@ export default function Career() {
               <Box component="ul" sx={{ pl: 2, color: "text.primary" }}>
                 <li>Work that directly supports patient outcomes.</li>
                 <li>Transparent, ethics-driven processes and governance.</li>
-                <li>Opportunities for professional development and cross-functional growth.</li>
+                <li>Opportunities for professional and cross-functional growth.</li>
               </Box>
             </Grid>
           </Grid>
         </Paper>
 
-        {/* Roles (informational only) */}
+        {/* Sample Roles */}
         <Box mb={6}>
           <Box display="flex" gap={2} alignItems="center" mb={2}>
             <PublicIcon sx={{ fontSize: 36 }} />
             <Typography variant="h5" fontWeight={600}>
-              Roles We Commonly Hire For (informational)
+              Roles We Commonly Hire For (Example Profiles)
             </Typography>
           </Box>
 
@@ -194,22 +271,18 @@ export default function Career() {
                     </Typography>
 
                     <Typography variant="caption" display="block" sx={{ mt: 2 }}>
-                      <strong>Note:</strong> These are example/prototype role profiles intended to
-                      illustrate the types of expertise we commonly look for. They are not live job
-                      postings and do not guarantee immediate openings.
+                      <strong>Note:</strong> These are sample role profiles and not active openings.
                     </Typography>
 
                     <Box sx={{ mt: 2 }}>
                       <Typography variant="body2" color="text.primary">
-                        Interested candidates should email their CV, cover note and qualifications to:
+                        Send your CV or introduction email:
                       </Typography>
-
                       <Button
                         variant="outlined"
                         size="small"
                         href={`mailto:${HR_EMAIL}`}
                         sx={{ mt: 1 }}
-                        aria-label="Email HR to apply"
                       >
                         Email: {HR_EMAIL}
                       </Button>
@@ -279,30 +352,27 @@ export default function Career() {
           </Grid>
         </Box>
 
-        {/* CTA / Application instructions */}
+        {/* CTA */}
         <Box textAlign="center" mb={6}>
           <Typography variant="h6" fontWeight={600}>
             Interested in joining Maclienson Healthcare?
           </Typography>
+
           <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-            To be considered, please email your CV and a brief note with:
-            <Box component="span" display="block">
-              • Full name • Highest qualification • Relevant experience • Preferred location
-            </Box>
+            Email your CV with your:
+            <br />• Full Name • Highest Qualification • Relevant Experience • Preferred Location
           </Typography>
 
           <Button
             variant="contained"
             sx={{ mt: 2 }}
             href={`mailto:${HR_EMAIL}`}
-            aria-label="Email HR"
           >
             Apply via Email: {HR_EMAIL}
           </Button>
 
           <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 2 }}>
-            We review all submissions in accordance with our hiring policy. Submissions to the above
-            address do not create an employment contract. We will contact shortlisted candidates.
+            We will contact shortlisted candidates.
           </Typography>
         </Box>
 
@@ -313,21 +383,17 @@ export default function Career() {
               Recruitment & Compliance
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-              Maclienson Healthcare follows standard background verification and qualification checks
-              for shortlisted candidates. We do not charge any fee for recruitment. For any concerns
-              please write to{" "}
+              Maclienson Healthcare follows standard background verification and qualification checks.
+              We do not charge any recruitment fee. For concerns, contact{" "}
               <Link href={`mailto:${HR_EMAIL}`} underline="hover">
                 {HR_EMAIL}
-              </Link>
-              .
+              </Link>.
             </Typography>
           </Paper>
         </Box>
 
-        {/* Footer */}
         <Box textAlign="center" color="text.secondary" sx={{ fontSize: 13 }}>
-          Maclienson Healthcare Pvt. Ltd. © All rights reserved · Information on this page is
-          representative and subject to change.
+          Maclienson Healthcare Pvt. Ltd. © All rights reserved.
         </Box>
       </Container>
     </ThemeProvider>

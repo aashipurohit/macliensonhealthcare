@@ -57,6 +57,7 @@ const DigDis = () => {
   {categories.map((category, index) => (
     <div 
       key={index}
+      id={category.title.toLowerCase().replace(/\s+/g, '')} 
       className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col"
     >
       {/* Image Section */}

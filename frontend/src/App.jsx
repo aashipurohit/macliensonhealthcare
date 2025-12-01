@@ -28,6 +28,7 @@ import store from "./redux/store";
 import CartInitializer from "./components/Layout/CartInitializer";
 import ProductForm from './components/Admin/ProductForm';
 import Policies from "./components/Common/Policies";
+import DigDis from "./components/Layout/DigDis";
 
 
 
@@ -68,7 +69,8 @@ const App = () => {
             
             <Route path="product/:id" element={<ProductDetails />} />  
             <Route path="checkout" element ={ <Checkout/>} /> 
-            <Route path="/order-confirmation" element={<OrderConfirmationPage />} />   
+            <Route path="/order-confirmation" element={<OrderConfirmationPage />} />  
+            <Route path ="digitaldispensary" element = {< DigDis />}/> 
             </Route>
 
             {/*Admin Layout */}
