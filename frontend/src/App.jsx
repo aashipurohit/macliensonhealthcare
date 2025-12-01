@@ -27,6 +27,8 @@ import { Provider} from "react-redux";
 import store from "./redux/store";
 import CartInitializer from "./components/Layout/CartInitializer";
 import ProductForm from './components/Admin/ProductForm';
+import Policies from "./components/Common/Policies";
+
 
 
 // import { fetchCart } from "./redux/slices/cartSlice"; //  import this
@@ -55,6 +57,8 @@ const App = () => {
             <Route path="/certifications" element={<Certifications />} />   
             <Route path="/career" element={<Career />} />
             <Route path="/contact" element={<ContactUs />} />
+            <Route path="/policies" element={<Policies />} />
+
 
             <Route path="login" element={<Login/>}/>
             <Route path="register" element={<Register/>}/>

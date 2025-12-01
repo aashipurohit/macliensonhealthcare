@@ -62,6 +62,7 @@ import nurturmac from './nurturmac.png';
 import syndrova_met_sr_t from './syndrova_met_sr_t.png';
 import flavona_forte_sy from './flavona_forte_sy.png';
 import flavona_forte_sy_b from './flavona_forte_sy_b.png';
+import career from './career.jpg'
 
        
 
@@ -130,7 +131,8 @@ export const assets = {
   nurturmac,
   syndrova_met_sr_t,
   flavona_forte_sy,
-  flavona_forte_sy_b
+  flavona_forte_sy_b,
+  career
   
 };
 
