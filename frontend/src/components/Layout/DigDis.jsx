@@ -88,11 +88,11 @@ const DigDis = () => {
         </ul>
 
         {/* Button container with mt-auto pushes it to bottom */}
-        <div className="mt-auto">
+        {/* <div className="mt-auto">
           <button className="w-full bg-rose-600 hover:bg-rose-700 text-white py-2 px-4 rounded-lg transition-colors duration-300">
             Explore Now
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   ))}
@@ -121,13 +121,7 @@ const DigDis = () => {
                 </li>
               </ul>
             </div>
-            <div className="md:w-1/2">
-              <img 
-                src={assets.quality_standard} // Add this image to assets
-                alt="Quality Standards"
-                className="w-full h-auto rounded-lg shadow-sm"
-              />
-            </div>
+            
           </div>
         </div>
       </div>
