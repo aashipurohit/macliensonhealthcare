@@ -38,7 +38,7 @@ setIsOpen(false);
         <button 
         type="submit"
          aria-label="Search"
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800">
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-primary-600">
             <HiMagnifyingGlass className="h-6 w-6"/>
         </button>
         </div>
@@ -47,7 +47,7 @@ setIsOpen(false);
 type="button"
 aria-label="Search"
  onClick={handleSearchToggle} 
- className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800">
+ className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-primary-600">
    
     <HiMiniXMark className="h-6 w-6"/>
 </button>
@@ -68,3 +68,4 @@ aria-label="Search"
 };
 
 export default SearchBar;
+

@@ -14,7 +14,7 @@
 //     };
 //   return( 
 //     <div className="flex">
-//       <div className="w-full md:w-1/2 flex flex-col justify-center items-center p-8 md:p-12">
+//       <div className="w-full md:w-1/2 flex flex-col justify-center items-center p-8 md:p-8">
 //        <form 
 //        onSubmit={handleSubmit}
 //         className="w-full max-w-md bg-white p-8 rounded-lg border shadow-sm">
@@ -63,7 +63,7 @@
 //          placeholder="Enter your password"
 //           />
 //           </div>
-//            <button type="submit" className="w-full bg-black text-white p-2 rounded-lg font-semibold hover:bg-gray-800 transition">
+//            <button type="submit" className="w-full bg-primary-600 text-white p-2 rounded-lg font-semibold hover:bg-primary-700 transition">
 //             Sign Up 
 //            </button>
 //            <p className="mt-6 text-center text-sm  ">
@@ -176,62 +176,62 @@ const Register = () => {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-gray-50 ">
       <Toaster position="top-center" richColors />
-      <div className="w-full md:w-1/2 flex flex-col justify-center items-center p-8 md:p-12">
-        <form onSubmit={handleSubmit} className="w-full max-w-md bg-white p-8 rounded-lg border shadow-sm">
+      <div className="w-full md:w-1/2 flex flex-col justify-center items-center p-8 md:p-8">
+        <form onSubmit={handleSubmit} className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-8 shadow-sm  ">
           <div className="flex justify-center mb-6">
-            <h2 className="text-xl font-medium">Macleinson</h2>
+            <h2 className="text-xl font-medium text-gray-900 ">Macleinson</h2>
           </div>
-          <h2 className="text-2xl font-bold text-center mb-6">Create an account</h2>
+          <h2 className="mb-6 text-center text-2xl font-bold text-gray-900 ">Create an account</h2>
 
           <div className="mb-4">
-            <label className="block text-sm font-semibold mb-2">Full Name</label>
+            <label className="mb-2 block text-sm font-semibold text-gray-700 ">Full Name</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className={`w-full p-2 border rounded ${errors.name ? "border-red-500" : ""}`}
+              className={`w-full rounded border bg-white p-2 text-gray-900   ${errors.name ? "border-red-500 " : "border-gray-300 "}`}
               placeholder="Enter your full name"
             />
             {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-semibold mb-2">Email</label>
+            <label className="mb-2 block text-sm font-semibold text-gray-700 ">Email</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className={`w-full p-2 border rounded ${errors.email ? "border-red-500" : ""}`}
+              className={`w-full rounded border bg-white p-2 text-gray-900   ${errors.email ? "border-red-500 " : "border-gray-300 "}`}
               placeholder="Enter your email address"
             />
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-semibold mb-2">Password</label>
+            <label className="mb-2 block text-sm font-semibold text-gray-700 ">Password</label>
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className={`w-full p-2 border rounded ${errors.password ? "border-red-500" : ""}`}
+              className={`w-full rounded border bg-white p-2 text-gray-900   ${errors.password ? "border-red-500 " : "border-gray-300 "}`}
               placeholder="Enter your password"
             />
             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
           </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-semibold mb-2">Confirm Password</label>
+            <label className="mb-2 block text-sm font-semibold text-gray-700 ">Confirm Password</label>
             <input
               type="password"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className={`w-full p-2 border rounded ${errors.confirmPassword ? "border-red-500" : ""}`}
+              className={`w-full rounded border bg-white p-2 text-gray-900   ${errors.confirmPassword ? "border-red-500 " : "border-gray-300 "}`}
               placeholder="Confirm your password"
             />
             {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
@@ -239,21 +239,21 @@ const Register = () => {
 
           <button
             type="submit"
-            className="w-full bg-black text-white p-2 rounded-lg font-semibold hover:bg-gray-800 transition"
+            className="w-full rounded-lg bg-primary-600 p-2 font-semibold text-white transition hover:bg-primary-700  "
           >
             Create Account
           </button>
 
-          <p className="mt-6 text-center text-sm">
+          <p className="mt-6 text-center text-sm text-gray-600 ">
             Already have an account?
-            <Link to="/login" className="text-blue-500 ml-1">
+            <Link to="/login" className="ml-1 text-primary-600 ">
               Login
             </Link>
           </p>
         </form>
       </div>
 
-      <div className="hidden md:block w-1/2 bg-white">
+      <div className="hidden w-1/2 bg-white  md:block">
         <div className="h-full flex flex-col justify-center items-center">
           <img
             src={assets.register_img}
@@ -267,3 +267,5 @@ const Register = () => {
 };
 
 export default Register;
+
+

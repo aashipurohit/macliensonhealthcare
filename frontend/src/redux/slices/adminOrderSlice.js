@@ -1,16 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const getAuthToken = () => {
+  const storedUserInfo = localStorage.getItem("userInfo");
+  const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
+  return userInfo?.token || localStorage.getItem("userToken");
+};
+
 // Fetch all orders (admin only)
 export const fetchAllOrders = createAsyncThunk(
   "adminOrders/fetchAllOrders",
   async (_, { rejectWithValue }) => {
     try {
+      const token = getAuthToken();
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/admin/orders`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -21,17 +28,38 @@ export const fetchAllOrders = createAsyncThunk(
   }
 );
 
+export const fetchAdminOrderDetails = createAsyncThunk(
+  "adminOrders/fetchAdminOrderDetails",
+  async (orderId, { rejectWithValue }) => {
+    try {
+      const token = getAuthToken();
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/orders/${orderId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 // Update order delivery status
 export const updateOrderStatus = createAsyncThunk(
   "adminOrders/updateOrderStatus",
-  async ({ id, status }, { rejectWithValue }) => {
+  async ({ orderId, status }, { rejectWithValue }) => {
     try {
+      const token = getAuthToken();
       const response = await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/api/admin/orders/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/orders/${orderId}`,
         { status },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -47,11 +75,12 @@ export const deleteOrder = createAsyncThunk(
   "adminOrders/deleteOrder",
   async (id, { rejectWithValue }) => {
     try {
+      const token = getAuthToken();
       await axios.delete(
         `${import.meta.env.VITE_BACKEND_URL}/api/admin/orders/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -66,6 +95,7 @@ const adminOrderSlice = createSlice({
   name: "adminOrders",
   initialState: {
     orders: [],
+    selectedOrder: null,
     totalOrders: 0,
     totalSales: 0,
     loading: false,
@@ -95,6 +125,20 @@ const adminOrderSlice = createSlice({
         state.error = action.payload?.message || "Failed to fetch orders";
       })
 
+      .addCase(fetchAdminOrderDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.selectedOrder = null;
+      })
+      .addCase(fetchAdminOrderDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedOrder = action.payload;
+      })
+      .addCase(fetchAdminOrderDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to fetch order";
+      })
+
       // Update Order Status
       .addCase(updateOrderStatus.pending, (state) => {
         state.loading = true;
@@ -108,6 +152,9 @@ const adminOrderSlice = createSlice({
         );
         if (orderIndex !== -1) {
           state.orders[orderIndex] = updatedOrder;
+        }
+        if (state.selectedOrder?._id === updatedOrder._id) {
+          state.selectedOrder = updatedOrder;
         }
       })
       .addCase(updateOrderStatus.rejected, (state, action) => {

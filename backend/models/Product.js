@@ -6,6 +6,13 @@ const productSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  slug: {
+  type: String,
+  unique: true,
+  required: true,
+  trim: true,
+},
+
   description: {
     type: String,
     required: true,
@@ -37,7 +44,7 @@ const productSchema = new mongoose.Schema({
   },
   collections: [
   {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.Mixed,
     ref: "Collection",
     required: true,
   }

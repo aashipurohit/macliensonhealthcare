@@ -15,7 +15,8 @@ const ProductForm = () => {
     description: '',
     price: 0,
     sku: '',
-    stock: 0,
+    quantity: 0,
+    countInStock: 0,
     category: '',
     images: [],
     specifications: {},
@@ -52,7 +53,7 @@ const ProductForm = () => {
     if (currentImage.trim()) {
       setProductData({
         ...productData,
-        images: [...productData.images, currentImage]
+        images: [...productData.images, { url: currentImage.trim(), altText: productData.name }]
       });
       setCurrentImage('');
     }
@@ -66,11 +67,26 @@ const ProductForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const stockInput = productData.quantity ?? productData.countInStock;
+    const stockValue = stockInput === undefined || stockInput === null || stockInput === '' ? 0 : stockInput;
+    const normalizedImages = productData.images.map((image) => (
+      typeof image === 'string'
+        ? { url: image, altText: productData.name }
+        : { url: image.url, altText: image.altText || productData.name }
+    ));
+    const payload = {
+      ...productData,
+      price: Number(productData.price),
+      quantity: String(stockValue),
+      countInStock: Number(stockValue),
+      images: normalizedImages,
+    };
+
     if (id) {
-      dispatch(updateProduct({ id, productData }))
+      dispatch(updateProduct({ id, productData: payload }))
         .then(() => navigate('/admin/products'));
     } else {
-      dispatch(createProduct(productData))
+      dispatch(createProduct(payload))
         .then(() => navigate('/admin/products'));
     }
   };
@@ -126,8 +142,8 @@ const ProductForm = () => {
             <label className="block text-sm font-medium text-gray-700">Stock Quantity</label>
             <input
               type="number"
-              name="stock"
-              value={productData.stock}
+              name="quantity"
+              value={productData.quantity ?? productData.countInStock ?? 0}
               onChange={handleChange}
               min="0"
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -189,7 +205,7 @@ const ProductForm = () => {
           <div className="mt-4 flex flex-wrap gap-2">
             {productData.images.map((img, index) => (
               <div key={index} className="relative">
-                <img src={img} alt={`Product ${index}`} className="h-20 w-20 object-cover rounded" />
+                <img src={typeof img === 'string' ? img : img.url} alt={typeof img === 'string' ? `Product ${index}` : img.altText || `Product ${index}`} className="h-20 w-20 object-cover rounded" />
                 <button
                   type="button"
                   onClick={() => handleImageRemove(index)}

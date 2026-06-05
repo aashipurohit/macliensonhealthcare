@@ -62,7 +62,7 @@ export const updateProduct = createAsyncThunk(
       productData,
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("UserToken")}`,
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
         },
       }
     );

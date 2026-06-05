@@ -14,7 +14,7 @@
 //       {products.map((product) => (
 //         <div 
 //           key={product.id} 
-//           className="border border-gray-200 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+//           className="border border-gray-200 p-4 rounded-lg shadow-sm hover:shadow-sm transition-shadow"
 //         >
 //           <Link to={`/product/${product.id}`}>
 //             <img 
@@ -22,13 +22,13 @@
 //               alt={product.name} 
 //               className="w-full h-48 object-contain mb-3" 
 //             />
-//             <h4 className="font-semibold text-gray-800">{product.name}</h4>
+//             <h4 className="font-semibold text-gray-700">{product.name}</h4>
 //             <p className="text-gray-600">₹{product.price}</p>
 //             <div className="flex flex-wrap gap-1 mt-2">
-//               <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+//               <span className="text-xs bg-primary-50 text-primary-700 px-2 py-1 rounded">
 //                 {product.category}
 //               </span>
-//               <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
+//               <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
 //                 {product.subcategory}
 //               </span>
 //             </div>
@@ -50,7 +50,7 @@ const ProductGrid = ({ products }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {products.map((product) => (
-        <div key={product._id} className="group relative bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+        <div key={product._id} className="group relative bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-sm transition-all duration-200">
           <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-t-lg bg-gray-200">
             <img
               src={product.images[0]?.url || '/placeholder-product.jpg'}
@@ -73,9 +73,9 @@ const ProductGrid = ({ products }) => {
             <p className="mt-1 text-sm text-gray-500">{product.category}</p>
             <p className="mt-2 text-sm text-gray-600 line-clamp-2">{product.description}</p>
             <div className="mt-4 flex justify-between items-center">
-              <p className="text-lg font-bold text-rose-600">₹{product.price.toFixed(2)}</p>
+              <p className="text-lg font-bold text-primary-600">₹{product.price.toFixed(2)}</p>
               {product.countInStock > 0 ? (
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
                   In Stock
                 </span>
               ) : (
@@ -92,3 +92,4 @@ const ProductGrid = ({ products }) => {
 };
 
 export default ProductGrid;
+

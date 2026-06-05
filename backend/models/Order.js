@@ -61,6 +61,12 @@ const orderSchema = new mongoose.Schema({
     deliveredAt: {
         type: Date,
     },
+    paymentResult: {
+  razorpayPaymentId: String,
+  razorpayOrderId: String,
+  razorpaySignature: String,
+},
+
     paymentStatus: {
         type: String,
         default: "pending",
@@ -71,7 +77,7 @@ const orderSchema = new mongoose.Schema({
         default: "Processing",
     },
 },
-{ timeseries: true}
+{ timestamps: true }
 );
 
 module.exports = mongoose.model("order", orderSchema);

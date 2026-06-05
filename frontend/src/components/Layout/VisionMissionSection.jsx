@@ -72,13 +72,13 @@ const VisionMissionSection = () => {
   };
 
   return (
-    <section className="py-12 px-4 bg-rose-50">
+    <section className="bg-gray-50 px-4 py-12 ">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {cards.map((card, index) => (
           <div
             key={index}
             ref={cardRefs[index]}
-            className="relative rounded-xl shadow-lg transition-all duration-500 ease-out overflow-hidden group h-full min-h-[300px]"
+            className="group relative h-full min-h-[300px] overflow-hidden rounded-lg border border-gray-200 shadow-sm transition-all duration-500 ease-out  "
             style={{
               backgroundImage: `url(${card.bgImage})`,
               backgroundSize: "cover",
@@ -91,21 +91,21 @@ const VisionMissionSection = () => {
             onMouseLeave={() => handleMouseLeave(cardRefs[index])}
           >
             {/* Enhanced overlay with gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-700/70 via-gray-600/50 to-gray-800/70 group-hover:from-gray-700/50 group-hover:via-gray-600/30 group-hover:to-gray-800/50 transition-all duration-500 z-0 pointer-events-none"></div>
+            <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-br from-gray-900/70 via-gray-900/45 to-gray-950/75 transition-all duration-500 group-hover:from-gray-900/55 group-hover:via-gray-900/35 group-hover:to-gray-950/65      "></div>
 
             <div className="relative z-10 p-8 flex flex-col h-full transform-style-preserve-3d">
-              <h3 className="text-2xl font-bold mb-6 text-center text-white drop-shadow-md">
+              <h3 className="mb-6 text-center text-2xl font-bold text-white drop-shadow-sm">
                 {card.title}
               </h3>
               {card.type === "paragraph" ? (
-                <p className="text-lg leading-relaxed text-center text-white/90 group-hover:text-white transition-colors duration-300">
+                <p className="text-center text-lg leading-relaxed text-gray-100/90 transition-colors duration-300 group-hover:text-white">
                   {card.content}
                 </p>
               ) : (
-                <ul className="text-lg space-y-3 mx-auto">
+                <ul className="mx-auto space-y-3 text-lg">
                   {card.content.map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-white/90 group-hover:text-white transition-colors duration-300">
-                      <span className="w-3 h-3 bg-white rounded-full flex-shrink-0"></span>
+                    <li key={i} className="flex items-center gap-3 text-gray-100/90 transition-colors duration-300 group-hover:text-white">
+                      <span className="h-3 w-3 flex-shrink-0 rounded-full bg-primary-300 "></span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -120,3 +120,5 @@ const VisionMissionSection = () => {
 };
 
 export default VisionMissionSection;
+
+

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <button id="payBtn">Pay Now</button>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        async function createOrder() {
+            const res = await fetch("http://localhost:9000/api/orders/create-razorpay-order", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    amount: 10000,
+                    currency: "INR",
+                    receipt: "test123"
+                }),
+            });
+
+            const data = await res.json();
+            return data.order;
+        }
+
+        document.getElementById("payBtn").onclick = async () => {
+            const order = await createOrder();
+
+            const options = {
+                key: "rzp_test_RmjUPAPHQ9OLwp", 
+                amount: order.amount,
+                currency: order.currency,
+                name: "Maclienson Healthcare",
+                description: "Test Payment",
+                order_id: order.id,
+                handler: async function (response) {
+                    console.log("PAYMENT RESPONSE", response);
+
+                    // Send to backend for signature verify
+                    const verify = await fetch("http://localhost:9000/api/orders/verify-payment", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(response)
+                    });
+
+                    const verifyData = await verify.json();
+                    console.log("VERIFY RESPONSE", verifyData);
+                    alert(JSON.stringify(verifyData));
+                }
+            };
+
+            const rzp = new Razorpay(options);
+            rzp.open();
+        };
+    </script>
+</body>
+</html>

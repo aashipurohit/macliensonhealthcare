@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 const Categories = () => {
   return (
        <>
-   <section className="bg-rose-100 py-12 px-4 lg:px-0">
+   <section className="bg-gray-50 py-12 px-4  lg:px-0">
   <div className="container mx-auto text-center px-4">
-    <h2 className="text-3xl font-bold text-gray-800 mb-4">Maclienson Healthcare Pvt. Ltd.</h2>
-    <ul className="text-lg font-semibold text-gray-700 leading-relaxed text-left list-disc pl-8 space-y-4">
+    <h2 className="mb-4 text-3xl font-bold text-gray-900 ">Maclienson Healthcare Pvt. Ltd.</h2>
+    <ul className="list-disc space-y-4 pl-8 text-left text-lg font-semibold leading-relaxed text-gray-700 ">
       <li><p>We deliver innovative pharmaceutical solutions with unwavering commitment to quality and efficacy.</p></li>
       <li><p>We provide international standard medicines at affordable prices, making quality healthcare accessible to all patients.</p></li>
       <li><p>Our dedication to research, integrity, and patient well-being drives us to create meaningful health outcomes for communities worldwide.</p></li>
@@ -73,3 +73,4 @@ const Categories = () => {
 };
 
 export default Categories
+

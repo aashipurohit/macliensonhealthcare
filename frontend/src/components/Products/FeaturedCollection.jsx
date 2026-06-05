@@ -4,7 +4,7 @@
 
 // const FeaturedCollection = () => {
 //   return <section className=" bg-red-100 py-16 px-4 lg:px-0">
-//   <div className="container mx-auto flex flex-col-reverse lg:flex-row items-center bg-rose-100 rounded-3xl">
+//   <div className="container mx-auto flex flex-col-reverse lg:flex-row items-center bg-gray-50 rounded-3xl">
     {/* Left Content */}
     // <div className="lg:w-1/2 p-8 text-center lg:text-left">
     //   <h2 className="text-lg font-semibold text-gray-700 mb-2">
@@ -17,7 +17,7 @@
     //   Explore a wide range of high-quality medicines and health products
     //   carefully curated to support your well-being. Delivered with care and precision.
     //   </p>
-    //   <Link to="/collections/all" className="bg-black text-white px-6 py-3 rounded-lg text-lg hover:bg-gray-800">
+    //   <Link to="/collections/all" className="bg-primary-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-primary-700">
     //   Browse Products
     //   </Link>
     // </div>
@@ -35,3 +35,4 @@ className="w-full h-full object-cover lg:rounded-tr-3xl lg:rounded-br-3xl"/>
 }
 
 export default FeaturedCollection */}
+

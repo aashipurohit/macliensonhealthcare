@@ -9,7 +9,7 @@ const FilterPanel = ({
 }) => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm">
-      <h2 className="text-xl font-semibold mb-4 text-gray-800">Filters</h2>
+      <h2 className="text-xl font-semibold mb-4 text-gray-700">Filters</h2>
       
       {/* Categories */}
       <div className="mb-6">
@@ -21,7 +21,7 @@ const FilterPanel = ({
                 type="checkbox"
                 checked={filters.category.includes(category)}
                 onChange={() => onFilterChange('category', category)}
-                className="h-4 w-4 text-rose-400 rounded focus:ring-rose-300"
+                className="h-4 w-4 text-primary-600 rounded focus:ring-primary-500"
               />
               <span className="ml-2 text-gray-700">{category}</span>
             </label>
@@ -39,7 +39,7 @@ const FilterPanel = ({
                 type="checkbox"
                 checked={filters.subcategory.includes(subcategory)}
                 onChange={() => onFilterChange('subcategory', subcategory)}
-                className="h-4 w-4 text-rose-400 rounded focus:ring-rose-300"
+                className="h-4 w-4 text-primary-600 rounded focus:ring-primary-500"
               />
               <span className="ml-2 text-gray-700">{subcategory}</span>
             </label>
@@ -57,7 +57,7 @@ const FilterPanel = ({
               name="prescription"
               checked={filters.prescription === 'all'}
               onChange={() => onFilterChange('prescription', 'all')}
-              className="h-4 w-4 text-rose-400 focus:ring-rose-300"
+              className="h-4 w-4 text-primary-600 focus:ring-primary-500"
             />
             <span className="ml-2 text-gray-700">All Products</span>
           </label>
@@ -67,7 +67,7 @@ const FilterPanel = ({
               name="prescription"
               checked={filters.prescription === 'required'}
               onChange={() => onFilterChange('prescription', 'required')}
-              className="h-4 w-4 text-rose-400 focus:ring-rose-300"
+              className="h-4 w-4 text-primary-600 focus:ring-primary-500"
             />
             <span className="ml-2 text-gray-700">Prescription Required</span>
           </label>
@@ -77,7 +77,7 @@ const FilterPanel = ({
               name="prescription"
               checked={filters.prescription === 'not-required'}
               onChange={() => onFilterChange('prescription', 'not-required')}
-              className="h-4 w-4 text-rose-400 focus:ring-rose-300"
+              className="h-4 w-4 text-primary-600 focus:ring-primary-500"
             />
             <span className="ml-2 text-gray-700">No Prescription Needed</span>
           </label>
@@ -118,7 +118,7 @@ const FilterPanel = ({
             type="checkbox"
             checked={filters.inStock}
             onChange={(e) => onFilterChange('inStock', e.target.checked)}
-            className="h-4 w-4 text-rose-400 rounded focus:ring-rose-300"
+            className="h-4 w-4 text-primary-600 rounded focus:ring-primary-500"
           />
           <span className="ml-2 text-gray-700">In Stock Only</span>
         </label>
@@ -128,3 +128,4 @@ const FilterPanel = ({
 };
 
 export default FilterPanel;
+

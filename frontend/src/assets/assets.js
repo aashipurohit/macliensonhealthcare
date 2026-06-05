@@ -63,6 +63,7 @@ import syndrova_met_sr_t from './syndrova_met_sr_t.png';
 import flavona_forte_sy from './flavona_forte_sy.png';
 import flavona_forte_sy_b from './flavona_forte_sy_b.png';
 import career from './career.jpg'
+import mac_sub_log from './mac_sub_log.jpeg'
 
        
 
@@ -74,6 +75,7 @@ import career from './career.jpg'
 export const assets = {
   logo_maclienson,
   logo_maclienson_br,
+  mac_sub_log,
   // crosin,
   // ecapsule,
   // paracetamol,

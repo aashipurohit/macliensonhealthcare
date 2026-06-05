@@ -52,7 +52,7 @@ const AdminLayout = () => {
           bg-gray-800 w-64 text-white
           ${isMobileSidebarOpen ? 'fixed z-50 transform translate-x-0' : 'fixed transform -translate-x-full'}
           md:relative md:translate-x-0 md:block
-          transition-transform duration-300 ease-in-out
+          transition-all duration-200 ease-in-out
           min-h-screen
         `}
       >
@@ -62,7 +62,7 @@ const AdminLayout = () => {
       {/* Overlay for mobile */}
       {isMobileSidebarOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          className="fixed inset-0 bg-primary-600 bg-opacity-50 z-40 md:hidden"
           onClick={() => setIsMobileSidebarOpen(false)}
         />
       )}
@@ -72,9 +72,10 @@ const AdminLayout = () => {
         className={`
           flex-grow p-4 md:p-6
           transition-all duration-300
-          ${sidebarOpen ? 'md:ml-64' : 'md:ml-0'}
         `}
       >
+        <div className="flex justify-end mb-4">
+        </div>
         <Outlet />
       </div>
     </div>
@@ -82,3 +83,4 @@ const AdminLayout = () => {
 };
 
 export default AdminLayout;
+
