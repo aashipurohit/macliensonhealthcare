@@ -50,7 +50,7 @@ const SortOptions = ({ onSortChange, currentSort }) => {
       <select
         value={currentSort}
         onChange={handleSortChange}
-        className="appearance-none bg-white border border-gray-300 rounded-md pl-3 pr-8 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+        className="appearance-none bg-white border border-gray-300 rounded-md pl-3 pr-8 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
       >
         {sortOptions.map((option) => (
           <option 
@@ -82,3 +82,4 @@ const SortOptions = ({ onSortChange, currentSort }) => {
 };
 
 export default SortOptions;
+

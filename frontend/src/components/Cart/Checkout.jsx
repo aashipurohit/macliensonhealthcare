@@ -1,27 +1,18 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-//import { assets } from "../../assets/assets";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import api from "../../api/apiClient";
+import { clearCart } from "../../redux/slices/cartSlice";
 
-// Mock cart data
-
-
-// Load Razorpay script dynamically
+// Dynamically load Razorpay script
 const loadRazorpay = () => {
   return new Promise((resolve) => {
-    if (window.Razorpay) {
-      resolve(true);
-      return;
-    }
+    if (window.Razorpay) return resolve(true);
 
-    const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.onload = () => {
-      resolve(true);
-    };
-    script.onerror = () => {
-      resolve(false);
-    };
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
     document.body.appendChild(script);
   });
 };
@@ -29,7 +20,8 @@ const loadRazorpay = () => {
 const Checkout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {cart,error} = useSelector((state) => state.cart);
+
+  const { cart } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
 
   const [loading, setLoading] = useState(false);
@@ -41,239 +33,267 @@ const Checkout = () => {
     postalCode: "",
     country: "India",
     phone: "",
-    email: "user@example.com"
+    email: user?.email || "",
   });
 
+  // Input handler
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setShippingAddress(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setShippingAddress((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Handle checkout submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Validate form
-    if (!shippingAddress.firstName || !shippingAddress.lastName || 
-        !shippingAddress.address || !shippingAddress.city || 
-        !shippingAddress.postalCode || !shippingAddress.country || 
-        !shippingAddress.phone || !shippingAddress.email) {
-      alert('Please fill all required fields');
-      return;
+
+    // Validate
+    const requiredFields = [
+      "firstName",
+      "lastName",
+      "address",
+      "city",
+      "postalCode",
+      "country",
+      "phone",
+      "email",
+    ];
+    for (const field of requiredFields) {
+      if (!shippingAddress[field]) {
+        alert("Please fill all required fields");
+        return;
+      }
     }
+
+console.log("Cart object:", cart);
+cart.products.forEach((p, i) => {
+  console.log(`Product ${i}:`, p);
+});
+
+
 
     setLoading(true);
 
     try {
-      // In a real app, you would call your backend to create an order
-      // This is a mock implementation
-      const orderData = {
-        amount: cart.totalPrice * 100, // Razorpay expects amount in paise
-        currency: "INR",
-        receipt: `order_${Date.now()}`,
-        notes: {
-          customerName: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
-          shippingAddress: `${shippingAddress.address}, ${shippingAddress.city}, ${shippingAddress.postalCode}`
-        }
-      };
+      // Create Razorpay order on backend
+     // Prepare orderItems array for backend
+const orderItems = cart.products.map((p) => ({
+  productId:  p.productId,
+  quantity: p.quantity,
+}));
+
+console.log("OrderItems to send to backend:", orderItems);
+
+// Create Razorpay order on backend
+const { data } = await api.post("/api/orders/create-razorpay-order", { orderItems });
+
+
+
+      if (!data?.order) throw new Error("Failed to create Razorpay order");
 
       // Load Razorpay script
       const razorpayLoaded = await loadRazorpay();
-      if (!razorpayLoaded) {
-        throw new Error('Razorpay SDK failed to load');
-      }
+      if (!razorpayLoaded) throw new Error("Failed to load Razorpay SDK");
 
-      // Mock options - in a real app, you would get these from your backend
+      // Configure Razorpay options
       const options = {
-        key: "rzp_test_1DP5mmOlF5G5ag", // Test key - replace with your own in production
-        amount: orderData.amount,
-        currency: orderData.currency,
-        name: "MediCare Pharmacy",
+        key: import.meta.env.VITE_Razorpay_API_KEY, // frontend key
+        amount: data.order.amount,
+        currency: data.order.currency,
+        name: "Maclienson Healthcare",
         description: "Order Payment",
         image: "https://via.placeholder.com/150", // Replace with your logo
-        order_id: `order_${Date.now()}`, // In real app, get this from your backend
-        handler: function(response) {
-          // Handle successful payment
-          navigate('/order-confirmation', {
-            state: {
-              orderDetails: { 
-                shippingAddress, 
-                cart, 
-                paymentDetails: response,
-                orderId: response.razorpay_order_id
-              }
-            }
-          });
+        order_id: data.order.id,
+        handler: async function (response) {
+          try {
+            console.log("Payment verification payload:", {
+  razorpay_payment_id: response.razorpay_payment_id,
+  razorpay_order_id: response.razorpay_order_id,
+  razorpay_signature: response.razorpay_signature,
+  orderItems
+});
+            // Verify payment on backend
+            await api.post("/api/orders/verify",
+              {
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_signature: response.razorpay_signature,
+                orderItems: cart.products.map((p) => ({
+                  productId: p._id,
+                  quantity: p.quantity,
+                })),
+              },
+            );
+
+            // Create order in database
+         const { data: orderData } = await api.post("/api/orders/create", {
+  shipping: shippingAddress,
+  cart,
+  paymentMethod: "razorpay",
+  razorpayPaymentId: response.razorpay_payment_id,
+  totalAmount: cart.totalPrice,
+  orderItems: cart.products.map((item) => ({
+    productId: item.productId,
+    quantity: item.quantity,
+  })),
+});
+            // Clear cart and navigate
+            dispatch(clearCart());
+            navigate("/order-confirmation", { state: { orderDetails: orderData.order } });
+          } catch (err) {
+            console.error("Payment verification/order creation failed:", err);
+            alert("Payment failed or verification failed. Please try again.");
+          }
         },
         prefill: {
           name: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
           email: shippingAddress.email,
-          contact: shippingAddress.phone
+          contact: shippingAddress.phone,
         },
-        notes: orderData.notes,
-        theme: {
-          color: "#3399cc"
-        }
+        theme: { color: "#e11d48" }, // rose-pink theme for SEO/branding
       };
 
       const rzp = new window.Razorpay(options);
       rzp.open();
-      
-      rzp.on('payment.failed', function(response) {
+
+      rzp.on("payment.failed", function (response) {
         alert(`Payment failed: ${response.error.description}`);
       });
     } catch (error) {
-      console.error("Payment error:", error);
-      alert(`Payment failed: ${error.message}`);
+      console.error("Checkout failed:", error);
+      alert(error.message || "Checkout failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto py-10 px-6 tracking-tighter">
-      {/* Left Section - Shipping Form */}
-      <div className="bg-white rounded-lg p-6 shadow-sm">
-        <h2 className="text-2xl uppercase mb-6 font-bold">Checkout</h2>
+    <div className="max-w-7xl mx-auto py-10 px-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
+      {/* Shipping Form */}
+      <div className="bg-white shadow-sm rounded-lg p-6">
+        <h2 className="text-2xl font-bold mb-6 uppercase">Checkout</h2>
         <form onSubmit={handleSubmit}>
-          {/* Contact Details */}
-          <h3 className="text-lg mb-4 font-medium">Contact Details</h3>
+          <h3 className="font-medium text-lg mb-4">Contact Details</h3>
           <div className="mb-4">
-            <label className="block text-gray-700 mb-1">Email <span className="text-red-500">*</span></label>
+            <label className="block mb-1 text-gray-700">Email</label>
             <input
-              type="email"
-              name="email"
-              value={shippingAddress.email}
+                type="email"
+                name="email"
+                value={shippingAddress.email}
+                onChange={handleInputChange}
+                className="w-full p-2 border rounded"
+                placeholder="Enter your email"
+              />
+
+          </div>
+
+          <h3 className="font-medium text-lg mb-4">Delivery Information</h3>
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <input
+              type="text"
+              name="firstName"
+              placeholder="First Name"
+              value={shippingAddress.firstName}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded"
-              disabled
+              className="w-full p-2 border rounded outline-none focus:ring-2 focus:ring-primary-500"
+              required
+            />
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Last Name"
+              value={shippingAddress.lastName}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded outline-none focus:ring-2 focus:ring-primary-500"
+              required
             />
           </div>
 
-          {/* Delivery Information */}
-          <h3 className="text-lg mb-4 font-medium">Delivery Information</h3>
-          <div className="grid grid-cols-2 gap-4 mb-4">
-            <div>
-              <label className="block text-gray-700 mb-1">First Name <span className="text-red-500">*</span></label>
-              <input
-                type="text"
-                name="firstName"
-                value={shippingAddress.firstName}
-                onChange={handleInputChange}
-                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700 mb-1">Last Name <span className="text-red-500">*</span></label>
-              <input
-                type="text"
-                name="lastName"
-                value={shippingAddress.lastName}
-                onChange={handleInputChange}
-                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                required
-              />
-            </div>
-          </div>
-
           <div className="mb-4">
-            <label className="block text-gray-700 mb-1">Address <span className="text-red-500">*</span></label>
             <input
               type="text"
               name="address"
+              placeholder="Address"
               value={shippingAddress.address}
               onChange={handleInputChange}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+              className="w-full p-2 border rounded outline-none focus:ring-2 focus:ring-primary-500"
               required
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4 mb-4">
-            <div>
-              <label className="block text-gray-700 mb-1">City <span className="text-red-500">*</span></label>
-              <input
-                type="text"
-                name="city"
-                value={shippingAddress.city}
-                onChange={handleInputChange}
-                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700 mb-1">Postal Code <span className="text-red-500">*</span></label>
-              <input
-                type="text"
-                name="postalCode"
-                value={shippingAddress.postalCode}
-                onChange={handleInputChange}
-                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                required
-              />
-            </div>
+            <input
+              type="text"
+              name="city"
+              placeholder="City"
+              value={shippingAddress.city}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded outline-none focus:ring-2 focus:ring-primary-500"
+              required
+            />
+            <input
+              type="text"
+              name="postalCode"
+              placeholder="Postal Code"
+              value={shippingAddress.postalCode}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded outline-none focus:ring-2 focus:ring-primary-500"
+              required
+            />
           </div>
 
           <div className="grid grid-cols-2 gap-4 mb-6">
-            <div>
-              <label className="block text-gray-700 mb-1">Country <span className="text-red-500">*</span></label>
-              <select
-                name="country"
-                value={shippingAddress.country}
-                onChange={handleInputChange}
-                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                required
-              >
-                <option value="India">India</option>
-                <option value="USA">United States</option>
-                <option value="UK">United Kingdom</option>
-                <option value="Canada">Canada</option>
-                <option value="Australia">Australia</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-gray-700 mb-1">Phone <span className="text-red-500">*</span></label>
-              <input
-                type="tel"
-                name="phone"
-                value={shippingAddress.phone}
-                onChange={handleInputChange}
-                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                required
-                pattern="[0-9]{10}"
-                title="Please enter a 10-digit phone number"
-              />
-            </div>
+            <select
+              name="country"
+              value={shippingAddress.country}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded outline-none focus:ring-2 focus:ring-primary-500"
+              required
+            >
+              <option value="India">India</option>
+              <option value="USA">United States</option>
+              <option value="UK">United Kingdom</option>
+              <option value="Canada">Canada</option>
+              <option value="Australia">Australia</option>
+            </select>
+            <input
+              type="tel"
+              name="phone"
+              placeholder="Phone"
+              value={shippingAddress.phone}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded outline-none focus:ring-2 focus:ring-primary-500"
+              required
+              pattern="[0-9]{10}"
+              title="Enter 10-digit phone number"
+            />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
-            disabled={loading}
+            disabled={loading || cart.products.length === 0}
+            className="w-full bg-gray-500 hover:bg-primary-600 text-white font-semibold py-3 rounded-lg transition disabled:opacity-50"
           >
-            {loading ? 'Processing...' : `Pay ₹${cart.totalPrice}`}
+            {loading ? "Processing..." : `Pay ₹${cart.totalPrice}`}
           </button>
         </form>
       </div>
 
-      {/* Right Section - Order Summary */}
-      <div className="bg-white rounded-lg p-6 shadow-sm">
-        <h2 className="text-2xl uppercase mb-6 font-bold">Order Summary</h2>
+      {/* Order Summary */}
+      <div className="bg-white shadow-sm rounded-lg p-6">
+        <h2 className="text-2xl font-bold mb-6 uppercase">Order Summary</h2>
         <div className="divide-y">
           {cart.products.map((product) => (
-            <div key={product.id} className="py-4 flex items-center">
+            <div key={product._id} className="py-4 flex items-center">
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-16 h-16 object-cover mr-4 rounded"
+                className="w-16 h-16 object-cover rounded mr-4"
               />
               <div className="flex-grow">
                 <h3 className="font-medium">{product.name}</h3>
-                <p className="text-gray-600 text-sm">{product.subcategory}</p>
+                <p className="text-gray-500 text-sm">{product.subcategory}</p>
                 {product.date && (
-                  <p className="text-gray-500 text-xs">Expiry: {product.date}</p>
+                  <p className="text-gray-400 text-xs">Expiry: {product.date}</p>
                 )}
               </div>
               <div className="text-right">
@@ -288,7 +308,7 @@ const Checkout = () => {
             <span>Subtotal:</span>
             <span>₹{cart.totalPrice}</span>
           </div>
-          <div className="flex justify-between text-gray-600 mb-2">
+          <div className="flex justify-between text-gray-500 mb-2">
             <span>Shipping:</span>
             <span>FREE</span>
           </div>
@@ -303,6 +323,7 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
 
 
 // import React, { useState, useEffect } from 'react';
@@ -484,7 +505,7 @@ export default Checkout;
 
 //       <main className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto py-10 px-4 sm:px-6">
 //         {/* Left Section - Shipping Form */}
-//         <section className="bg-white rounded-lg p-6 shadow-sm">
+//         <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm transition-all duration-200 hover:shadow-md">
 //           <h1 className="text-2xl uppercase mb-6 font-bold">Checkout</h1>
 //           <form onSubmit={handleSubmit}>
 //             <section aria-labelledby="contact-details">
@@ -514,7 +535,7 @@ export default Checkout;
 //                     name="firstName"
 //                     value={shippingAddress.firstName}
 //                     onChange={handleInputChange}
-//                     className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+//                     className="w-full p-2 border rounded focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
 //                     required
 //                   />
 //                 </div>
@@ -526,7 +547,7 @@ export default Checkout;
 //                     name="lastName"
 //                     value={shippingAddress.lastName}
 //                     onChange={handleInputChange}
-//                     className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+//                     className="w-full p-2 border rounded focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
 //                     required
 //                   />
 //                 </div>
@@ -540,7 +561,7 @@ export default Checkout;
 //                   name="address"
 //                   value={shippingAddress.address}
 //                   onChange={handleInputChange}
-//                   className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+//                   className="w-full p-2 border rounded focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
 //                   required
 //                 />
 //               </div>
@@ -554,7 +575,7 @@ export default Checkout;
 //                     name="city"
 //                     value={shippingAddress.city}
 //                     onChange={handleInputChange}
-//                     className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+//                     className="w-full p-2 border rounded focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
 //                     required
 //                   />
 //                 </div>
@@ -566,7 +587,7 @@ export default Checkout;
 //                     name="postalCode"
 //                     value={shippingAddress.postalCode}
 //                     onChange={handleInputChange}
-//                     className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+//                     className="w-full p-2 border rounded focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
 //                     required
 //                   />
 //                 </div>
@@ -580,7 +601,7 @@ export default Checkout;
 //                     name="country"
 //                     value={shippingAddress.country}
 //                     onChange={handleInputChange}
-//                     className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+//                     className="w-full p-2 border rounded focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
 //                     required
 //                   >
 //                     <option value="India">India</option>
@@ -598,7 +619,7 @@ export default Checkout;
 //                     name="phone"
 //                     value={shippingAddress.phone}
 //                     onChange={handleInputChange}
-//                     className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+//                     className="w-full p-2 border rounded focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
 //                     required
 //                     pattern="[0-9]{10}"
 //                     title="Please enter a 10-digit phone number"
@@ -609,7 +630,7 @@ export default Checkout;
 
 //             <button
 //               type="submit"
-//               className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+//               className="w-full bg-primary-600 text-white py-3 rounded-lg font-semibold hover:bg-primary-700 transition disabled:opacity-50"
 //               disabled={loading}
 //               aria-label="Proceed to payment"
 //             >
@@ -619,7 +640,7 @@ export default Checkout;
 //         </section>
 
 //         {/* Right Section - Order Summary */}
-//         <section className="bg-white rounded-lg p-6 shadow-sm">
+//         <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm transition-all duration-200 hover:shadow-md">
 //           <h2 className="text-2xl uppercase mb-6 font-bold">Order Summary</h2>
 //           <div className="divide-y">
 //             {cart.products?.map((product) => (
@@ -670,3 +691,4 @@ export default Checkout;
 // };
 
 // export default Checkout;
+

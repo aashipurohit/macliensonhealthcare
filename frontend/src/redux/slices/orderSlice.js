@@ -6,11 +6,14 @@ export const fetchUserOrders = createAsyncThunk(
     "orders/fetchUserOrders",
     async (_, { rejectWithValue }) => {
     try {
+    const storedUserInfo = localStorage.getItem("userInfo");
+    const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
+    const token = userInfo?.token || localStorage.getItem("userToken");
     const response = await axios.get(
     `${import.meta.env.VITE_BACKEND_URL}/api/orders/my-orders`,
     {
     headers: {
-    Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+    Authorization: `Bearer ${token}`,
     },
 }
     );
@@ -27,20 +30,23 @@ export const fetchOrderDetails = createAsyncThunk(
     "orders/fetchOrderDetails",
     async (orderId, { rejectWithValue }) => {
     try {
+    const storedUserInfo = localStorage.getItem("userInfo");
+    const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
+    const token = userInfo?.token || localStorage.getItem("userToken");
     const response = await axios.get(
     `${import.meta.env.VITE_BACKEND_URL}/api/orders/${orderId}`,
     {
     headers: {
-    Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+    Authorization: `Bearer ${token}`,
     },
     }
     );
     return response.data;
     } catch (error) {
-        rejectWithValue(error.response.data);
+        return rejectWithValue(error.response?.data || error.message);
     }
 }
- 
+  
 );
 
 

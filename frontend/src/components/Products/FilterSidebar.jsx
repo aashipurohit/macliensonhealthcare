@@ -71,13 +71,13 @@
 //   };
 
 //   return (
-//     <div className="w-80 h-full p-6 bg-white border-r border-gray-200 shadow-lg sticky top-0 z-10">
+//     <div className="w-80 h-full p-6 bg-white border-r border-gray-200 shadow-sm sticky top-0 z-10">
 //       {/* Header */}
 //       <div className="flex items-center justify-between mb-6 pb-3 border-b border-gray-200">
-//         <h2 className="text-xl font-semibold text-gray-800">Filter Products</h2>
+//         <h2 className="text-xl font-semibold text-gray-700">Filter Products</h2>
 //         <button 
 //           onClick={clearAllFilters}
-//           className="text-sm text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+//           className="text-sm text-primary-600 hover:text-primary-700 hover:underline transition-colors"
 //         >
 //           Clear all
 //         </button>
@@ -104,13 +104,13 @@
 //           {expandedSections[name] && (
 //             <div className="space-y-3 mt-4 pl-2">
 //               {options.map(({ value, label }) => (
-//                 <label key={value} className="flex items-center gap-3 text-sm text-gray-800 hover:bg-gray-50 p-2 rounded cursor-pointer">
+//                 <label key={value} className="flex items-center gap-3 text-sm text-gray-700 hover:bg-gray-50 p-2 rounded cursor-pointer">
 //                   <input
 //                     type="radio"
 //                     name={name}
 //                     checked={filters[name] === value}
 //                     onChange={() => handleFilterChange(name, value)}
-//                     className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+//                     className="h-4 w-4 text-primary-600 border-gray-300 focus:ring-primary-500"
 //                   />
 //                   <span>{label}</span>
 //                 </label>
@@ -138,13 +138,13 @@
 //           {expandedSections.subcategory && (
 //             <div className="space-y-3 mt-4 pl-2">
 //               {getCurrentSubcategories().map(({ value, label }) => (
-//                 <label key={value} className="flex items-center gap-3 text-sm text-gray-800 hover:bg-gray-50 p-2 rounded cursor-pointer">
+//                 <label key={value} className="flex items-center gap-3 text-sm text-gray-700 hover:bg-gray-50 p-2 rounded cursor-pointer">
 //                   <input
 //                     type="radio"
 //                     name="subcategory"
 //                     checked={filters.subcategory === value}
 //                     onChange={() => handleFilterChange('subcategory', value)}
-//                     className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+//                     className="h-4 w-4 text-primary-600 border-gray-300 focus:ring-primary-500"
 //                   />
 //                   <span>{label}</span>
 //                 </label>
@@ -192,7 +192,7 @@ const FilterSidebar = ({ onClose }) => {
                 type="checkbox"
                 checked={filters.category.includes(category)}
                 onChange={() => handleCategoryChange(category)}
-                className="h-4 w-4 text-rose-400 rounded focus:ring-rose-300"
+                className="h-4 w-4 text-primary-600 rounded focus:ring-primary-500"
               />
               <span className="ml-2 text-gray-700">{category}</span>
             </label>
@@ -210,7 +210,7 @@ const FilterSidebar = ({ onClose }) => {
                 type="checkbox"
                 checked={filters.subcategory.includes(subcategory)}
                 onChange={() => handleSubcategoryChange(subcategory)}
-                className="h-4 w-4 text-rose-400 rounded focus:ring-rose-300"
+                className="h-4 w-4 text-primary-600 rounded focus:ring-primary-500"
               />
               <span className="ml-2 text-gray-700">{subcategory}</span>
             </label>
@@ -228,7 +228,7 @@ const FilterSidebar = ({ onClose }) => {
               name="prescription"
               checked={filters.prescriptionRequired === null}
               onChange={() => handlePrescriptionChange(null)}
-              className="h-4 w-4 text-rose-400 focus:ring-rose-300"
+              className="h-4 w-4 text-primary-600 focus:ring-primary-500"
             />
             <span className="ml-2 text-gray-700">All</span>
           </label>
@@ -238,7 +238,7 @@ const FilterSidebar = ({ onClose }) => {
               name="prescription"
               checked={filters.prescriptionRequired === true}
               onChange={() => handlePrescriptionChange(true)}
-              className="h-4 w-4 text-rose-400 focus:ring-rose-300"
+              className="h-4 w-4 text-primary-600 focus:ring-primary-500"
             />
             <span className="ml-2 text-gray-700">Prescription Required</span>
           </label>
@@ -248,7 +248,7 @@ const FilterSidebar = ({ onClose }) => {
               name="prescription"
               checked={filters.prescriptionRequired === false}
               onChange={() => handlePrescriptionChange(false)}
-              className="h-4 w-4 text-rose-400 focus:ring-rose-300"
+              className="h-4 w-4 text-primary-600 focus:ring-primary-500"
             />
             <span className="ml-2 text-gray-700">No Prescription Needed</span>
           </label>
@@ -302,7 +302,7 @@ const FilterSidebar = ({ onClose }) => {
           <button
             type="button"
             onClick={onClose}
-            className="w-full bg-rose-400 py-2 px-4 text-sm font-medium text-white rounded-md hover:bg-rose-500"
+            className="w-full bg-primary-600 py-2 px-4 text-sm font-medium text-white rounded-md hover:bg-gray-500"
           >
             Apply filters
           </button>
@@ -313,3 +313,4 @@ const FilterSidebar = ({ onClose }) => {
 };
 
 export default FilterSidebar;
+

@@ -1,13 +1,73 @@
+// const dotenv = require("dotenv");
+// dotenv.config();
+// const express = require("express");
+// const cors = require("cors");
+// const sitemapRoute = require("./routes/sitemapRoute");
+
+
+// const morgan = require("morgan"); // For better request logging
+
+// const connectDB = require("./config/db");
+// const userRoutes = require("./routes/userRoutes");
+// const productRoutes = require("./routes/productRoutes");
+// const cartRoutes = require("./routes/cartRoutes");
+// const checkoutRoutes = require("./routes/checkoutRoutes");
+// const orderRoutes = require("./routes/orderRoutes");
+// const uploadRoutes = require("./routes/uploadRoutes");
+// const subscribeRoutes = require("./routes/subscribeRoutes");
+// const adminRoutes = require("./routes/adminRoutes");
+// const productAdminRoutes = require("./routes/productAdminRoutes");
+// const adminOrderRoutes = require("./routes/adminOrderRoutes");
+// const paymentRoutes = require("./routes/paymentRoutes");
+
+// const app = express();
+// app.use(express.json());
+// app.use(cors());
+
+
+// const PORT = process.env.PORT || 3000;
+
+// //Connect to MongoDB
+// connectDB();
+
+// app.get("/", (req, res) => {
+//     res.send("Welcome to MacliensonAPI !");
+// } );
+
+// //API Routes
+// app.use("/api/users", userRoutes);
+// app.use("/api/products", productRoutes);
+// app.use("/api/cart", cartRoutes);
+// app.use("/api/checkout", checkoutRoutes);
+// app.use("/api/orders", orderRoutes);
+// app.use("/api/upload", uploadRoutes);
+// app.use("/api", subscribeRoutes);
+// app.use("/api/payment", paymentRoutes);
+
+// // Admin
+// app.use("/api/admin/users", adminRoutes);
+// app.use("/api/admin/products", productAdminRoutes);
+// app.use("/api/admin/orders", adminOrderRoutes);
+// app.use("/", sitemapRoute);
+
+// app.listen(PORT, () => {
+//     console.log(`Server is running on http://localhost:${PORT}`);
+
+// });
+
+
 const dotenv = require("dotenv");
 dotenv.config();
+
 const express = require("express");
 const cors = require("cors");
-const sitemapRoute = require("./routes/sitemapRoute");
-
-
-const morgan = require("morgan"); // For better request logging
+const morgan = require("morgan");
+const helmet = require("helmet");
 
 const connectDB = require("./config/db");
+
+// Routes
+const sitemapRoute = require("./routes/sitemapRoute");
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
 const cartRoutes = require("./routes/cartRoutes");
@@ -18,29 +78,42 @@ const subscribeRoutes = require("./routes/subscribeRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const productAdminRoutes = require("./routes/productAdminRoutes");
 const adminOrderRoutes = require("./routes/adminOrderRoutes");
-
-
-
+const adminAnalyticsRoutes = require("./routes/adminAnalyticsRoutes");
 
 const app = express();
-app.use(express.json());
-app.use(cors());
 
+/* -------------------- SAFE MIDDLEWARE -------------------- */
+app.set("etag", false);
+app.use(helmet());
+app.use(express.json({ limit: "10kb" }));
 
-const PORT = process.env.PORT || 3000;
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "*",
+    credentials: true,
+  })
+);
 
-//Connect to MongoDB
+if (process.env.NODE_ENV !== "production") {
+  app.use(morgan("dev"));
+}
+
+/* -------------------- DATABASE -------------------- */
+
 connectDB();
 
-app.get("/", (req, res) => {
-    res.send("Welcome to MacliensonAPI !");
-} );
+/* -------------------- HEALTH -------------------- */
 
-//API Routes
+app.get("/", (req, res) => {
+  res.send("Maclienson API running");
+});
+
+/* -------------------- ROUTES -------------------- */
+
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
-app.use("/api/checkout", checkoutRoutes);
+// app.use("/api/checkout", checkoutRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api", subscribeRoutes);
@@ -49,13 +122,21 @@ app.use("/api", subscribeRoutes);
 app.use("/api/admin/users", adminRoutes);
 app.use("/api/admin/products", productAdminRoutes);
 app.use("/api/admin/orders", adminOrderRoutes);
+app.use("/api/admin/analytics", adminAnalyticsRoutes);
+
+// Sitemap
 app.use("/", sitemapRoute);
 
+/* -------------------- ERROR HANDLER -------------------- */
 
-
-
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-
+app.use((err, req, res, next) => {
+  console.error("ERROR:", err.message);
+  res.status(500).json({ message: "Server error" });
 });
 
+/* -------------------- START -------------------- */
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

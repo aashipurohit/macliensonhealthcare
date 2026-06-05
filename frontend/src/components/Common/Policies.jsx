@@ -19,13 +19,13 @@ const Policies = () => {
 
   return (
     <div className="container mx-auto px-4 py-10 max-w-4xl">
-      <h1 className="text-3xl font-bold text-gray-800 mb-10 text-center">
+      <h1 className="text-3xl font-bold text-gray-700 mb-8 text-center">
         Policies & Information
       </h1>
 
       {/* Terms and Conditions */}
-      <section id="terms" className="mb-12 scroll-mt-24">
-        <h2 className="text-2xl font-semibold text-rose-500 mb-3">Terms & Conditions</h2>
+      <section id="terms" className="mb-8 scroll-mt-24">
+        <h2 className="text-2xl font-semibold text-primary-600 mb-3">Terms & Conditions</h2>
         <p className="text-gray-600 leading-relaxed">
           These Terms and Conditions govern your use of Maclienson Healthcare products
           and website. By accessing the platform, you agree to abide by all rules,
@@ -34,8 +34,8 @@ const Policies = () => {
       </section>
 
       {/* Shipping and Delivery */}
-      <section id="shipping" className="mb-12 scroll-mt-24">
-        <h2 className="text-2xl font-semibold text-rose-500 mb-3">Shipping & Delivery</h2>
+      <section id="shipping" className="mb-8 scroll-mt-24">
+        <h2 className="text-2xl font-semibold text-primary-600 mb-3">Shipping & Delivery</h2>
         <p className="text-gray-600 leading-relaxed">
           We provide fast and reliable shipping across India. Orders are usually
           dispatched within 24–48 hours. Delivery time depends on location, usually
@@ -44,8 +44,8 @@ const Policies = () => {
       </section>
 
       {/* Privacy Policy */}
-      <section id="privacy" className="mb-12 scroll-mt-24">
-        <h2 className="text-2xl font-semibold text-rose-500 mb-3">Privacy Policy</h2>
+      <section id="privacy" className="mb-8 scroll-mt-24">
+        <h2 className="text-2xl font-semibold text-primary-600 mb-3">Privacy Policy</h2>
         <p className="text-gray-600 leading-relaxed">
           Your privacy matters to us. We collect only essential information required for 
           processing orders, improving user experience, and providing customer support. 
@@ -54,8 +54,8 @@ const Policies = () => {
       </section>
 
       {/* How to Order */}
-      <section id="howtoorder" className="mb-12 scroll-mt-24">
-        <h2 className="text-2xl font-semibold text-rose-500 mb-3">How to Order</h2>
+      <section id="howtoorder" className="mb-8 scroll-mt-24">
+        <h2 className="text-2xl font-semibold text-primary-600 mb-3">How to Order</h2>
         <p className="text-gray-600 leading-relaxed">
           Ordering is simple: Browse products → Add to Cart → Proceed to Checkout →
           Fill shipping details → Complete payment. You will receive a confirmation
@@ -67,3 +67,5 @@ const Policies = () => {
 };
 
 export default Policies;
+
+

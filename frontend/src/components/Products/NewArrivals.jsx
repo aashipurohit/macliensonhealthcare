@@ -133,8 +133,8 @@
 //   };
 
 //   return (
-//     <section className="py-16 bg-rose-50">
-//       <div className="container mx-auto text-center mb-10 relative">
+//     <section className="py-16 bg-gray-50">
+//       <div className="container mx-auto text-center mb-8 relative">
 //         <h2 className="text-3xl font-bold mb-4">Explore New Arrivals</h2>
 //         <p className="text-lg text-gray-600 mb-8">
 //           Stay ahead in health with our most recent pharmaceutical additions.
@@ -173,7 +173,7 @@
 //         {newArrivals.map((product) => (
 //           <div
 //            key={product._id}
-//             className="min-w-[280px] sm:min-w-[340px] h-[450px] relative bg-rose-50 rounded-xl overflow-hidden shadow-lg flex flex-col"
+//             className="min-w-[280px] sm:min-w-[340px] h-[450px] relative bg-gray-50 rounded-lg overflow-hidden shadow-sm flex flex-col"
 //               >
 
 //             <img
@@ -181,7 +181,7 @@
 //             alt={product.name}
 //             className="w-full h-[500px] object-contain p-2"
 //             />
-//            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white text-left px-4 py-3">
+//            <div className="absolute bottom-0 left-0 right-0 bg-primary-600 bg-opacity-70 text-white text-left px-4 py-3">
 
 //               <Link to={`/product/${product._id}`} className="block">
 //                 <h4 className="text-lg font-semibold">{product.name}</h4>
@@ -298,7 +298,7 @@ useEffect(() => {
   // Loading and error states
   if (loading) {
     return (
-      <section className="py-16 bg-rose-50">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto text-center">
           <p>Loading new arrivals...</p>
         </div>
@@ -308,7 +308,7 @@ useEffect(() => {
 
   if (error) {
     return (
-      <section className="py-16 bg-rose-50">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto text-center text-red-500">
           <p>Error loading products: {error}</p>
         </div>
@@ -317,8 +317,8 @@ useEffect(() => {
   }
 
   return (
-    <section className="py-16 bg-rose-50">
-      <div className="container mx-auto text-center mb-10 relative">
+    <section className="py-16 bg-gray-50">
+      <div className="container mx-auto text-center mb-8 relative">
         <h2 className="text-3xl font-bold mb-4">Explore New Arrivals</h2>
         <p className="text-lg text-gray-600 mb-8">
           Stay ahead in health with our most recent pharmaceutical additions.
@@ -327,14 +327,14 @@ useEffect(() => {
         {/* Scroll buttons */}
         <div className="absolute right-0 bottom-[-30px] flex space-x-2">
           <button
-            className="p-2 rounded border bg-white text-black hover:bg-rose-100 transition"
+            className="p-2 rounded border bg-white text-black hover:bg-gray-50 transition"
             onClick={() => scroll("left")}
             aria-label="Scroll left"
           >
             <FiChevronLeft className="text-2xl" />
           </button>
           <button
-            className="p-2 rounded border bg-white text-black hover:bg-rose-100 transition disabled:opacity-50"
+            className="p-2 rounded border bg-white text-black hover:bg-gray-50 transition disabled:opacity-50"
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
             aria-label="Scroll right"
@@ -363,7 +363,7 @@ useEffect(() => {
   {newArrivals.map((product) => (
     <div
       key={product._id}
-      className="w-[280px] flex-shrink-0 snap-start bg-white rounded-xl shadow-lg flex flex-col" // Fixed width here
+      className="w-[280px] flex-shrink-0 snap-start bg-white rounded-lg shadow-sm flex flex-col" // Fixed width here
     >
       {/* Product image - Fixed aspect ratio container */}
       <div className="relative pt-[75%] bg-gray-50"> {/* 4:3 aspect ratio */}
@@ -383,7 +383,7 @@ useEffect(() => {
           to={`/product/${product._id}`} 
           className="group block flex-grow"
         >
-          <h3 className="text-lg font-semibold mb-2 group-hover:text-rose-600 transition line-clamp-2">
+          <h3 className="text-lg font-semibold mb-2 group-hover:text-primary-600 transition line-clamp-2">
             {product.name}
           </h3>
           <p className="text-gray-600 text-sm mb-3 line-clamp-3">
@@ -392,7 +392,7 @@ useEffect(() => {
         </Link>
         
         <div className="mt-auto">
-          <p className="text-lg font-bold text-rose-700">
+          <p className="text-lg font-bold text-primary-700">
             ₹{product.price.toLocaleString()}
           </p>
           {product.countInStock > 0 ? (

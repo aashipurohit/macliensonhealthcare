@@ -212,7 +212,7 @@ const FullScreenImageView = ({
                   onClick={() => onQuantityChange(qty)}
                   className={`px-4 py-2 border rounded-full text-sm ${
                     selectedQuantity === qty 
-                      ? 'bg-black text-white' 
+                      ? 'bg-primary-600 text-white' 
                       : 'bg-gray-100 hover:bg-gray-200'
                   }`}
                 >
@@ -245,7 +245,7 @@ const FullScreenImageView = ({
           {/* Add to cart button */}
           <button 
             onClick={onAddToCart}
-            className="w-full bg-black text-white py-3 px-4 rounded-lg font-medium hover:bg-gray-800 mt-auto flex items-center justify-center gap-2"
+            className="w-full bg-primary-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-primary-700 mt-auto flex items-center justify-center gap-2"
           >
             <FaShoppingCart />
             ADD TO CART

@@ -1,187 +1,116 @@
-import React from 'react';
-import {Link} from "react-router-dom";
+import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 import { assets } from '../../assets/assets'; 
-import {HiOutlineUser ,HiOutlineShoppingBag, HiBars3BottomRight } from "react-icons/hi2";
+import { HiOutlineUser, HiOutlineShoppingBag, HiBars3BottomRight } from "react-icons/hi2";
 import SearchBar from '../Common/SearchBar';
 import CartDrawer from '../Layout/CartDrawer';
-import  { useState } from 'react';
 import { IoMdClose } from "react-icons/io";
 import { useSelector } from "react-redux";
 
-
-
 const Navbar = () => {
-
   const [drawerOpen, setDrawerOpen] = useState(false);
-
   const [navDrawerOpen, setNavDrawer] = useState(false);
    
-  const {cart} = useSelector((state) => state.cart);
+  const { cart } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.auth);
 
-  const {user} = useSelector((state) => state.auth); // Add this line to get user data
+  const cartItemCount = cart?.products?.reduce((total, product) => total + product.quantity, 0) || 0;
 
-  const cartItemCount = 
-  cart?.products?.reduce((total, product) => total + product.quantity, 0) || 0;
+  const toggleCartDrawer = () => setDrawerOpen(!drawerOpen);
+  const toggleNavDrawer = () => setNavDrawer(!navDrawerOpen);
 
+  // Define your paths explicitly here so they don't break
+  const navLinks = [
+    { name: 'HOME', path: '/' },
+    { name: 'ABOUT US', path: '/about' },
+    { name: 'PRODUCTS', path: '/collections/all' },
+    { name: 'CERTIFICATIONS', path: '/certifications' },
+    { name: 'CAREER', path: '/career' },
+    { name: 'CONTACT US', path: '/contact' },
+  ];
 
-    const toggleCartDrawer = () => {
-        setDrawerOpen(!drawerOpen);
-
-        
-    };
-    const toggleNavDrawer = () => {
-      setNavDrawer(!navDrawerOpen);
-    };
   return (
     <>
-      <nav className="container mx-auto flex items-center justify-between py-4 px-6">
-        {/*Left-Logo */}
-        <div className="pl-4 md:pl-6 lg:pl-8">
-          <Link to="/" className= "text-2xl font-medium" >
-          <img
-  src={assets.logo_maclienson_br}
-  alt="Maclienson Logo"
-  
-  className="h-20 w-auto"
-/>
-
+      <nav className="container mx-auto flex items-center justify-between px-4 py-4 text-primary-950">
+        
+        {/* Left - Logo & Legal Info */}
+        <div className="flex flex-col items-center min-w-[280px]">
+          <Link to="/" className="flex-shrink-0">
+            <img src={assets.logo_maclienson_br} alt="Maclienson Logo" className="h-20 w-auto object-contain" />
           </Link>
-        </div>
-        {/* Center -Navigation Links*/}
-        <div className="hidden md:flex space-x-6">
-            <Link to="/" className="text-gray-700 hover:text-black text-base font-bold uppercase">
-            HOME 
-            </Link>
-            <Link to="/about" className="text-gray-700 hover:text-black text-base font-bold uppercase">
-            ABOUT US
-            </Link>
-            <Link to="/collections/all" className="text-gray-700 hover:text-black text-base font-bold uppercase">
-            PRODUCTS
-            </Link>
-            <Link to="certifications" className="text-gray-700 hover:text-black text-base font-bold uppercase">
-            CERTIFICATIONS
-            </Link>
-            <Link to="/career" className="text-gray-700 hover:text-black text-base font-bold uppercase">
-            CAREER
-            </Link>
-            <Link to="/contact" className="text-gray-700 hover:text-black text-base font-bold uppercase">
-            CONTACT US
-            </Link>
-            
-        </div>
+          
+          <div className="mt-2 flex flex-col items-center text-center leading-tight">
+            <div className="text-[9px] uppercase tracking-[0.2em] font-bold text-primary-900 leading-tight">
+              <span>A DIVISION OF MACLIENSON </span>
+              <br />
+              <span>LIFE SCIENCES INC.</span>
+            </div>
 
-{/*Right - Icons */}
-
-<div className="flex items-center space-x-4">
-  {/* Admin Button - Only show if user is admin */}
-          {user?.role === 'admin' && (
-            
-  <Link 
-  to="/admin" 
-  className="hidden md:block bg-rose-400 text-black px-4 py-2  rounded-md text-base font-medium hover:bg-gray-800  hover:text-white transition">
-    Admin
-    </Link>
-          )}
-      {user ? (
-            <Link to="/profile" className="hover:text-black" aria-label="Go to Profile">
-              <HiOutlineUser className="h-6 w-6 text-gray-700" />
-            </Link>
-          ) : (
-            <Link 
-              to="/login" 
-              className="hidden md:block bg-rose-400 text-black px-4 py-2 rounded-md text-base font-medium hover:bg-gray-800 hover:text-white transition"
-            >
-              Login
-            </Link>
-          )}
-
-  <button
-   onClick={toggleCartDrawer} className="relative hover:text-black">
-    <HiOutlineShoppingBag className="h-6 w-6 text-gray-700"  />
-    {cartItemCount > 0 && (<span className="absolute -top-1  bg-cyan-950 text-white text-xs rounded-full px-2 py-0.5">
-    {cartItemCount}
-  </span>)}
-  </button>
-{/*Search*/}
-<div className="overflow-hidden">
-<SearchBar/>
-</div>
-
-<button 
-onClick={toggleNavDrawer} 
-className="md:hidden"
-aria-label={navDrawerOpen ? "Close navigation menu" : "Open navigation menu"}
-  aria-expanded={navDrawerOpen}
-  aria-controls="mobile-menu">
-  <HiBars3BottomRight className="h-6 w-6 text-gray-700" aria-hidden="true" />
-</button>
-</div>
-
-      </nav>
-      <CartDrawer drawerOpen={drawerOpen} toggleCartDrawer={toggleCartDrawer}/>
-
-      {/* Mobile Navigation */}
-      <div
-      id= "mobile-menu"
-       className={`fixed top-0 left-0 w-3/4 sm:w-1/2 md:w-1/3 h-full bg-white shadow-lg transform transition-transform duration-300 z-50 ${
-        navDrawerOpen ? "translate-x-0 " : "-translate-x-full"}`}
-        >
-          <div className="flex justify-end p-4">
-            <button 
-            aria-label="Close" 
-            onClick={toggleNavDrawer}>
-            <IoMdClose className = "h-6 w-6 text-gray-600"/>
-            </button>
+            <div className="mt-1 flex flex-col items-center text-[8px] font-semibold text-primary-700/90 leading-tight text-center">
+              <span>REGISTERED OFFICE:</span>
+              <span>30N GOULD STREET,</span>
+              <span>SHERIDAN, WYOMING- 82801, USA</span>
+            </div>
           </div>
-<div className="p-4">
-  <h2 className="text-xl font-semisolid mb-4">Menu</h2>
-  <nav className="space-y-4 ">
-    <Link to="/" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
-    HOME
-    </Link>
+        </div>
 
-    <Link to="/about" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
-  ABOUT US
-    </Link>
-
-    <Link to="/collections/all" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
-   PRODUCTS
-    </Link>
-
-    <Link to="/certifications" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
-    CERTIFICATIONS
-    </Link>
-
-    <Link to="/career" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
-    CAREER
-    </Link>
-
-    <Link to="/contact" onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">
-    CONTACT US
-    </Link>
-
-   {/* Conditionally show Admin in mobile menu */}
-          {user?.role === 'admin' && (
+        {/* Center - Navigation Links */}
+        <div className="hidden md:flex space-x-6 lg:space-x-8">
+          {navLinks.map((link) => (
             <Link 
-              to="/admin" 
-              onClick={toggleNavDrawer} 
-              className="block bg-black text-white px-2 py-1 rounded text-sm font-medium hover:bg-gray-800"
+              key={link.name}
+              to={link.path} 
+              className="text-sm font-semibold tracking-widest uppercase text-primary-800 transition-colors hover:text-gold-400 whitespace-nowrap"
             >
-              Admin
+              {link.name}
             </Link>
+          ))}
+        </div>
+
+        {/* Right - Icons */}
+        <div className="flex items-center space-x-4 lg:space-x-5">
+          {user?.role === 'admin' && (
+            <Link to="/admin" className="hidden lg:block rounded-full bg-primary-800 px-5 py-2 text-sm font-medium text-champagne-50 hover:bg-primary-900">Admin</Link>
           )}
-    <Link to="/login" onClick={toggleNavDrawer} className="block bg-black text-white px-2 py-1 rounded text-sm font-medium hover:bg-gray-800">
-      Login
-    </Link>
+          {user ? (
+            <Link to="/profile" className="text-primary-800"><HiOutlineUser className="h-6 w-6" /></Link>
+          ) : (
+            <Link to="/login" className="hidden lg:block rounded-full bg-primary-800 px-5 py-2 text-sm font-medium text-champagne-50">Login</Link>
+          )}
+          <button onClick={toggleCartDrawer} className="relative text-primary-800 hover:text-gold-400 transition-colors">
+            <HiOutlineShoppingBag className="h-6 w-6" />
+            {cartItemCount > 0 && (
+              <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-gold-400 text-[10px] font-bold text-primary-950 shadow-sm">
+                {cartItemCount}
+              </span>
+            )}
+          </button>
+          <div className="overflow-hidden">
+            <SearchBar />
+          </div>
+          <button onClick={toggleNavDrawer} className="md:hidden text-primary-800 hover:text-gold-400"><HiBars3BottomRight className="h-7 w-7" /></button>
+        </div>
+      </nav>
 
-    
-  </nav>
+      <CartDrawer drawerOpen={drawerOpen} toggleCartDrawer={toggleCartDrawer} />
 
-</div>
-
+      {/* Mobile Nav */}
+      <div className={`fixed top-0 left-0 z-50 h-full w-3/4 border-r border-gold-200 bg-champagne-50 shadow-regal transform transition-all duration-300 ease-in-out ${navDrawerOpen ? "translate-x-0" : "-translate-x-full"}`}>
+        <div className="flex justify-end p-4">
+          <button onClick={toggleNavDrawer}><IoMdClose className="h-7 w-7 text-primary-800" /></button>
+        </div>
+        <div className="p-6">
+          <nav className="space-y-6">
+            {navLinks.map((link) => (
+                <Link key={link.name} to={link.path} onClick={toggleNavDrawer} className="block text-base font-bold tracking-wider text-primary-800">
+                    {link.name}
+                </Link>
+            ))}
+          </nav>
+        </div>
       </div>
     </>
   );
 };
 
-export default Navbar
+export default Navbar;

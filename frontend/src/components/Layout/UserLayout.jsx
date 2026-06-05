@@ -14,7 +14,7 @@ const UserLayout = () => {
     dispatch(fetchCart()); // fetch cart on layout mount
   }, [dispatch]);
   return (
-    <>
+    <div className="min-h-screen bg-gray-50 text-gray-900  ">
     {/*Header*/}
     <Header />
     
@@ -26,8 +26,9 @@ const UserLayout = () => {
 
     {/* Footer */ }
     <Footer />
-    </>
+    </div>
   );
 };
 
 export default UserLayout;
+

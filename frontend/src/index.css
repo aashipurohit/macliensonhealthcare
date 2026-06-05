@@ -2,17 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-#root {
-    font-family: "Inter", sans-serif;
+@layer base {
+  /* 1. Base UI Setup */
+  #root {
+    @apply font-sans antialiased;
     font-optical-sizing: auto;
-    font-style: normal;
+  }
+
+  body {
+    /* Using Primary-50 (Champagne) for background and Primary-950 for text */
+    @apply bg-primary-50 text-primary-950;
+  }
+
+  /* 2. Editorial Heading Typography */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-primary-950 tracking-normal;
+  }
+
+  /* 3. Premium Selection Effect */
+  ::selection {
+    @apply bg-gold-200 text-primary-950;
+  }
 }
 
+@layer components {
+  /* Reusable Luxury Components */
+  
+  /* The "Maclienson" Card - used for products, grids, and containers */
+  .mh-card {
+    @apply overflow-hidden rounded-xl border border-gold-100 bg-white/90 shadow-regal transition hover:-translate-y-1;
+  }
+
+  /* The "Maclienson" Button - consistent Terracotta CTA */
+  .mh-primary-btn {
+    @apply rounded-full bg-primary-800 px-6 py-3 text-sm font-semibold text-champagne-50 shadow-regal transition hover:bg-primary-900 active:scale-95;
+  }
+
+  /* Subtitles and Muted Text */
+  .mh-body-muted {
+    @apply text-sm leading-6 text-primary-900/70;
+  }
+  
+  /* Eyebrow headings for collections */
+  .mh-eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.14em] text-primary-800/70;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────
+   EXISTING UTILITIES (KEPT PERFECTLY SAFE)
+   ───────────────────────────────────────────────────────── */
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
 .hide-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-

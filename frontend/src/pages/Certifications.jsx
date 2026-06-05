@@ -28,13 +28,11 @@ const pastelTheme = createTheme({
     primary: {
       main: '#A8D8EA', // Pastel blue
       light: '#D3E5EF',
-      dark: '#89C4E1',
       contrastText: '#000000', // Black text
     },
     secondary: {
       main: '#F8B195', // Pastel peach
       light: '#FCD0BD',
-      dark: '#F5926B',
       contrastText: '#000000', // Black text
     },
     background: {
@@ -373,11 +371,11 @@ const Certifications = () => {
             sx={{ 
               mr: 2,
               backgroundColor: theme.palette.secondary.main,
-              color: theme.palette.secondary.contrastText,
-              '&:hover': {
-                backgroundColor: theme.palette.secondary.dark
-              }
-            }}
+                color: theme.palette.secondary.contrastText,
+                '&:hover': {
+                  backgroundColor: theme.palette.secondary.main
+                }
+              }}
             href="/contact"
           >
             Request Documents

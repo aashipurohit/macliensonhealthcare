@@ -35,9 +35,9 @@ export default function AboutUs() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="bg-white rounded-xl shadow-lg overflow-hidden"
+          className="bg-white rounded-lg shadow-sm overflow-hidden"
         >
-          <div className="p-8 sm:p-10">
+          <div className="p-8 sm:p-8">
             <h2 className="text-2xl font-semibold text-indigo-800 mb-6">
               Our Story
             </h2>
@@ -55,7 +55,7 @@ export default function AboutUs() {
                       {product.icon}
                     </div>
                     <div>
-                      <h3 className="text-lg font-medium text-gray-800">{product.name}</h3>
+                      <h3 className="text-lg font-medium text-gray-700">{product.name}</h3>
                       <p className="text-gray-600">{product.desc}</p>
                     </div>
                   </div>
@@ -78,7 +78,7 @@ export default function AboutUs() {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="bg-indigo-50 rounded-xl p-8"
+          className="bg-indigo-50 rounded-lg p-8"
         >
           <h3 className="text-xl font-semibold text-indigo-800 mb-4">
             Our Vision
@@ -94,7 +94,7 @@ export default function AboutUs() {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="bg-amber-50 rounded-xl p-8"
+          className="bg-amber-50 rounded-lg p-8"
         >
           <h3 className="text-xl font-semibold text-amber-800 mb-4">
             Our Mission
@@ -117,7 +117,7 @@ export default function AboutUs() {
           <h2 className="text-2xl font-semibold text-indigo-800 mb-6 text-center">
             Our Headquarters
           </h2>
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
             <div className="p-6">
               <div className="flex items-center justify-center mb-4">
                 <MapPin className="text-red-500 mr-2" />
@@ -142,7 +142,7 @@ export default function AboutUs() {
 
               {/* Address Box */}
               <div className="mt-6 bg-gray-50 p-4 rounded-lg">
-                <h3 className="text-lg font-medium text-gray-800 mb-2">
+                <h3 className="text-lg font-medium text-gray-700 mb-2">
                   Maclienson Healthcare Pvt. Ltd.
                 </h3>
                 <address className="not-italic text-gray-600">
@@ -172,3 +172,4 @@ export default function AboutUs() {
     </div>
   );
 }
+

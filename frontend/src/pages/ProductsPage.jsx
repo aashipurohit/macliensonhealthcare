@@ -3,12 +3,12 @@
 
 // const ProductDetailModal = ({ product, similarProducts, onClose, onAddToCart, onSimilarProductClick }) => {
 //   return (
-//     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+//     <div className="fixed inset-0 bg-primary-600 bg-opacity-50 flex items-center justify-center p-4 z-50">
 //       <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
 //         <div className="p-6">
 //           <div className="flex justify-between items-start mb-4">
 //             <div>
-//               <h2 className="text-2xl font-bold text-gray-800">{product.name}</h2>
+//               <h2 className="text-2xl font-bold text-gray-700">{product.name}</h2>
 //               <div className="flex items-center mt-1">
 //                 <div className="flex text-yellow-400">
 //                   {[...Array(5)].map((_, i) => (
@@ -37,18 +37,18 @@
 //                 className="h-64 w-full object-contain"
 //                 loading="lazy"
 //               />
-//               <div className="absolute top-2 left-2 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+//               <div className="absolute top-2 left-2 bg-primary-50 text-primary-700 text-xs px-2 py-1 rounded">
 //                 {product.category}
 //               </div>
 //               {product.prescriptionRequired && (
-//                 <div className="absolute top-2 right-2 bg-rose-100 text-red-800 text-xs px-2 py-1 rounded">
+//                 <div className="absolute top-2 right-2 bg-gray-50 text-red-800 text-xs px-2 py-1 rounded">
 //                   Prescription Required
 //                 </div>
 //               )}
 //             </div>
 //             <div>
 //               <div className="mb-4">
-//                 <h3 className="text-lg font-semibold text-gray-800">Product Information</h3>
+//                 <h3 className="text-lg font-semibold text-gray-700">Product Information</h3>
 //                 <div className="mt-2 text-sm text-gray-600">
 //                   <p><span className="font-medium">Category:</span> {product.category}</p>
 //                   <p><span className="font-medium">Subcategory:</span> {product.subcategory}</p>
@@ -56,7 +56,7 @@
 //                 </div>
 //               </div>
               
-//               <p className="text-lg font-bold text-blue-600 mb-4">₹{product.price.toFixed(2)}</p>
+//               <p className="text-lg font-bold text-primary-600 mb-4">₹{product.price.toFixed(2)}</p>
               
 //               <div className="prose prose-sm text-gray-600 mb-4">
 //                 {product.detailedDescription || (
@@ -94,7 +94,7 @@
 
 //               <button 
 //                 onClick={() => onAddToCart(product)}
-//                 className="w-full py-2 px-4 bg-rose-400 text-white rounded-md hover:bg-rose-500 transition-colors"
+//                 className="w-full py-2 px-4 bg-primary-600 text-white rounded-md hover:bg-gray-500 transition-colors"
 //               >
 //                 Add to Cart
 //               </button>
@@ -103,12 +103,12 @@
 
 //           {similarProducts.length > 0 && (
 //             <div className="mt-8">
-//               <h3 className="text-xl font-semibold text-gray-800 mb-4">Similar Products</h3>
+//               <h3 className="text-xl font-semibold text-gray-700 mb-4">Similar Products</h3>
 //               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
 //                 {similarProducts.map(similar => (
 //                   <div 
 //                     key={similar.id} 
-//                     className="border rounded-lg p-2 cursor-pointer hover:shadow-md"
+//                     className="border rounded-lg p-2 cursor-pointer hover:shadow-sm"
 //                     onClick={() => onSimilarProductClick(similar)}
 //                     role="button"
 //                     tabIndex={0}
@@ -122,14 +122,14 @@
 //                         className="h-full w-full object-contain"
 //                         loading="lazy"
 //                       />
-//                       <div className="absolute top-1 left-1 bg-blue-100 text-rose-400 text-xs px-1 py-0.5 rounded">
+//                       <div className="absolute top-1 left-1 bg-primary-50 text-primary-600 text-xs px-1 py-0.5 rounded">
 //                         {similar.category}
 //                       </div>
 //                     </div>
-//                     <p className="text-sm font-medium text-gray-800 truncate">{similar.name}</p>
+//                     <p className="text-sm font-medium text-gray-700 truncate">{similar.name}</p>
 //                     <div className="flex justify-between items-center mt-1">
 //                       <span className="text-xs text-gray-500">{similar.subcategory}</span>
-//                       <span className="text-xs font-bold text-rose-300">₹{similar.price.toFixed(2)}</span>
+//                       <span className="text-xs font-bold text-primary-600">₹{similar.price.toFixed(2)}</span>
 //                     </div>
 //                   </div>
 //                 ))}
@@ -291,15 +291,15 @@
 //   };
 
 //   return (
-//     <div className="w-full bg-rose-100">
+//     <div className="w-full bg-gray-50">
 //       <div className="max-w-screen-2xl mx-auto">
-//         <h1 className="text-3xl font-bold text-gray-800 mb-8 px-4 pt-8">Products</h1>
+//         <h1 className="text-3xl font-bold text-gray-700 mb-8 px-4 pt-8">Products</h1>
         
 //         {/* Mobile Filter/Sort Buttons */}
 //         <div className="md:hidden flex justify-between mb-4 px-4">
 //           <button 
 //             onClick={() => setShowMobileFilters(!showMobileFilters)}
-//             className="flex items-center gap-1 px-4 py-2 bg-rose-200 rounded-lg shadow-sm"
+//             className="flex items-center gap-1 px-4 py-2 bg-gray-100 rounded-lg shadow-sm"
 //             aria-expanded={showMobileFilters}
 //             aria-controls="mobile-filters"
 //           >
@@ -308,7 +308,7 @@
 //           </button>
 //           <button 
 //             onClick={() => setShowMobileSort(!showMobileSort)}
-//             className="flex items-center gap-1 px-4 py-2 bg-rose-200 rounded-lg shadow-sm"
+//             className="flex items-center gap-1 px-4 py-2 bg-gray-100 rounded-lg shadow-sm"
 //             aria-expanded={showMobileSort}
 //             aria-controls="mobile-sort"
 //           >
@@ -321,9 +321,9 @@
 //           {/* Filter Sidebar */}
 //           <div 
 //             id="mobile-filters"
-//             className={`${showMobileFilters ? 'block fixed inset-0 z-40 bg-rose-200 p-6 overflow-y-auto' : 'hidden'} md:block w-full md:w-64 flex-shrink-0`}
+//             className={`${showMobileFilters ? 'block fixed inset-0 z-40 bg-gray-100 p-6 overflow-y-auto' : 'hidden'} md:block w-full md:w-64 flex-shrink-0`}
 //           >
-//             <div className="md:bg-rose-200 md:p-6 md:rounded-lg md:shadow-md">
+//             <div className="md:bg-gray-100 md:p-6 md:rounded-lg md:shadow-sm">
 //               <div className="flex justify-between items-center mb-4">
 //                 <h2 className="text-xl font-semibold text-gray-700">Filters</h2>
 //                 <button 
@@ -345,7 +345,7 @@
 //                         type="checkbox"
 //                         checked={selectedCategories.includes(category)}
 //                         onChange={() => handleCategoryChange(category)}
-//                         className="h-4 w-4 text-rose-400 rounded focus:ring-rose-300"
+//                         className="h-4 w-4 text-primary-600 rounded focus:ring-primary-500"
 //                       />
 //                       <span className="ml-2 text-gray-700">{category}</span>
 //                     </label>
@@ -363,7 +363,7 @@
 //                         type="checkbox"
 //                         checked={selectedSubcategories.includes(subcategory)}
 //                         onChange={() => handleSubcategoryChange(subcategory)}
-//                         className="h-4 w-4 text-rose-400 rounded focus:ring-rose-300"
+//                         className="h-4 w-4 text-primary-600 rounded focus:ring-primary-500"
 //                       />
 //                       <span className="ml-2 text-gray-700">{subcategory}</span>
 //                     </label>
@@ -381,7 +381,7 @@
 //                       name="prescription"
 //                       checked={prescriptionFilter === 'all'}
 //                       onChange={() => setPrescriptionFilter('all')}
-//                       className="h-4 w-4 text-rose-400 focus:ring-rose-300"
+//                       className="h-4 w-4 text-primary-600 focus:ring-primary-500"
 //                     />
 //                     <span className="ml-2 text-gray-700">All Products</span>
 //                   </label>
@@ -391,7 +391,7 @@
 //                       name="prescription"
 //                       checked={prescriptionFilter === 'required'}
 //                       onChange={() => setPrescriptionFilter('required')}
-//                       className="h-4 w-4 text-rose-400 focus:ring-rose-300"
+//                       className="h-4 w-4 text-primary-600 focus:ring-primary-500"
 //                     />
 //                     <span className="ml-2 text-gray-700">Prescription Required</span>
 //                   </label>
@@ -401,7 +401,7 @@
 //                       name="prescription"
 //                       checked={prescriptionFilter === 'not-required'}
 //                       onChange={() => setPrescriptionFilter('not-required')}
-//                       className="h-4 w-4 text-rose-400 focus:ring-rose-300"
+//                       className="h-4 w-4 text-primary-600 focus:ring-primary-500"
 //                     />
 //                     <span className="ml-2 text-gray-700">No Prescription Needed</span>
 //                   </label>
@@ -444,7 +444,7 @@
 //                     type="checkbox"
 //                     checked={inStockOnly}
 //                     onChange={() => setInStockOnly(!inStockOnly)}
-//                     className="h-4 w-4 text-rose-400 rounded focus:ring-rose-300"
+//                     className="h-4 w-4 text-primary-600 rounded focus:ring-primary-500"
 //                   />
 //                   <span className="ml-2 text-gray-700">In Stock Only</span>
 //                 </label>
@@ -452,7 +452,7 @@
 
 //               <button 
 //                 onClick={() => setShowMobileFilters(false)}
-//                 className="md:hidden w-full py-2 px-4 bg-rose-400 text-white rounded-md mt-4"
+//                 className="md:hidden w-full py-2 px-4 bg-primary-600 text-white rounded-md mt-4"
 //               >
 //                 Apply Filters
 //               </button>
@@ -488,7 +488,7 @@
 //             {showMobileSort && (
 //               <div 
 //                 id="mobile-sort"
-//                 className="md:hidden mb-6 bg-white p-4 rounded-lg shadow-md"
+//                 className="md:hidden mb-6 bg-white p-4 rounded-lg shadow-sm"
 //               >
 //                 <div className="flex justify-between items-center mb-3">
 //                   <h3 className="text-lg font-medium text-gray-700">Sort By</h3>
@@ -516,7 +516,7 @@
 //                         value={option.value}
 //                         checked={sortOption === option.value}
 //                         onChange={() => setSortOption(option.value)}
-//                         className="h-4 w-4 text-rose-400 focus:ring-rose-300"
+//                         className="h-4 w-4 text-primary-600 focus:ring-primary-500"
 //                       />
 //                       <span className="ml-2 text-gray-700">{option.label}</span>
 //                     </label>
@@ -530,7 +530,7 @@
 //               {displayedProducts.map(product => (
 //                 <article 
 //                   key={product.id} 
-//                   className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+//                   className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-sm transition-all duration-200"
 //                 >
 //                   <div 
 //                     className="p-3 cursor-pointer"
@@ -547,7 +547,7 @@
 //                         className="h-full w-full object-contain"
 //                         loading="lazy"
 //                       />
-//                       <div className="absolute top-2 left-2 bg-blue-100 text-rose-600 text-xs px-2 py-1 rounded">
+//                       <div className="absolute top-2 left-2 bg-primary-50 text-primary-600 text-xs px-2 py-1 rounded">
 //                         {product.category}
 //                       </div>
 //                       {product.prescriptionRequired && (
@@ -557,9 +557,9 @@
 //                       )}
 //                     </div>
 //                     <div className="flex justify-between items-start mb-1">
-//                       <h3 className="text-sm font-semibold text-gray-800 line-clamp-2">{product.name}</h3>
+//                       <h3 className="text-sm font-semibold text-gray-700 line-clamp-2">{product.name}</h3>
 //                       {product.bestseller && (
-//                         <span className="bg-yellow-100 text-yellow-800 text-xs px-1 py-0.5 rounded whitespace-nowrap">
+//                         <span className="bg-gray-100 text-gray-600 text-xs px-1 py-0.5 rounded whitespace-nowrap">
 //                           Bestseller
 //                         </span>
 //                       )}
@@ -575,10 +575,10 @@
 //                     <p className="text-xs text-gray-500 mb-1">{product.subcategory}</p>
 //                   </div>
 //                   <div className="flex justify-between items-center p-3 border-t">
-//                     <span className="text-sm font-bold text-rose-400">₹{product.price.toFixed(2)}</span>
+//                     <span className="text-sm font-bold text-primary-600">₹{product.price.toFixed(2)}</span>
 //                     <button 
 //                       onClick={() => handleAddToCart(product)}
-//                       className="px-2 py-1 rounded-md text-xs font-medium bg-rose-400 text-white hover:bg-rose-500 transition-colors"
+//                       className="px-2 py-1 rounded-md text-xs font-medium bg-primary-600 text-white hover:bg-gray-500 transition-colors"
 //                       aria-label={`Add ${product.name} to cart`}
 //                     >
 //                       Add to Cart
@@ -635,7 +635,7 @@
 //   }, [dispatch]);
 
 //   return (
-//     <div className="bg-rose-50 min-h-screen">
+//     <div className="bg-gray-50 min-h-screen">
 //       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 //         {/* Page header */}
 //         <div className="pt-8 pb-4">
@@ -834,15 +834,15 @@
 //   }
 
 //   return (
-//     <div className="w-full bg-rose-100">
+//     <div className="w-full bg-gray-50">
 //       <div className="max-w-screen-2xl mx-auto">
-//         <h1 className="text-3xl font-bold text-gray-800 mb-8 px-4 pt-8">Products</h1>
+//         <h1 className="text-3xl font-bold text-gray-700 mb-8 px-4 pt-8">Products</h1>
         
 //         {/* Mobile Filter/Sort Buttons */}
 //         <div className="md:hidden flex justify-between mb-4 px-4">
 //           <button 
 //             onClick={() => setShowMobileFilters(!showMobileFilters)}
-//             className="flex items-center gap-1 px-4 py-2 bg-rose-200 rounded-lg shadow-sm"
+//             className="flex items-center gap-1 px-4 py-2 bg-gray-100 rounded-lg shadow-sm"
 //             aria-expanded={showMobileFilters}
 //             aria-controls="mobile-filters"
 //           >
@@ -851,7 +851,7 @@
 //           </button>
 //           <button 
 //             onClick={() => setShowMobileSort(!showMobileSort)}
-//             className="flex items-center gap-1 px-4 py-2 bg-rose-200 rounded-lg shadow-sm"
+//             className="flex items-center gap-1 px-4 py-2 bg-gray-100 rounded-lg shadow-sm"
 //             aria-expanded={showMobileSort}
 //             aria-controls="mobile-sort"
 //           >
@@ -864,9 +864,9 @@
 //           {/* Filter Sidebar */}
 //           <div 
 //             id="mobile-filters"
-//             className={`${showMobileFilters ? 'block fixed inset-0 z-40 bg-rose-200 p-6 overflow-y-auto' : 'hidden'} md:block w-full md:w-64 flex-shrink-0`}
+//             className={`${showMobileFilters ? 'block fixed inset-0 z-40 bg-gray-100 p-6 overflow-y-auto' : 'hidden'} md:block w-full md:w-64 flex-shrink-0`}
 //           >
-//             <div className="md:bg-rose-200 md:p-6 md:rounded-lg md:shadow-md">
+//             <div className="md:bg-gray-100 md:p-6 md:rounded-lg md:shadow-sm">
 //               <div className="flex justify-between items-center mb-4">
 //                 <h2 className="text-xl font-semibold text-gray-700">Filters</h2>
 //                 <button 
@@ -888,7 +888,7 @@
 //                         type="checkbox"
 //                         checked={selectedCategories.includes(category)}
 //                         onChange={() => handleCategoryChange(category)}
-//                         className="h-4 w-4 text-rose-400 rounded focus:ring-rose-300"
+//                         className="h-4 w-4 text-primary-600 rounded focus:ring-primary-500"
 //                       />
 //                       <span className="ml-2 text-gray-700">{category}</span>
 //                     </label>
@@ -906,7 +906,7 @@
 //                         type="checkbox"
 //                         checked={selectedSubcategories.includes(subcategory)}
 //                         onChange={() => handleSubcategoryChange(subcategory)}
-//                         className="h-4 w-4 text-rose-400 rounded focus:ring-rose-300"
+//                         className="h-4 w-4 text-primary-600 rounded focus:ring-primary-500"
 //                       />
 //                       <span className="ml-2 text-gray-700">{subcategory}</span>
 //                     </label>
@@ -924,7 +924,7 @@
 //                       name="prescription"
 //                       checked={prescriptionFilter === 'all'}
 //                       onChange={() => setPrescriptionFilter('all')}
-//                       className="h-4 w-4 text-rose-400 focus:ring-rose-300"
+//                       className="h-4 w-4 text-primary-600 focus:ring-primary-500"
 //                     />
 //                     <span className="ml-2 text-gray-700">All Products</span>
 //                   </label>
@@ -934,7 +934,7 @@
 //                       name="prescription"
 //                       checked={prescriptionFilter === 'required'}
 //                       onChange={() => setPrescriptionFilter('required')}
-//                       className="h-4 w-4 text-rose-400 focus:ring-rose-300"
+//                       className="h-4 w-4 text-primary-600 focus:ring-primary-500"
 //                     />
 //                     <span className="ml-2 text-gray-700">Prescription Required</span>
 //                   </label>
@@ -944,7 +944,7 @@
 //                       name="prescription"
 //                       checked={prescriptionFilter === 'not-required'}
 //                       onChange={() => setPrescriptionFilter('not-required')}
-//                       className="h-4 w-4 text-rose-400 focus:ring-rose-300"
+//                       className="h-4 w-4 text-primary-600 focus:ring-primary-500"
 //                     />
 //                     <span className="ml-2 text-gray-700">No Prescription Needed</span>
 //                   </label>
@@ -987,7 +987,7 @@
 //                     type="checkbox"
 //                     checked={inStockOnly}
 //                     onChange={() => setInStockOnly(!inStockOnly)}
-//                     className="h-4 w-4 text-rose-400 rounded focus:ring-rose-300"
+//                     className="h-4 w-4 text-primary-600 rounded focus:ring-primary-500"
 //                   />
 //                   <span className="ml-2 text-gray-700">In Stock Only</span>
 //                 </label>
@@ -995,7 +995,7 @@
 
 //               <button 
 //                 onClick={() => setShowMobileFilters(false)}
-//                 className="md:hidden w-full py-2 px-4 bg-rose-400 text-white rounded-md mt-4"
+//                 className="md:hidden w-full py-2 px-4 bg-primary-600 text-white rounded-md mt-4"
 //               >
 //                 Apply Filters
 //               </button>
@@ -1031,7 +1031,7 @@
 //             {showMobileSort && (
 //               <div 
 //                 id="mobile-sort"
-//                 className="md:hidden mb-6 bg-white p-4 rounded-lg shadow-md"
+//                 className="md:hidden mb-6 bg-white p-4 rounded-lg shadow-sm"
 //               >
 //                 <div className="flex justify-between items-center mb-3">
 //                   <h3 className="text-lg font-medium text-gray-700">Sort By</h3>
@@ -1059,7 +1059,7 @@
 //                         value={option.value}
 //                         checked={sortOption === option.value}
 //                         onChange={() => setSortOption(option.value)}
-//                         className="h-4 w-4 text-rose-400 focus:ring-rose-300"
+//                         className="h-4 w-4 text-primary-600 focus:ring-primary-500"
 //                       />
 //                       <span className="ml-2 text-gray-700">{option.label}</span>
 //                     </label>
@@ -1073,7 +1073,7 @@
 //               {backendProducts.map(product => (
 //                 <article 
 //                   key={product._id} 
-//                   className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+//                   className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-sm transition-all duration-200"
 //                 >
 //                   <div 
 //                     className="p-3 cursor-pointer"
@@ -1090,7 +1090,7 @@
 //                         className="h-full w-full object-contain"
 //                         loading="lazy"
 //                       />
-//                       <div className="absolute top-2 left-2 bg-blue-100 text-rose-600 text-xs px-2 py-1 rounded">
+//                       <div className="absolute top-2 left-2 bg-primary-50 text-primary-600 text-xs px-2 py-1 rounded">
 //                         {product.category}
 //                       </div>
 //                       {product.prescriptionRequired && (
@@ -1100,9 +1100,9 @@
 //                       )}
 //                     </div>
 //                     <div className="flex justify-between items-start mb-1">
-//                       <h3 className="text-sm font-semibold text-gray-800 line-clamp-2">{product.name}</h3>
+//                       <h3 className="text-sm font-semibold text-gray-700 line-clamp-2">{product.name}</h3>
 //                       {product.bestseller && (
-//                         <span className="bg-yellow-100 text-yellow-800 text-xs px-1 py-0.5 rounded whitespace-nowrap">
+//                         <span className="bg-gray-100 text-gray-600 text-xs px-1 py-0.5 rounded whitespace-nowrap">
 //                           Bestseller
 //                         </span>
 //                       )}
@@ -1118,10 +1118,10 @@
 //                     <p className="text-xs text-gray-500 mb-1">{product.subcategory}</p>
 //                   </div>
 //                   <div className="flex justify-between items-center p-3 border-t">
-//                     <span className="text-sm font-bold text-rose-400">₹{product.price.toFixed(2)}</span>
+//                     <span className="text-sm font-bold text-primary-600">₹{product.price.toFixed(2)}</span>
 //                     <button 
 //                       onClick={() => handleAddToCart(product)}
-//                       className="px-2 py-1 rounded-md text-xs font-medium bg-rose-400 text-white hover:bg-rose-500 transition-colors"
+//                       className="px-2 py-1 rounded-md text-xs font-medium bg-primary-600 text-white hover:bg-gray-500 transition-colors"
 //                       aria-label={`Add ${product.name} to cart`}
 //                     >
 //                       Add to Cart
@@ -1159,7 +1159,6 @@
 // export default ProductsPage;
 
 // src/pages/ProductsPage.jsx
-
 import React, { useEffect, useState } from 'react';
 import { Helmet } from "react-helmet-async";  
 import { useDispatch, useSelector } from 'react-redux';
@@ -1170,39 +1169,13 @@ import {
 } from '../redux/slices/productsSlice';
 import { Link } from 'react-router-dom';
 import {
-  Box,
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-  Button,
-  CircularProgress,
-  Alert,
-  FormControl,
-  FormLabel,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-  RadioGroup,
-  Radio,
-  Container,
-  Paper,
-  useMediaQuery,
-  TextField,
-  InputAdornment,
-  Slider,
-  Chip,
-  Select,
-  MenuItem,
-  InputLabel,
-  Drawer,
-  IconButton,
-  Stack,
-  Divider,
-  Badge
+  Box, Grid, Card, CardContent, CardMedia, Typography, Button,
+  CircularProgress, Alert, FormControl, FormLabel, FormGroup,
+  FormControlLabel, Checkbox, RadioGroup, Radio, Container,
+  Paper, useMediaQuery, TextField, InputAdornment, Slider,
+  Chip, Select, MenuItem, InputLabel, Drawer, IconButton,
+  Stack, Divider, Badge
 } from '@mui/material';
-import { pink } from '@mui/material/colors';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -1212,6 +1185,16 @@ import { formatINR } from "../utils/formatCurrency";
 const MIN_PRICE = 0;
 const MAX_PRICE = 1000;
 const PRICE_STEP = 10;
+
+// --- Premium Theme Colors ---
+const THEME = {
+  royal: '#a24b38',
+  royalHover: '#731b04',
+  gold: '#D8B76A',
+  goldLight: '#F5EDD6',
+  mauve: '#A8829C',
+  champagne: '#FCFAF8',
+};
 
 // Predefined categories
 const CATEGORIES = [
@@ -1224,28 +1207,21 @@ const CATEGORIES = [
 const ProductsPage = () => {
   const dispatch = useDispatch();
   const { 
-  products = [], 
-  loading = false, 
-  error = null, 
-  filters = {
-    category: [],
-    subcategory: [],
-    prescriptionRequired: null
-  },
-  allSubcategories = [], 
-  //allBrands = [] 
-} = useSelector((state) => state.products);
+    products = [], 
+    loading = false, 
+    error = null, 
+    filters = { category: [], subcategory: [], prescriptionRequired: null },
+    allSubcategories = [], 
+  } = useSelector((state) => state.products);
 
   const isMobile = useMediaQuery('(max-width:900px)');
   const [mobileOpen, setMobileOpen] = useState(false);
-
   const [searchTerm, setSearchTerm] = useState('');
   const [priceRange, setPriceRange] = useState([MIN_PRICE, MAX_PRICE]);
   const [sortBy, setSortBy] = useState('newest');
 
   useEffect(() => {
     if (mobileOpen) {
-      
       const firstFocusable = document.querySelector('.MuiDrawer-paper button, .MuiDrawer-paper input');
       firstFocusable?.focus();
     }
@@ -1320,7 +1296,7 @@ const ProductsPage = () => {
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh">
-        <CircularProgress sx={{ color: pink[600] }} />
+        <CircularProgress sx={{ color: THEME.royal }} />
       </Box>
     );
   }
@@ -1334,9 +1310,9 @@ const ProductsPage = () => {
   }
 
   const filterDrawer = (
-    <Box sx={{ p: 2, width: '100%', height: '100%' }}>
+    <Box sx={{ p: 2, width: '100%', height: '100%', backgroundColor: THEME.champagne }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-        <Typography variant="h6" sx={{ color: pink[600] }}>
+        <Typography variant="h6" sx={{ color: THEME.royal, fontFamily: '"Cormorant Garamond", serif', fontWeight: 'bold' }}>
           Filters
         </Typography>
         <IconButton onClick={handleDrawerToggle} sx={{ display: { md: 'none' } }}>
@@ -1350,11 +1326,11 @@ const ProductsPage = () => {
         placeholder="Search products..."
         value={searchTerm}
         onChange={handleSearchChange}
-        sx={{ mb: 3 }}
+        sx={{ mb: 3, '& .MuiOutlinedInput-root': { '&.Mui-focused fieldset': { borderColor: THEME.gold } } }}
         slotProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon sx={{ color: pink[600] }} />
+              <SearchIcon sx={{ color: THEME.gold }} />
             </InputAdornment>
           )
         }}
@@ -1367,6 +1343,7 @@ const ProductsPage = () => {
           value={sortBy}
           onChange={handleSortChange}
           label="Sort By"
+          sx={{ '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: THEME.gold } }}
         >
           <MenuItem value="newest">Newest First</MenuItem>
           <MenuItem value="priceAsc">Price: Low to High</MenuItem>
@@ -1376,7 +1353,7 @@ const ProductsPage = () => {
       </FormControl>
 
       <FormControl fullWidth sx={{ mb: 3 }}>
-        <FormLabel sx={{ color: pink[600], mb: 1 }}>Price Range</FormLabel>
+        <FormLabel sx={{ color: THEME.royal, mb: 1, fontWeight: 'bold' }}>Price Range</FormLabel>
         <Slider
           value={priceRange}
           onChange={handlePriceChange}
@@ -1384,7 +1361,7 @@ const ProductsPage = () => {
           min={MIN_PRICE}
           max={MAX_PRICE}
           step={PRICE_STEP}
-          sx={{ color: pink[600] }}
+          sx={{ color: THEME.gold }}
         />
         <Box display="flex" justifyContent="space-between">
           <Typography variant="caption">{formatINR(priceRange[0])}</Typography>
@@ -1393,7 +1370,7 @@ const ProductsPage = () => {
       </FormControl>
 
       <FormControl fullWidth sx={{ mb: 3 }}>
-        <FormLabel sx={{ color: pink[600] }}>Categories</FormLabel>
+        <FormLabel sx={{ color: THEME.royal, fontWeight: 'bold' }}>Categories</FormLabel>
         <RadioGroup
           value={filters.category.length > 0 ? filters.category[0] : 'all'}
           onChange={(e) => {
@@ -1408,7 +1385,7 @@ const ProductsPage = () => {
             <FormControlLabel
               key={category.id}
               value={category.id}
-              control={<Radio sx={{ color: pink[600] }} />}
+              control={<Radio sx={{ color: THEME.mauve, '&.Mui-checked': { color: THEME.gold } }} />}
               label={category.name}
             />
           ))}
@@ -1417,7 +1394,7 @@ const ProductsPage = () => {
 
       {allSubcategories?.length > 0 && (
         <FormControl fullWidth sx={{ mb: 3 }}>
-          <FormLabel sx={{ color: pink[600] }}>Subcategory</FormLabel>
+          <FormLabel sx={{ color: THEME.royal, fontWeight: 'bold' }}>Subcategory</FormLabel>
           <FormGroup>
             {allSubcategories.map(subcategory => (
               <FormControlLabel
@@ -1426,7 +1403,7 @@ const ProductsPage = () => {
                   <Checkbox
                     checked={filters.subcategory.includes(subcategory)}
                     onChange={() => handleSubcategoryChange(subcategory)}
-                    sx={{ color: pink[600] }}
+                    sx={{ color: THEME.mauve, '&.Mui-checked': { color: THEME.gold } }}
                   />
                 }
                 label={subcategory}
@@ -1437,14 +1414,14 @@ const ProductsPage = () => {
       )}
 
       <FormControl fullWidth>
-        <FormLabel sx={{ color: pink[600] }}>Prescription</FormLabel>
+        <FormLabel sx={{ color: THEME.royal, fontWeight: 'bold' }}>Prescription</FormLabel>
         <RadioGroup
          value={filters?.prescriptionRequired === null ? 'null' : String(filters?.prescriptionRequired ?? '')}
          onChange={handlePrescriptionChange}
          >
-          <FormControlLabel value="null" control={<Radio sx={{ color: pink[600] }} />} label="All" />
-          <FormControlLabel value="true" control={<Radio sx={{ color: pink[600] }} />} label="Required" />
-          <FormControlLabel value="false" control={<Radio sx={{ color: pink[600] }} />} label="Not Required" />
+          <FormControlLabel value="null" control={<Radio sx={{ color: THEME.mauve, '&.Mui-checked': { color: THEME.gold } }} />} label="All" />
+          <FormControlLabel value="true" control={<Radio sx={{ color: THEME.mauve, '&.Mui-checked': { color: THEME.gold } }} />} label="Required" />
+          <FormControlLabel value="false" control={<Radio sx={{ color: THEME.mauve, '&.Mui-checked': { color: THEME.gold } }} />} label="Not Required" />
         </RadioGroup>
       </FormControl>
 
@@ -1455,11 +1432,12 @@ const ProductsPage = () => {
         onClick={handleClearFilters}
         sx={{ 
           mt: 2,
-          color: pink[600],
-          borderColor: pink[600],
+          color: THEME.royal,
+          borderColor: THEME.gold,
+          borderRadius: '50px',
           '&:hover': {
-            borderColor: pink[800],
-            backgroundColor: pink[50]
+            borderColor: THEME.royal,
+            backgroundColor: THEME.goldLight
           }
         }}
       >
@@ -1472,28 +1450,20 @@ const ProductsPage = () => {
     <>
          <Helmet>
       <title>Buy Medicines & Healthcare Products Online | Maclienson Healthcare</title>
-      <meta
-        name="description"
-        content="Browse genuine medicines, supplements, and healthcare products at Maclienson Healthcare. Trusted pharmaceutical store with quality and care."
-      />
-      <meta
-        name="keywords"
-        content="Maclienson Healthcare, buy medicines online, healthcare, pharma, supplements, pharmacy India, skincare, health products"
-      />
-      <link rel="canonical" href="https://www.macliensonhealthcare.com/products" />
+      <meta name="description" content="Browse genuine medicines, supplements, and healthcare products at Maclienson Healthcare." />
     </Helmet>
     
-    <Container maxWidth="xl" sx={{ my: 4, backgroundColor: '#fafafa' }}>
+    <Container maxWidth="xl" sx={{ my: 4, backgroundColor: THEME.champagne, minHeight: '100vh', borderRadius: 4, py: 4 }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
-        <Typography variant="h4" sx={{ fontWeight: 600, color: pink[600] }}>
+        <Typography variant="h4" sx={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 'bold', color: THEME.royal }}>
           Our Pharmaceutical Products
         </Typography>
         
         {isMobile && (
           <Badge badgeContent={activeFilterCount} color="primary" sx={{ 
             '& .MuiBadge-badge': { 
-              backgroundColor: pink[600],
-              color: 'white'
+              backgroundColor: THEME.gold,
+              color: THEME.royal
             }
           }}>
             <Button
@@ -1501,18 +1471,11 @@ const ProductsPage = () => {
               startIcon={<MenuIcon />}
               onClick={handleDrawerToggle}
               sx={{
-                color: pink[600],
-                borderColor: pink[600],
-                '&:hover': {
-                  borderColor: pink[800],
-                  backgroundColor: pink[50]
-                },
-
-                overflow: 'hidden',
-               whiteSpace: 'nowrap',
-               textOverflow: 'ellipsis'
+                color: THEME.royal,
+                borderColor: THEME.gold,
+                borderRadius: '50px',
+                '&:hover': { backgroundColor: THEME.goldLight }
               }}
-              aria-label="Open filters"
             >
               Filters
             </Button>
@@ -1521,224 +1484,105 @@ const ProductsPage = () => {
       </Box>
 
       <Box sx={{ display: 'flex', width: '100%' }}>
-        {/* Desktop Filter Sidebar - Fixed width */}
         {!isMobile && (
           <Box sx={{ 
-            width: 280,
-            position: 'sticky',
-            top: 20,
-            height: 'calc(100vh - 100px)',
-            overflowY: 'auto',
-            alignSelf: 'flex-start',
-            pr: 2,
-            flexShrink: 0
+            width: 280, position: 'sticky', top: 100, height: 'calc(100vh - 100px)',
+            overflowY: 'auto', alignSelf: 'flex-start', pr: 2, flexShrink: 0
           }}>
-            <Paper elevation={0} sx={{ 
-              p: 2, 
-              borderRadius: 2,
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column'
-            }}>
+            <Paper elevation={0} sx={{ p: 2, borderRadius: 4, height: '100%', display: 'flex', flexDirection: 'column', backgroundColor: '#fff', border: `1px solid ${THEME.goldLight}` }}>
               {filterDrawer}
             </Paper>
           </Box>
         )}
 
-        {/* Mobile Filter Drawer */}
         <Drawer
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
-          ModalProps={{
-             keepMounted: true,
-            disableEnforceFocus: false,
-            disableAutoFocus: false,
-             disableRestoreFocus: false
-           }}
-          sx={{
-            display: { xs: 'block', md: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 280 }
-          }}
+          ModalProps={{ keepMounted: true }}
+          sx={{ display: { xs: 'block', md: 'none' }, '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 280 } }}
         >
           {filterDrawer}
         </Drawer>
 
-        {/* Products Section - Takes remaining space */}
-        <Box sx={{ 
-          flexGrow: 1,
-          pl: !isMobile ? 2 : 0
-        }}>
-          <div
-           id="main-content" 
-             aria-hidden={mobileOpen ? 'true' : 'false'}
-             style={{ pointerEvents: mobileOpen ? 'none' : 'auto' }}
-             >
-
-           </div>
+        <Box sx={{ flexGrow: 1, pl: !isMobile ? 2 : 0 }}>
           <Box sx={{ mb: 3 }}>
             {activeFilterCount > 0 && (
               <>
-                <Typography variant="subtitle2" sx={{ mb: 1 }}>Active Filters:</Typography>
+                <Typography variant="subtitle2" sx={{ mb: 1, color: THEME.royal }}>Active Filters:</Typography>
                 <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
                   {filters.category.map(cat => (
-                    <Chip
-                      key={cat}
-                      label={`Category: ${CATEGORIES.find(c => c.id === cat)?.name || cat}`}
-                      onDelete={() => handleCategoryChange(cat)}
-                      sx={{ 
-                        color: pink[600],
-                        borderColor: pink[600],
-                        '& .MuiChip-deleteIcon': {
-                          color: pink[600]
-                        }
-                      }}
-                      variant="outlined"
-                      size="small"
-                    />
+                    <Chip key={cat} label={`Category: ${CATEGORIES.find(c => c.id === cat)?.name || cat}`} onDelete={() => handleCategoryChange(cat)}
+                      sx={{ color: THEME.royal, borderColor: THEME.gold }} variant="outlined" size="small" />
                   ))}
                   {filters.subcategory.map(sub => (
-                    <Chip
-                      key={sub}
-                      label={`Subcategory: ${sub}`}
-                      onDelete={() => handleSubcategoryChange(sub)}
-                      sx={{ 
-                        color: pink[600],
-                        borderColor: pink[600],
-                        '& .MuiChip-deleteIcon': {
-                          color: pink[600]
-                        }
-                      }}
-                      variant="outlined"
-                      size="small"
-                    />
+                    <Chip key={sub} label={`Subcategory: ${sub}`} onDelete={() => handleSubcategoryChange(sub)}
+                      sx={{ color: THEME.royal, borderColor: THEME.gold }} variant="outlined" size="small" />
                   ))}
                   {filters.prescriptionRequired !== null && (
-                    <Chip
-                      label={`Prescription: ${filters.prescriptionRequired ? 'Required' : 'Not Required'}`}
-                      onDelete={() => dispatch(setFilters({ ...filters, prescriptionRequired: null }))}
-                      sx={{ 
-                        color: pink[600],
-                        borderColor: pink[600],
-                        '& .MuiChip-deleteIcon': {
-                          color: pink[600]
-                        }
-                      }}
-                      variant="outlined"
-                      size="small"
-                    />
+                    <Chip label={`Prescription: ${filters.prescriptionRequired ? 'Required' : 'Not Required'}`} onDelete={() => dispatch(setFilters({ ...filters, prescriptionRequired: null }))}
+                      sx={{ color: THEME.royal, borderColor: THEME.gold }} variant="outlined" size="small" />
                   )}
                   {(priceRange[0] > MIN_PRICE || priceRange[1] < MAX_PRICE) && (
-                    <Chip
-                      label={`Price: ${formatINR(priceRange[0])} - ${formatINR(priceRange[1])}`}
-                      onDelete={() => setPriceRange([MIN_PRICE, MAX_PRICE])}
-                      sx={{ 
-                        color: pink[600],
-                        borderColor: pink[600],
-                        '& .MuiChip-deleteIcon': {
-                          color: pink[600]
-                        }
-                      }}
-                      variant="outlined"
-                      size="small"
-                    />
+                    <Chip label={`Price: ${formatINR(priceRange[0])} - ${formatINR(priceRange[1])}`} onDelete={() => setPriceRange([MIN_PRICE, MAX_PRICE])}
+                      sx={{ color: THEME.royal, borderColor: THEME.gold }} variant="outlined" size="small" />
                   )}
                   {searchTerm && (
-                    <Chip
-                      label={`Search: "${searchTerm}"`}
-                      onDelete={() => setSearchTerm('')}
-                      sx={{ 
-                        color: pink[600],
-                        borderColor: pink[600],
-                        '& .MuiChip-deleteIcon': {
-                          color: pink[600]
-                        }
-                      }}
-                      variant="outlined"
-                      size="small"
-                    />
+                    <Chip label={`Search: "${searchTerm}"`} onDelete={() => setSearchTerm('')}
+                      sx={{ color: THEME.royal, borderColor: THEME.gold }} variant="outlined" size="small" />
                   )}
                 </Stack>
                 <Divider sx={{ my: 2 }} />
               </>
             )}
 
-            <Typography variant="subtitle1" sx={{ mb: 2 }}>
+            <Typography variant="subtitle1" sx={{ mb: 2, color: THEME.royal, fontWeight: 500 }}>
               {products.length} {products.length === 1 ? 'Product' : 'Products'} Found
             </Typography>
           </Box>
 
           {products.length === 0 ? (
-            <Alert severity="info" sx={{ mb: 3 }}>No products match your filters.</Alert>
+            <Alert severity="info" sx={{ mb: 3, backgroundColor: THEME.goldLight, color: THEME.royal }}>No products match your filters.</Alert>
           ) : (
-            <Grid container spacing={2} sx={{
-  display: 'grid',
-  gridTemplateColumns: {
-    xs: 'repeat(1, 1fr)',
-    sm: 'repeat(2, 1fr)',
-    md: 'repeat(3, 1fr)',
-    lg: 'repeat(4, 1fr)'
-  }
-}}>
-  {products.map(product => (
-    <Grid key={product._id}>
-      <Card
-        sx={{
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          transition: 'transform 0.3s, box-shadow 0.3s',
-          '&:hover': {
-            transform: 'translateY(-4px)',
-            boxShadow: 3
-          }
-        }}
+            <Grid container spacing={3} sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)' } }}>
+              {products.map(product => (
+                <Grid key={product._id}>
+                  <Card
+                    sx={{
+                      width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
+                      borderRadius: 4, border: `1px solid ${THEME.goldLight}`, boxShadow: '0 10px 40px -10px rgb(96, 20, 20)',
+                      transition: 'transform 0.3s, box-shadow 0.3s', '&:hover': { transform: 'translateY(-4px)', boxShadow: '0 20px 40px -10px rgb(96, 20, 20)' }
+                    }}
                   >
-                    <Box sx={{ 
-                      position: 'relative', 
-                      pt: '70%',
-                      backgroundColor: '#f5f5f5'
-                    }}>
+                    <Box sx={{ position: 'relative', pt: '80%', backgroundColor: '#ffffff' }}>
                       <CardMedia
                         component="img"
                         image={product.images?.[0]?.url || '/default-medicine.jpg'}
                         alt={product.images?.[0]?.altText || product.name}
                         loading={isMobile ? 'lazy' : 'eager'} 
-                        sx={{
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'contain',
-                          p: 1
-                        }}
+                        sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', p: 2 }}
                       />
                     </Box>
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography gutterBottom variant="h6" component="div" noWrap>
+                    <CardContent sx={{ flexGrow: 1, backgroundColor: THEME.champagne }}>
+                      <Typography gutterBottom variant="h6" component="div" sx={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 'bold', color: THEME.royal }} noWrap>
                         {product.name}
                       </Typography>
                       <Typography variant="body2" color="text.secondary" sx={{ 
-                        mb: 1,
-                        display: '-webkit-box',
-                        WebkitLineClamp: 3,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                        height: '60px'
+                        mb: 1, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', height: '40px' 
                       }}>
                         {product.description}
                       </Typography>
-                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                        <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: pink[600] }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, mt: 2 }}>
+                        <Typography variant="h6" sx={{ fontWeight: 'bold', color: THEME.royal }}>
                           {formatINR(product.price)}
                         </Typography>
                         <Chip
-                          label={product.prescriptionRequired ? 'Rx Only' : 'Rx'}
+                          label={product.prescriptionRequired ? 'Rx Required' : 'OTC'}
                           size="small"
                           sx={{ 
-                            backgroundColor: product.prescriptionRequired ? pink[100] : '#e8f5e9',
-                            color: product.prescriptionRequired ? pink[800] : '#2e7d32'
+                            backgroundColor: product.prescriptionRequired ? THEME.mauve : THEME.goldLight,
+                            color: product.prescriptionRequired ? '#fff' : THEME.royal,
+                            fontWeight: 'bold'
                           }}
                         />
                       </Box>
@@ -1749,10 +1593,10 @@ const ProductsPage = () => {
                         variant="contained"
                         sx={{ 
                           mt: 'auto',
-                          backgroundColor: pink[600],
-                          '&:hover': {
-                            backgroundColor: pink[800]
-                          }
+                          borderRadius: '50px',
+                          backgroundColor: THEME.royal,
+                          padding: '10px 0',
+                          '&:hover': { backgroundColor: THEME.royalHover }
                         }}
                       >
                         View Details
@@ -1771,5 +1615,3 @@ const ProductsPage = () => {
 };
 
 export default ProductsPage;
-
-

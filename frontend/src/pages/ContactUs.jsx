@@ -26,13 +26,11 @@ const pastelTheme = createTheme({
     primary: {
       main: "#85C1E9",
       light: "#D6EAF8",
-      dark: "#5DADE2",
       contrastText: "#000",
     },
     secondary: {
       main: "#F5B7B1",
       light: "#FADBD8",
-      dark: "#EC7063",
       contrastText: "#000",
     },
     background: {

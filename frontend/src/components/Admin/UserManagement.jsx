@@ -144,14 +144,14 @@ const handleChange = (e) => {
                         <option value="admin">Admin</option>
                     </select>
                 </div>
-               <button type="submit" className="bg-green-500  text-white py-2 px-4 rounded hover:bg-green-600" >
+               <button type="submit" className="bg-primary-600  text-white py-2 px-4 rounded hover:bg-primary-600" >
                 Add User
                </button>
             </form>
 
         </div>
        {/*user list management */}    
-       <div className="overflow-x-auto shadow-md sm:rounded-lg" >
+       <div className="overflow-x-auto shadow-sm sm:rounded-lg" >
         <table className="table-fixed w-full bg-gray-100 text-xs uppercase text-gray-700" >
             <thead className="bg-gray-100 text-xs uppercase text-gray-700" >
                 <tr>
@@ -197,3 +197,5 @@ const handleChange = (e) => {
 };
 
 export default UserManagement
+
+
