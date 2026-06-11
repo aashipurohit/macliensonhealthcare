@@ -1,10 +1,4 @@
 import logo_maclienson from './logo_maclienson.png';
-// import crosin from './crosin.png';
-// import ecapsule from './ecapsule.png';
-// import paracetamol from './paracetamol.png';
-//  import vision from './vision.png';
-//  import vision_1 from './vision_1.png';
-//  import mission_1 from './mission_1.png';
  import mission_2 from './mission_2.jpg';
  import values_1 from './values_1.jpg';
  import values_2 from './values_2.jpg';
@@ -27,30 +21,10 @@ import main_c6 from './main_c6.jpg';
  import main_c4 from './main_c4.png';
  import main_c7 from './main_c7.jpg';
  import main_pw from './main_pw.webp';
-// import syrup_m from './syrup_m.png';
-// import syrup_m_2 from './syrup_m_2.png';
  import main_cp from './main_cp.png';
-// import protien_c from './protien_c.png';
-// import tablet_c from './tablet_c.png';
-// import capsule_c from './capsule_c.png';
-// import syrup_c from './syrup_c.png';
- 
-// import paraffine_500 from './paraffine_500.png';
-// import B12_neuro_cat from './B12_neuro_cat.png';
-// import pan_d_cat from './pan_d_cat.png';
-// import beneprotein_bs from './beneprotein_bs.png';
-// import cetzine_bs from './cetzine_bs.png';
-// import revital_h_bs from './revital_h_bs.png';
-// import sterellium_med_bs from './sterellium_med_bs.png';
-// import beneprotein_back_bs from './beneprotein_back_bs.png';
  import featured from './featured.png';
  import login_img from './login_img.png';
  import register_img from './register_img.png';
-// import azithral_500 from './azithral_500.png';
-// import naproxen_c from './naproxen_c.png';
-// import nexito_10_c from './nexito_10_c.png';
-// import alprazolam_c from './alprazolam_c.png';
-// import taxim_o_c from './taxim_o_c.png';
 import sanitizer_c from './sanitizer_c.png';
  import medicine_cat from './medicine_cat.png';
  import healthcare_cat from './healthcare_cat.png';
@@ -64,7 +38,8 @@ import flavona_forte_sy from './flavona_forte_sy.png';
 import flavona_forte_sy_b from './flavona_forte_sy_b.png';
 import career from './career.jpg'
 import mac_sub_log from './mac_sub_log.jpeg'
-
+import hero_2 from './hero_2.png'
+import hero_3 from './hero_3.png'
        
 
     
@@ -76,11 +51,9 @@ export const assets = {
   logo_maclienson,
   logo_maclienson_br,
   mac_sub_log,
-  // crosin,
-  // ecapsule,
-  // paracetamol,
+  hero_2,
+  hero_3,
   syrup,
-  // syrup_m,
   main_p,
   main_c2,
   main_c3,
@@ -89,23 +62,10 @@ export const assets = {
   main_c5,
   main_c6,
   main_c7,
-  // syrup_m_2,
   main_cp,
-  // protien_c,
-  // tablet_c,
-  // capsule_c,
-  // syrup_c,
    sanitizer_c,
   medicine_cat,
    healthcare_cat,
-  // paraffine_500,
-  // B12_neuro_cat,
-  // pan_d_cat,
-  // beneprotein_bs,
-  // cetzine_bs,
-  // revital_h_bs,
-  // sterellium_med_bs,
-  // beneprotein_back_bs,
   featured,
   login_img ,
   register_img,
@@ -125,9 +85,6 @@ export const assets = {
   digdis_2,
   digdis_3,
   digdis_w,
-  // azithral_500,
-  // alprazolam_c,
-  // taxim_o_c,
   tabletsrx,
   macnurish_p,
   nurturmac,
