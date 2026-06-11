@@ -3,12 +3,12 @@ import { MapPin, Leaf, FlaskConical, HeartPulse, Baby, Activity } from 'lucide-r
 
 export default function AboutUs() {
   const products = [
-    { name: 'Myoinositol supplements', icon: <Leaf className="text-green-500" />, desc: 'For hormonal balance and PCOS management' },
-    { name: 'Protein formulations', icon: <FlaskConical className="text-blue-500" />, desc: 'Specialized for women and athletes' },
-    { name: 'PCOS/PCOD care', icon: <HeartPulse className="text-pink-500" />, desc: 'Evidence-based management formulas' },
-    { name: 'Kids nutrition', icon: <Baby className="text-yellow-500" />, desc: 'Pediatric-approved supplements' },
-    { name: 'Sports nutrition', icon: <Activity className="text-red-500" />, desc: 'Performance-enhancing formulas' },
-    { name: 'Maternal care', icon: <HeartPulse className="text-purple-500" />, desc: 'Prenatal and postnatal support' }
+    { name: 'Myoinositol supplements', icon: <Leaf className="text-success-500" />, desc: 'For hormonal balance and PCOS management' },
+    { name: 'Protein formulations', icon: <FlaskConical className="text-primary-500" />, desc: 'Specialized for women and athletes' },
+    { name: 'PCOS/PCOD care', icon: <HeartPulse className="text-lilac-900" />, desc: 'Evidence-based management formulas' },
+    { name: 'Kids nutrition', icon: <Baby className="text-neutral-500" />, desc: 'Pediatric-approved supplements' },
+    { name: 'Sports nutrition', icon: <Activity className="text-danger-500" />, desc: 'Performance-enhancing formulas' },
+    { name: 'Maternal care', icon: <HeartPulse className="text-gold-200" />, desc: 'Prenatal and postnatal support' }
   ];
 
   return (

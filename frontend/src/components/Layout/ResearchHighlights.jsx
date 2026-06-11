@@ -1,631 +1,442 @@
-import React, { useState } from 'react';
-import { motion, LayoutGroup } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { assets } from "../../assets/assets";
 
 const ResearchHighlights = () => {
   const [activeFilter, setActiveFilter] = useState('all');
-  const [expandedArticle, setExpandedArticle] = useState(null);
+  const [selectedArticleId, setSelectedArticleId] = useState(null);
 
   const allArticles = [
     {
-  id: 1,
-  image: assets.rh_myo,
-  title: 'The Comparative Effects of Myo-Inositol and Metformin in PCOS Treatment',
-  description: 'Clinical trial comparing Myo-Inositol and Metformin efficacy in normal-weight PCOS patients, showing significant improvements in hormonal and metabolic parameters with both treatments.',
-  fullContent: (
-    <div className="space-y-6">
-      {/* Study Overview */}
-      <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm  ">
-        <h3 className="mb-4 text-xl font-bold text-primary-700 ">Study Highlights</h3>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="mb-2 font-semibold text-gray-700 ">🔬 Study Design</h4>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>6-month randomized controlled trial</li>
-              <li>200 normal-weight PCOS patients (BMI 18.5-24.9)</li>
-              <li>Age group: 18-35 years</li>
-              <li>Double-blind, placebo-controlled methodology</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="mb-2 font-semibold text-gray-700 ">💊 Treatment Groups</h4>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>Group A: Myo-Inositol 2000mg twice daily</li>
-              <li>Group B: Metformin SR 1000mg twice daily</li>
-              <li>Group C: Combined therapy</li>
-              <li>Group D: Placebo control</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Key Findings */}
-      <div>
-        <h3 className="font-bold text-lg mb-3">📊 Key Findings</h3>
-        
-        <div className="grid md:grid-cols-3 gap-4 mb-6">
-          <div className="rounded-lg bg-primary-50 p-3 ">
-            <h4 className="mb-1 font-semibold text-primary-700 ">Menstrual Regularity</h4>
-            <p className="text-sm">
-              <span className="font-bold">Myo-Inositol:</span> 78% improvement<br/>
-              <span className="font-bold">Metformin:</span> 72% improvement
-            </p>
-          </div>
-          <div className="rounded-lg bg-gray-50 p-3 ">
-            <h4 className="font-semibold text-gray-600 mb-1">Insulin Sensitivity</h4>
-            <p className="text-sm">
-              <span className="font-bold">HOMA-IR Reduction:</span><br/>
-              Myo-Inositol: 32% ↓<br/>
-              Metformin: 38% ↓
-            </p>
-          </div>
-          <div className="rounded-lg bg-violet-50 p-3 ">
-            <h4 className="mb-1 font-semibold text-violet-700 ">Androgen Levels</h4>
-            <p className="text-sm">
-              <span className="font-bold">Free Testosterone:</span><br/>
-              Myo-Inositol: 41% ↓<br/>
-              Metformin: 36% ↓
-            </p>
-          </div>
-        </div>
-
-        <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-4  ">
-          <h4 className="mb-2 font-semibold text-primary-700 ">Comparative Efficacy</h4>
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b">
-                <th className="text-left py-2">Parameter</th>
-                <th className="text-center">Myo-Inositol</th>
-                <th className="text-center">Metformin</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b">
-                <td className="py-2">Ovulation Rate</td>
-                <td className="text-center">82%</td>
-                <td className="text-center">76%</td>
-              </tr>
-              <tr className="border-b">
-                <td className="py-2">BMI Change</td>
-                <td className="text-center">-0.8 kg/m²</td>
-                <td className="text-center">-1.2 kg/m²</td>
-              </tr>
-              <tr>
-                <td className="py-2">Side Effects</td>
-                <td className="text-center">8% reported</td>
-                <td className="text-center">23% reported</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Mechanism of Action */}
-      <div>
-        <h3 className="font-bold text-lg mb-3">⚙️ Mechanism of Action</h3>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="rounded-lg bg-indigo-50 p-4 ">
-            <h4 className="mb-2 font-semibold text-indigo-700 ">Myo-Inositol</h4>
-            <ul className="list-disc pl-5 space-y-1 text-sm">
-              <li>Improves insulin receptor signaling</li>
-              <li>Enhances FSH sensitivity in ovaries</li>
-              <li>Reduces androgen production</li>
-              <li>Promotes oocyte quality</li>
-            </ul>
-          </div>
-          <div className="rounded-lg bg-teal-50 p-4 ">
-            <h4 className="mb-2 font-semibold text-teal-700 ">Metformin</h4>
-            <ul className="list-disc pl-5 space-y-1 text-sm">
-              <li>Activates AMP-activated protein kinase</li>
-              <li>Suppresses hepatic glucose production</li>
-              <li>Reduces intestinal glucose absorption</li>
-              <li>Decreases ovarian androgen secretion</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Clinical Recommendations */}
-      <div className="mt-4 rounded-lg border border-gray-200 bg-gray-50 p-4  ">
-        <h3 className="font-bold text-lg mb-2">🏥 Clinical Recommendations</h3>
-        <ul className="list-disc pl-5 space-y-2">
-          <li><strong>First-line therapy:</strong> Myo-Inositol preferred for patients concerned about gastrointestinal side effects</li>
-          <li><strong>Severe insulin resistance:</strong> Metformin may show better results</li>
-          <li><strong>Fertility goals:</strong> Consider combination therapy for optimal ovulation induction</li>
-          <li><strong>Maintenance therapy:</strong> Myo-Inositol better tolerated for long-term use</li>
-        </ul>
-        <p className="mt-3 text-sm text-gray-600 ">
-          <strong>Note:</strong> Study conducted on normal-weight PCOS patients. Results may vary for overweight/obese populations.
-        </p>
-      </div>
-
-      {/* References */}
-      <div className="mt-6 text-sm text-gray-500 ">
-        <p>Reference: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10886614/" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline ">Original Study (PMC10886614)</a></p>
-      </div>
-    </div>
-  ),
-  category: 'research',
-  date: '2024-03-15',
-  link: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10886614/'
-},
-   {
-  id: 2,
-  image: assets.rh_a3,
-  title: 'Is PCOS the Same as PCOD? Understanding the Key Differences',
-  description: 'While often confused, PCOS and PCOD differ in severity, hormonal impact, and long-term health implications. Learn how to distinguish these conditions.',
-  fullContent: (
-    <div className="space-y-6">
-      {/* New Block Diagram Comparison */}
-      <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm  ">
-        <h3 className="mb-6 text-center text-xl font-bold text-primary-700 ">PCOS vs PCOD: At a Glance</h3>
-        
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          {/* PCOD Column */}
-          <div className="rounded-lg border-2 border-primary-200 bg-primary-50 p-4  ">
-            <h4 className="mb-4 border-b border-primary-200 pb-2 text-center text-lg font-bold text-primary-800  ">PCOD</h4>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <span className="mr-2 rounded-full bg-primary-100 p-1 text-primary-800  ">•</span>
-                <span><strong>Type:</strong> Metabolic disorder</span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-2 rounded-full bg-primary-100 p-1 text-primary-800  ">•</span>
-                <span><strong>Common:</strong> 1 in 10 women</span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-2 rounded-full bg-primary-100 p-1 text-primary-800  ">•</span>
-                <span><strong>Ovulation:</strong> Usually occurs</span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-2 rounded-full bg-primary-100 p-1 text-primary-800  ">•</span>
-                <span><strong>Severity:</strong> Mild symptoms</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* PCOS Column */}
-          <div className="rounded-lg border-2 border-primary-200 bg-gray-50 p-4  ">
-            <h4 className="mb-4 border-b border-primary-200 pb-2 text-center text-lg font-bold text-primary-800  ">PCOS</h4>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <span className="mr-2 rounded-full bg-primary-100 p-1 text-primary-800  ">•</span>
-                <span><strong>Type:</strong> Endocrine disorder</span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-2 rounded-full bg-primary-100 p-1 text-primary-800  ">•</span>
-                <span><strong>Common:</strong> 1 in 15 women</span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-2 rounded-full bg-primary-100 p-1 text-primary-800  ">•</span>
-                <span><strong>Ovulation:</strong> Often absent</span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-2 rounded-full bg-primary-100 p-1 text-primary-800  ">•</span>
-                <span><strong>Severity:</strong> Significant symptoms</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Original Detailed Content */}
-      <h3 className="font-bold text-lg mb-2">The Fundamental Difference</h3>
-      <p className="mb-4">
-        PCOD (Polycystic Ovarian Disease) is primarily a metabolic disorder marked by multiple ovarian cysts, while PCOS (Polycystic Ovarian Syndrome) is an endocrine system disorder with more severe hormonal imbalances and systemic effects.
-      </p>
-
-      <h3 className="font-bold text-lg mb-2">Key Clinical Differences</h3>
-      <ul className="list-disc pl-5 mb-4 space-y-2">
-        <li><strong>Prevalence:</strong> PCOD affects ~10% of women, PCOS affects ~5-7%</li>
-        <li><strong>Ovulation:</strong> PCOD patients often ovulate regularly, PCOS patients frequently experience anovulation</li>
-        <li><strong>Insulin Resistance:</strong> Present in 70-80% of PCOS cases vs 20-30% of PCOD cases</li>
-        <li><strong>Androgen Levels:</strong> Significantly higher in PCOS</li>
-      </ul>
-
-      <h3 className="font-bold text-lg mb-2">Diagnostic Criteria</h3>
-      <p className="mb-4">
-        PCOS requires at least 2 of these 3 Rotterdam criteria:
-        <ol className="list-decimal pl-5 mt-2 space-y-1">
-          <li>Irregular or absent periods</li>
-          <li>Clinical/biochemical signs of hyperandrogenism</li>
-          <li>Polycystic ovaries on ultrasound</li>
-        </ol>
-        PCOD is diagnosed primarily through ultrasound findings with milder symptoms.
-      </p>
-
-      <h3 className="font-bold text-lg mb-2">Long-Term Health Risks</h3>
-      <div className="grid md:grid-cols-2 gap-4 mb-4">
-        <div className="rounded-lg bg-gray-50 p-3 ">
-          <h4 className="font-semibold text-primary-700 ">PCOS Risks</h4>
-          <ul className="text-sm mt-1 space-y-1">
-            <li>Type 2 diabetes (2-4× higher risk)</li>
-            <li>Cardiovascular disease</li>
-            <li>Endometrial cancer</li>
-            <li>Clinical depression</li>
-          </ul>
-        </div>
-        <div className="rounded-lg bg-primary-50 p-3 ">
-          <h4 className="font-semibold text-primary-700 ">PCOD Risks</h4>
-          <ul className="text-sm mt-1 space-y-1">
-            <li>Weight management challenges</li>
-            <li>Mild fertility issues</li>
-            <li>Occasional hormonal acne</li>
-          </ul>
-        </div>
-      </div>
-
-      <h3 className="font-bold text-lg mb-2">Treatment Approaches</h3>
-      <p className="mb-2">
-        <strong>For PCOD:</strong> Lifestyle modifications (diet/exercise) are often sufficient. OCPs may be used for symptom management.
-      </p>
-      <p>
-        <strong>For PCOS:</strong> Requires comprehensive management including:
-        <ul className="list-disc pl-5 mt-2 space-y-1">
-          <li>Metformin for insulin resistance</li>
-          <li>Anti-androgens for hirsutism</li>
-          <li>Fertility treatments when needed</li>
-          <li>Mental health support</li>
-        </ul>
-      </p>
-
-      <div className="mt-6 rounded-lg border border-gray-200 bg-gray-50 p-4  ">
-        <h4 className="mb-2 font-bold text-gray-700 ">When to Consult a Doctor</h4>
-        <p>
-          Seek medical advice if experiencing:
-          <ul className="list-disc pl-5 mt-1 space-y-1">
-            <li>Irregular periods for &gt;3 cycles</li>
-            <li>Unexplained weight gain with acne</li>
-            <li>Excessive facial/body hair</li>
-            <li>Difficulty conceiving after 6-12 months</li>
-          </ul>
-        </p>
-      </div>
-    </div>
-  ),
-  category: 'education',
-  date: '2024-02-28',
-  link: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10063586/'
-},
-    {
-  id: 3,
-  image: assets.rh_a4,
-  title: 'Understanding Oligohydramnios: Causes, Risks & Management',
-  description: 'Comprehensive guide to low amniotic fluid levels - diagnosis, clinical implications, and evidence-based management strategies for optimal pregnancy outcomes.',
-  fullContent: (
-    <div className="space-y-6">
-      {/* Hero Summary */}
-      <div className="flex items-start rounded-lg border-l-4 border-primary-400 bg-primary-50 p-6 ">
-        <div className="mr-4 text-blue-500 text-3xl">🫄</div>
-        <div>
-          <h3 className="mb-2 font-bold text-primary-800 ">Oligohydramnios at a Glance</h3>
-          <p className="text-primary-700 ">
-            Affecting ~4% of pregnancies, oligohydramnios (amniotic fluid index ≤5cm or single deepest pocket ≤2cm) requires careful monitoring and individualized management.
-          </p>
-        </div>
-      </div>
-
-      {/* Causes & Risk Factors */}
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="rounded-lg bg-gray-50 p-6 ">
-          <div className="flex items-center mb-3">
-            <div className="mr-3 rounded-full bg-primary-100 p-2 ">🔍</div>
-            <h4 className="font-bold text-primary-800 ">Primary Causes</h4>
-          </div>
-          <ul className="space-y-2 pl-2">
-            <li className="flex items-start">
-              <span className="mr-2 rounded-full bg-primary-200 p-1 text-xs text-primary-800  ">1</span>
-              <span><strong>Ruptured membranes</strong> (25-35% of cases)</span>
-            </li>
-            <li className="flex items-start">
-              <span className="mr-2 rounded-full bg-primary-200 p-1 text-xs text-primary-800  ">2</span>
-              <span><strong>Placental insufficiency</strong> (IUGR association)</span>
-            </li>
-            <li className="flex items-start">
-              <span className="mr-2 rounded-full bg-primary-200 p-1 text-xs text-primary-800  ">3</span>
-              <span><strong>Fetal anomalies</strong> (renal/urinary tract defects)</span>
-            </li>
-            <li className="flex items-start">
-              <span className="mr-2 rounded-full bg-primary-200 p-1 text-xs text-primary-800  ">4</span>
-              <span><strong>Post-term pregnancy</strong> (≥42 weeks)</span>
-            </li>
-          </ul>
-        </div>
-
-        <div className="rounded-lg bg-violet-50 p-6 ">
-          <div className="flex items-center mb-3">
-            <div className="mr-3 rounded-full bg-violet-100 p-2 ">⚠️</div>
-            <h4 className="font-bold text-violet-800 ">Risk Factors</h4>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            <span className="bg-white bg-opacity-50 rounded px-2 py-1 text-sm shadow-xs">Hypertension</span>
-            <span className="bg-white bg-opacity-50 rounded px-2 py-1 text-sm shadow-xs">Diabetes</span>
-            <span className="bg-white bg-opacity-50 rounded px-2 py-1 text-sm shadow-xs">Lupus</span>
-            <span className="bg-white bg-opacity-50 rounded px-2 py-1 text-sm shadow-xs">Dehydration</span>
-            <span className="bg-white bg-opacity-50 rounded px-2 py-1 text-sm shadow-xs">ACE inhibitors</span>
-            <span className="bg-white bg-opacity-50 rounded px-2 py-1 text-sm shadow-xs">NSAID use</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Diagnostic Process */}
-      <div className="rounded-lg bg-teal-50 p-6 ">
-        <h3 className="mb-4 flex items-center font-bold text-teal-800 ">
-          <span className="mr-3 rounded-full bg-teal-100 p-2 ">🩺</span>
-          Diagnostic Pathway
-        </h3>
-        <div className="flex overflow-x-auto pb-4">
-          <div className="flex space-x-4">
-            {[
-              { step: 1, icon: '📅', text: 'Gestational age confirmation' },
-              { step: 2, icon: '💧', text: 'AFI measurement' },
-              { step: 3, icon: '👶', text: 'Fetal anatomy scan' },
-              { step: 4, icon: '❤️', text: 'Doppler studies' },
-              { step: 5, icon: '🧪', text: 'Infection workup' }
-            ].map((item) => (
-              <div key={item.step} className="w-40 flex-shrink-0 rounded-lg border border-gray-200 bg-white p-4 shadow-sm  ">
-                <div className="mx-auto mb-2 flex h-8 w-8 items-center justify-center rounded-full bg-teal-100 text-teal-800  ">
-                  {item.icon}
-                </div>
-                <p className="text-center text-sm font-medium">{item.text}</p>
+      id: 1,
+      image: assets.rh_myo,
+      title: 'The Comparative Effects of Myo-Inositol and Metformin in PCOS Treatment',
+      description: 'Clinical trial comparing Myo-Inositol and Metformin efficacy in normal-weight PCOS patients, showing significant improvements in hormonal and metabolic parameters with both treatments.',
+      link: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10886614/',
+      fullContent: (
+        <div className="space-y-6 text-left">
+          {/* Study Overview */}
+          <div className="rounded-xl border border-primary-100 bg-white p-6 shadow-sm">
+            <h3 className="mb-4 text-xl font-bold text-primary-700">Study Highlights</h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="mb-2 font-semibold text-gray-800">🔬 Study Design</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>6-month randomized controlled trial</li>
+                  <li>200 normal-weight PCOS patients (BMI 18.5-24.9)</li>
+                  <li>Age group: 18-35 years</li>
+                  <li>Double-blind, placebo-controlled methodology</li>
+                </ul>
               </div>
-            ))}
+              <div>
+                <h4 className="mb-2 font-semibold text-gray-800">💊 Treatment Groups</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                  <li>Group A: Myo-Inositol 2000mg twice daily</li>
+                  <li>Group B: Metformin SR 1000mg twice daily</li>
+                  <li>Group C: Combined therapy</li>
+                  <li>Group D: Placebo control</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Key Findings */}
+          <div>
+            <h3 className="font-bold text-xl text-gray-900 mb-4">📊 Key Findings</h3>
+            <div className="grid md:grid-cols-3 gap-4 mb-6">
+              <div className="rounded-lg bg-primary-50 border border-primary-100 p-4">
+                <h4 className="mb-2 font-semibold text-primary-800">Menstrual Regularity</h4>
+                <p className="text-sm text-gray-700">
+                  <span className="font-bold">Myo-Inositol:</span> 78% improvement<br/>
+                  <span className="font-bold">Metformin:</span> 72% improvement
+                </p>
+              </div>
+              <div className="rounded-lg bg-gray-50 border border-gray-200 p-4">
+                <h4 className="font-semibold text-gray-800 mb-2">Insulin Sensitivity</h4>
+                <p className="text-sm text-gray-700">
+                  <span className="font-bold">HOMA-IR Reduction:</span><br/>
+                  Myo-Inositol: 32% ↓<br/>
+                  Metformin: 38% ↓
+                </p>
+              </div>
+              <div className="rounded-lg bg-primary-50 border border-primary-100 p-4">
+                <h4 className="mb-2 font-semibold text-primary-800">Androgen Levels</h4>
+                <p className="text-sm text-gray-700">
+                  <span className="font-bold">Free Testosterone:</span><br/>
+                  Myo-Inositol: 41% ↓<br/>
+                  Metformin: 36% ↓
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Clinical Recommendations */}
+          <div className="mt-8 rounded-xl border-l-4 border-primary-500 bg-primary-50 p-6">
+            <h3 className="font-bold text-lg text-primary-900 mb-3">🏥 Clinical Recommendations</h3>
+            <ul className="list-disc pl-5 space-y-2 text-gray-700">
+              <li><strong>First-line therapy:</strong> Myo-Inositol preferred for patients concerned about gastrointestinal side effects</li>
+              <li><strong>Severe insulin resistance:</strong> Metformin may show better results</li>
+              <li><strong>Fertility goals:</strong> Consider combination therapy for optimal ovulation induction</li>
+            </ul>
           </div>
         </div>
-      </div>
+      ),
+      category: 'research',
+      date: '2024-03-15',
+    },
+    {
+      id: 2,
+      image: assets.rh_a3,
+      title: 'Is PCOS the Same as PCOD? Understanding the Key Differences',
+      description: 'While often confused, PCOS and PCOD differ in severity, hormonal impact, and long-term health implications. Learn how to distinguish these conditions.',
+      link: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10063586/',
+      fullContent: (
+        <div className="space-y-6 text-left">
+          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+            <h3 className="mb-6 text-center text-xl font-bold text-primary-700">PCOS vs PCOD: At a Glance</h3>
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <div className="rounded-lg border-2 border-primary-200 bg-primary-50 p-5">
+                <h4 className="mb-4 border-b border-primary-200 pb-2 text-center text-lg font-bold text-primary-800">PCOD (Polycystic Ovarian Disease)</h4>
+                <ul className="space-y-3 text-gray-700 text-sm">
+                  <li>• <strong>Condition Type:</strong> Primarily a condition of the ovaries.</li>
+                  <li>• <strong>Prevalence:</strong> More common, affecting nearly 1 in 10 women globally.</li>
+                  <li>• <strong>Ovulation & Fertility:</strong> Women with PCOD generally continue to ovulate and can conceive with minimal medical intervention.</li>
+                  <li>• <strong>Hormonal Shift:</strong> Mild hormonal imbalance; symptoms are often manageable with lifestyle changes.</li>
+                </ul>
+              </div>
+              <div className="rounded-lg border-2 border-gray-200 bg-gray-50 p-5">
+                <h4 className="mb-4 border-b border-gray-200 pb-2 text-center text-lg font-bold text-gray-800">PCOS (Polycystic Ovary Syndrome)</h4>
+                <ul className="space-y-3 text-gray-700 text-sm">
+                  <li>• <strong>Condition Type:</strong> A severe systemic endocrine (metabolic) disorder.</li>
+                  <li>• <strong>Prevalence:</strong> Less common, affecting roughly 1 in 15 women.</li>
+                  <li>• <strong>Ovulation & Fertility:</strong> Anovulation (lack of ovulation) is extremely common, making conception naturally more difficult.</li>
+                  <li>• <strong>Hormonal Shift:</strong> Severe hyperandrogenism (excess male hormones) leading to pronounced hirsutism, acne, and hair thinning.</li>
+                </ul>
+              </div>
+            </div>
 
-      {/* Management Strategies */}
-      <div>
-        <h3 className="mb-3 flex items-center text-lg font-bold text-gray-900 ">
-          <span className="mr-2 rounded-full bg-amber-100 p-2 ">🛡️</span>
-          Management Approaches by Trimester
-        </h3>
-        <div className="grid md:grid-cols-3 gap-4">
-          {[
-            {
-              trimester: '1st',
-              color: 'bg-amber-100',
-              actions: [
-                'Rule out fetal anomalies',
-                'Genetic counseling',
-                'Consider termination if severe anomalies'
-              ]
-            },
-            {
-              trimester: '2nd',
-              color: 'bg-gray-100',
-              actions: [
-                'Serial growth scans',
-                'Amnioinfusion if indicated',
-                'Steroids if delivery possible'
-              ]
-            },
-            {
-              trimester: '3rd',
-              color: 'bg-primary-50',
-              actions: [
-                'Fetal monitoring 2x/week',
-                'Delivery at 36-37 weeks',
-                'Maternal hydration therapy'
-              ]
-            }
-          ].map((item) => (
-            <div key={item.trimester} className={`${item.color} rounded-lg p-4 `}>
-              <div className="font-bold text-lg mb-2">{item.trimester} Trimester</div>
-              <ul className="list-disc pl-5 space-y-1 text-sm">
-                {item.actions.map((action, i) => (
-                  <li key={i}>{action}</li>
-                ))}
+            {/* Deep Dive Medical Details */}
+            <h3 className="font-bold text-xl text-gray-900 mb-4 border-t border-gray-100 pt-6">🧬 Deep Dive: Clinical Implications</h3>
+            
+            <div className="space-y-6">
+              <div>
+                <h4 className="font-bold text-primary-800 mb-2">1. Long-Term Health Risks</h4>
+                <p className="text-gray-700 mb-2 text-sm">Because PCOS is a systemic metabolic syndrome, it carries far heavier long-term risks compared to PCOD. Women diagnosed with PCOS must be actively monitored for:</p>
+                <ul className="list-disc pl-5 space-y-1 text-gray-600 text-sm">
+                  <li><strong>Type 2 Diabetes:</strong> Up to 70% of women with PCOS exhibit insulin resistance, making them highly susceptible to prediabetes and Type 2 Diabetes by age 40.</li>
+                  <li><strong>Cardiovascular Issues:</strong> Increased risk of hypertension (high blood pressure) and dyslipidemia (imbalanced cholesterol).</li>
+                  <li><strong>Endometrial Hyperplasia:</strong> Chronic anovulation leads to unchecked estrogen levels, which increases the risk of endometrial cancer over time.</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-bold text-primary-800 mb-2">2. Diagnostic Criteria (Rotterdam Criteria)</h4>
+                <p className="text-gray-700 mb-2 text-sm">To officially diagnose PCOS, an endocrinologist or gynecologist relies on the Rotterdam Criteria. A patient must exhibit at least two of the following three markers:</p>
+                <ul className="list-decimal pl-5 space-y-1 text-gray-600 text-sm">
+                  <li>Oligo-ovulation or anovulation (irregular or absent menstrual cycles).</li>
+                  <li>Clinical and/or biochemical signs of hyperandrogenism (excess testosterone).</li>
+                  <li>Polycystic ovaries visible on an ultrasound (12 or more follicles per ovary).</li>
+                </ul>
+                <p className="text-xs text-gray-500 mt-2 italic">*Note: PCOD is primarily diagnosed solely via ultrasound morphology and does not strictly require the metabolic or systemic symptoms seen in the Rotterdam Criteria.</p>
+              </div>
+
+              <div>
+                <h4 className="font-bold text-primary-800 mb-2">3. Treatment Methodologies</h4>
+                <p className="text-gray-700 mb-2 text-sm"><strong>Managing PCOD:</strong> Generally resolved through diet, weight management, avoiding processed foods, and light exercise. Medical intervention is usually minimal.</p>
+                <p className="text-gray-700 text-sm"><strong>Managing PCOS:</strong> Requires a multi-disciplinary approach. Treatment often involves Metformin (to combat insulin resistance), combined oral contraceptives (to regulate cycles and protect the endometrium), anti-androgens (like Spironolactone for acne and hair growth), and structured fertility treatments (like Letrozole or Clomiphene) when trying to conceive.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+      category: 'education',
+      date: '2024-02-28',
+    },
+    {
+      id: 3,
+      image: assets.rh_a4,
+      title: 'Understanding Oligohydramnios: Causes, Risks & Management',
+      description: 'Comprehensive guide to low amniotic fluid levels - diagnosis, clinical implications, and evidence-based management strategies for optimal pregnancy outcomes.',
+      link: 'https://www.ncbi.nlm.nih.gov/books/NBK562326/',
+      fullContent: (
+        <div className="space-y-6 text-left">
+          {/* Hero Summary */}
+          <div className="flex items-start rounded-xl border-l-4 border-primary-400 bg-primary-50 p-6 shadow-sm">
+            <div className="mr-4 text-3xl">🫄</div>
+            <div>
+              <h3 className="mb-2 font-bold text-primary-800 text-lg">Oligohydramnios at a Glance</h3>
+              <p className="text-primary-700 leading-relaxed text-sm">
+                Affecting approximately 4-5% of pregnancies, oligohydramnios is clinically defined as an Amniotic Fluid Index (AFI) of ≤5cm or a Single Deepest Pocket (SDP) of ≤2cm. Because amniotic fluid is crucial for fetal lung development, temperature regulation, and cushioning the umbilical cord, a low volume requires immediate and careful clinical monitoring.
+              </p>
+            </div>
+          </div>
+    
+          {/* Causes & Fetal Complications */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+              <div className="flex items-center mb-4">
+                <div className="mr-3 rounded-full bg-primary-50 p-2 text-xl">🔍</div>
+                <h4 className="font-bold text-gray-900 text-lg">Primary Etiology (Causes)</h4>
+              </div>
+              <ul className="space-y-3 pl-2 text-gray-700 text-sm">
+                <li className="flex items-start">
+                  <span className="mr-3 mt-0.5 rounded-full bg-primary-100 px-2 py-0.5 text-xs font-bold text-primary-800">1</span>
+                  <span><strong>Premature Rupture of Membranes (PROM):</strong> The most common cause, accounting for 25-35% of cases.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-3 mt-0.5 rounded-full bg-primary-100 px-2 py-0.5 text-xs font-bold text-primary-800">2</span>
+                  <span><strong>Placental Insufficiency:</strong> Poor blood flow to the placenta, often leading to Intrauterine Growth Restriction (IUGR).</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-3 mt-0.5 rounded-full bg-primary-100 px-2 py-0.5 text-xs font-bold text-primary-800">3</span>
+                  <span><strong>Fetal Renal Anomalies:</strong> In the second half of pregnancy, amniotic fluid is mostly fetal urine. Conditions like renal agenesis reduce fluid volume.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-3 mt-0.5 rounded-full bg-primary-100 px-2 py-0.5 text-xs font-bold text-primary-800">4</span>
+                  <span><strong>Post-term Pregnancy:</strong> Fluid naturally declines after 40 weeks, dropping sharply by 42 weeks.</span>
+                </li>
               </ul>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Visual Risk Scale */}
-      <div className="rounded-lg border border-gray-200 bg-white p-6  ">
-        <h3 className="font-bold text-lg mb-4 flex items-center">
-          <span className="bg-red-100 text-red-800 p-2 rounded-full mr-2">📊</span>
-          Severity Classification
-        </h3>
-        <div className="space-y-3">
-          {[
-            { level: 'Mild', range: 'AFI 5-8cm', color: 'bg-gray-100', risk: 'Low complication risk' },
-            { level: 'Moderate', range: 'AFI 3-5cm', color: 'bg-orange-100', risk: 'Increased monitoring needed' },
-            { level: 'Severe', range: 'AFI <3cm', color: 'bg-red-100', risk: 'Immediate intervention required' }
-          ].map((item) => (
-            <div key={item.level} className="flex items-center">
-              <div className={`${item.color} w-24 rounded-l-lg py-2 text-center font-medium text-gray-900  `}>
-                {item.level}
+    
+            <div className="rounded-xl border border-gray-200 bg-gray-50 p-6 shadow-sm">
+              <div className="flex items-center mb-4">
+                <div className="mr-3 rounded-full bg-gray-200 p-2 text-xl">⚠️</div>
+                <h4 className="font-bold text-gray-900 text-lg">Fetal Complications</h4>
               </div>
-              <div className="flex-grow bg-gray-100 px-4 py-2 text-gray-700  ">
-                <span className="font-medium">{item.range}</span> • {item.risk}
+              <p className="text-sm text-gray-600 mb-3">Severe oligohydramnios can lead to mechanical and developmental complications:</p>
+              <ul className="list-disc pl-5 space-y-2 text-gray-700 text-sm">
+                <li><strong>Cord Compression:</strong> Without fluid cushioning, the umbilical cord can compress, leading to fetal hypoxia (seen as variable decelerations on CTG).</li>
+                <li><strong>Pulmonary Hypoplasia:</strong> If fluid is low during the second trimester, fetal lungs cannot expand properly, leading to severe breathing issues at birth.</li>
+                <li><strong>Potter Sequence:</strong> Prolonged lack of fluid can cause facial deformities and limb contractures (e.g., clubfoot) due to uterine wall compression.</li>
+                <li><strong>Meconium Aspiration:</strong> Increased risk of the fetus passing meconium (first stool) in utero due to stress.</li>
+              </ul>
+            </div>
+          </div>
+    
+          {/* Advanced Monitoring Process */}
+          <div className="rounded-xl bg-white border border-primary-100 p-6 shadow-sm">
+            <h3 className="mb-4 flex items-center font-bold text-gray-900 text-lg">
+              <span className="mr-3 rounded-full bg-primary-50 p-2 text-xl">🩺</span>
+              Advanced Monitoring & Diagnostics
+            </h3>
+            <p className="text-gray-700 mb-4 text-sm">Once diagnosed, pregnancies complicated by oligohydramnios require intensive fetal surveillance to prevent stillbirth or severe morbidity.</p>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                <h4 className="font-bold text-primary-800 mb-1">Non-Stress Test (NST)</h4>
+                <p className="text-xs text-gray-600">Performed 1-2 times per week to monitor fetal heart rate reactivity and detect cord compression.</p>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                <h4 className="font-bold text-primary-800 mb-1">Biophysical Profile (BPP)</h4>
+                <p className="text-xs text-gray-600">Combines an NST with an ultrasound to score fetal breathing, tone, movement, and amniotic fluid volume.</p>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                <h4 className="font-bold text-primary-800 mb-1">Umbilical Artery Doppler</h4>
+                <p className="text-xs text-gray-600">Assesses placental blood flow resistance to identify placental insufficiency and IUGR.</p>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Patient Counseling */}
-      <div className="rounded-lg bg-indigo-50 p-6 ">
-        <h3 className="mb-3 flex items-center font-bold text-indigo-800 ">
-          <span className="bg-indigo-100 p-2 rounded-full mr-2">💬</span>
-          Patient Counseling Points
-        </h3>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="rounded-lg border border-gray-200 bg-white p-3  ">
-            <h4 className="mb-1 flex items-center font-semibold text-indigo-700 ">
-              <span className="mr-2">✅</span> Do's
-            </h4>
-            <ul className="list-disc pl-5 text-sm space-y-1">
-              <li>Increase water intake (2-3L/day)</li>
-              <li>Monitor fetal movement daily</li>
-              <li>Attend all scheduled scans</li>
-            </ul>
           </div>
-          <div className="rounded-lg border border-gray-200 bg-white p-3  ">
-            <h4 className="mb-1 flex items-center font-semibold text-indigo-700 ">
-              <span className="mr-2">❌</span> Don'ts
-            </h4>
-            <ul className="list-disc pl-5 text-sm space-y-1">
-              <li>Avoid NSAIDs without consultation</li>
-              <li>Don't ignore reduced fetal movements</li>
-              <li>Don't delay prenatal visits</li>
-            </ul>
+    
+          {/* Management Strategies */}
+          <div>
+            <h3 className="mb-4 flex items-center text-lg font-bold text-gray-900">
+              <span className="mr-3 rounded-full bg-gray-100 p-2 text-xl">🛡️</span>
+              Clinical Management Strategies
+            </h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                <div className="font-bold text-gray-900 text-lg mb-3 pb-2 border-b border-gray-200/50">Conservative</div>
+                <ul className="list-disc pl-4 space-y-2 text-xs text-gray-700">
+                  <li><strong>Maternal Hydration:</strong> Oral or IV hydration can temporarily increase fluid volume in borderline cases.</li>
+                  <li><strong>Bed Rest:</strong> Recommended in some cases to improve uteroplacental perfusion.</li>
+                  <li><strong>Strict Surveillance:</strong> Twice-weekly NSTs and AFIs.</li>
+                </ul>
+              </div>
+              <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 shadow-sm">
+                <div className="font-bold text-gray-900 text-lg mb-3 pb-2 border-b border-gray-200/50">Interventional</div>
+                <ul className="list-disc pl-4 space-y-2 text-xs text-gray-700">
+                  <li><strong>Amnioinfusion:</strong> Infusion of sterile saline into the uterine cavity during labor to resolve repetitive cord compressions.</li>
+                  <li><strong>Corticosteroids:</strong> Administered if premature delivery (before 34 weeks) is anticipated to accelerate fetal lung maturity.</li>
+                </ul>
+              </div>
+              <div className="bg-primary-50 border border-primary-100 rounded-xl p-5 shadow-sm">
+                <div className="font-bold text-gray-900 text-lg mb-3 pb-2 border-b border-gray-200/50">Delivery Timing</div>
+                <ul className="list-disc pl-4 space-y-2 text-xs text-gray-700">
+                  <li><strong>Isolated Oligo:</strong> Induction of labor is generally recommended between 36 to 37 weeks.</li>
+                  <li><strong>With Complications:</strong> Immediate delivery (often via C-section) if non-reassuring fetal status or severe IUGR is present.</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  ),
-  category: 'clinical',
-  date: '2024-01-10',
-  link: 'https://www.ncbi.nlm.nih.gov/books/NBK562326/'
-},
+      ),
+      category: 'clinical',
+      date: '2024-01-10',
+    }
   ];
 
   const filteredArticles = activeFilter === 'all' 
     ? allArticles 
     : allArticles.filter(article => article.category === activeFilter);
 
-  const toggleExpand = (id) => {
-    setExpandedArticle(prev => (prev === id ? null : id));
-  };
+  // Lock body scroll when an article is open
+  useEffect(() => {
+    if (selectedArticleId) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [selectedArticleId]);
+
+  const activeArticle = allArticles.find(a => a.id === selectedArticleId);
 
   return (
-    <section className="min-h-screen bg-gray-50 px-6 py-12 ">
+    <section className="min-h-screen bg-[#faf9f8] px-6 py-16">
       <div className="max-w-7xl mx-auto">
+        
         {/* Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-8"
-        >
-          <h1 className="mb-3 text-4xl font-bold text-gray-900 ">Research Highlights</h1>
-          <p className="mb-6 text-lg font-medium text-primary-700 ">
-            Discover the latest medical research and insights
+        <div className="text-center mb-12">
+          <h1 className="mb-4 text-4xl font-extrabold text-gray-900 tracking-tight">Research Highlights</h1>
+          <p className="mb-8 text-lg text-primary-700 font-medium">
+            Discover the latest medical research and clinical insights
           </p>
 
           {/* Filter Navigation */}
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
+          <div className="flex flex-wrap justify-center gap-3">
             {['all', 'research', 'education', 'clinical'].map((filter) => (
               <button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
-                className={`px-4 py-2 rounded-full capitalize transition-colors ${
+                className={`px-5 py-2.5 rounded-full capitalize font-medium transition-all duration-300 ${
                   activeFilter === filter 
-                    ? 'bg-primary-600 text-white ' 
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300   '
+                    ? 'bg-primary-600 text-white shadow-md' 
+                    : 'bg-white border border-gray-200 text-gray-600 hover:bg-primary-50 hover:text-primary-700'
                 }`}
               >
                 {filter === 'all' ? 'All Articles' : filter}
               </button>
             ))}
           </div>
-        </motion.div>
+        </div>
 
-        {/* Articles Grid */}
-        <LayoutGroup>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredArticles.map((article) => {
-              const isExpanded = expandedArticle === article.id;
+        {/* ARTICLES GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+          {filteredArticles.map((article) => (
+            <div
+              key={article.id}
+              onClick={() => setSelectedArticleId(article.id)}
+              className="group flex flex-col h-full relative overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-md cursor-pointer hover:shadow-xl transition-shadow"
+            >
+              {/* Grid Image */}
+              <div className="relative h-64 overflow-hidden">
+                <img src={article.image} alt={article.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent" />
+                <div className="absolute bottom-4 left-6 right-6 flex justify-between items-center text-white">
+                  <span className="px-3 py-1 bg-primary-600/90 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
+                    {article.category}
+                  </span>
+                  <span className="text-sm font-medium opacity-90">
+                    {new Date(article.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                  </span>
+                </div>
+              </div>
 
-              return (
-                <motion.div
-                  key={article.id}
-                  layout
-                  transition={{ type: 'spring', damping: 20, stiffness: 200 }}
-                  className={`group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm   ${
-                    isExpanded ? 'w-full max-w-5xl md:col-span-2 lg:col-span-3 mx-auto' : ''
-                  }`}
-                >
-                  <motion.div layout className="flex flex-col h-full">
-                    {/* Image */}
-                    <div className={`relative overflow-hidden ${isExpanded ? 'h-96 md:h-[30rem]' : 'h-64 md:h-80'}`}>
-
-                      <img
-                        src={article.image}
-                        alt={article.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent " />
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6 flex-grow">
-                      <div className="flex justify-between items-start mb-3">
-                        <span className="text-sm font-medium uppercase tracking-wider text-primary-600 ">
-                          {article.category}
-                        </span>
-                        <span className="text-sm text-gray-500 ">
-                          {new Date(article.date).toLocaleDateString()}
-                        </span>
-                      </div>
-
-                      <h3 className="mb-3 text-xl font-bold text-gray-900 ">
-                        {article.title}
-                      </h3>
-
-                      {/* Animated Expandable Text */}
-                      <motion.div
-                        layout
-                        initial={false}
-                        animate={{
-                          height: isExpanded ? 'auto' : 72,
-                          opacity: 1,
-                          overflow: 'hidden'
-                        }}
-                        transition={{ duration: 0.4, ease: 'easeInOut' }}
-                        className="mb-4 text-gray-700 "
-                      >
-                        <p className="mb-4">
-                          {isExpanded ? article.fullContent : article.description}
-                        </p>
-                        {isExpanded && article.link && (
-                          <a
-                            href={article.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center font-medium text-primary-600 transition-colors hover:text-primary-800  "
-                          >
-                            Read Full Study
-                            <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                          </a>
-                        )}
-                      </motion.div>
-
-                      <button
-                        onClick={() => toggleExpand(article.id)}
-                        className="mt-2 flex items-center font-medium text-primary-600 transition-colors hover:text-primary-800  "
-                      >
-                        {isExpanded ? 'Show Less' : 'Read More'}
-                        <svg
-                          className={`w-4 h-4 ml-1 transform transition-transform ${
-                            isExpanded ? 'rotate-180' : ''
-                          }`}
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </button>
-                    </div>
-                  </motion.div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </LayoutGroup>
+              {/* Grid Text Body */}
+              <div className="flex flex-col flex-grow p-6">
+                <h3 className="font-bold text-gray-900 text-xl mb-3 line-clamp-2 transition-colors group-hover:text-primary-600">
+                  {article.title}
+                </h3>
+                <p className="text-gray-600 mb-6 line-clamp-3">
+                  {article.description}
+                </p>
+                <div className="mt-auto pt-4 border-t border-gray-100 text-primary-600 font-semibold flex items-center group-hover:text-primary-800">
+                  Read Full Study
+                  <svg className="w-5 h-5 ml-2 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
+
+      {/* 🌟 PURE GPU-ACCELERATED MODAL OVERLAY 🌟 */}
+      <AnimatePresence>
+        {selectedArticleId && activeArticle && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8 pointer-events-auto">
+            
+            {/* Smooth Blur Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={() => setSelectedArticleId(null)}
+              className="absolute inset-0 bg-gray-900/60 backdrop-blur-md cursor-pointer"
+            />
+
+            {/* Scale & Fade Modal */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }} 
+              className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden z-10"
+            >
+              {/* Floating Close Button */}
+              <button
+                onClick={() => setSelectedArticleId(null)}
+                className="absolute top-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md transition-colors hover:bg-black/80"
+              >
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              <div className="overflow-y-auto w-full hide-scrollbar">
+                {/* Expanded Image */}
+                <div className="relative h-64 sm:h-80 w-full flex-shrink-0">
+                  <img src={activeArticle.image} alt={activeArticle.title} className="h-full w-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <span className="inline-block mb-3 px-3 py-1 bg-primary-600 text-white rounded-full text-xs font-bold uppercase tracking-wider">
+                      {activeArticle.category}
+                    </span>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
+                      {activeArticle.title}
+                    </h2>
+                  </div>
+                </div>
+
+                {/* Expanded Content */}
+                <div className="p-6 sm:p-10">
+                  {activeArticle.fullContent}
+                  
+                  {/* Link Box */}
+                  {activeArticle.link && (
+                    <div className="mt-12 mb-4 flex justify-center">
+                      <a
+                        href={activeArticle.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center px-8 py-3 bg-primary-50 border-2 border-primary-500 text-primary-700 font-bold rounded-full hover:bg-primary-600 hover:text-white transition-all duration-300 shadow-sm hover:shadow-md"
+                      >
+                        To know more
+                        <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
 
 export default ResearchHighlights;
-
-
-
-

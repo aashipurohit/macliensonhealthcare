@@ -20,7 +20,7 @@ const UserLayout = () => {
     
 
     {/* Main Content*/ }
-<main>
+<main className="pt-[140px]">
   <Outlet />
 </main>
 

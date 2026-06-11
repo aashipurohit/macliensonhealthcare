@@ -1,192 +1,42 @@
-// import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import axios from "axios";
-
-// // Async thunk to create a checkout session
-// export const createCheckout = createAsyncThunk(
-//     "checkout/createCheckout",
-//     async (checkoutdata, { rejectWithValue }) => {
-//     try {
-//     const response = await axios.post(
-//     `${import.meta.env.VITE_BACKEND_URL}/api/checkout`,
-//     checkoutdata,
-//     {
-//     headers: {
-     
-//         Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-      
-//         },
-
-//      }
-
-//     );
-//        return response.data
-//     }  catch (error) {
-//         return rejectWithValue(error.response.data);
-//     }
-
-// }
-   
-// );
-
-// const checkoutSlice = createSlice({
-//     name: "checkout",
-//     initialState: {
-//     checkout: null,
-//     loading: false,
-//     error: null,
-//     },
-//     reducers: {},
-//     extraReducers: (builder) => {
-//     builder
-//     .addCase(createCheckout.pending, (state) => {
-//     state.loading = true;
-//     state.error = null;
-//     })
-//     .addCase(createCheckout.fulfilled, (state, action) => {
-//     state.loading = false;
-//     state.checkout = action.payload;
-//     })
-//     .addCase(createCheckout.rejected, (state, action) => {
-//     state.loading = false;
-//     state.error = action.payload.message;
-//     });
-//     },
-
-// });
-
-// export default checkoutSlice.reducer;
-
-
-// redux/slices/checkoutSlice.js - Updated
-// import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import axios from "axios";
-
-// // Async thunk to create Razorpay order
-// export const createRazorpayOrder = createAsyncThunk(
-//   "checkout/createRazorpayOrder",
-//   async (orderData, { rejectWithValue }) => {
-//     try {
-//       const response = await axios.post(
-//         `${import.meta.env.VITE_BACKEND_URL}/api/orders/create-razorpay-order`,
-//         orderData,
-//         {
-//           headers: {
-//             Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-//           },
-//         }
-//       );
-//       return response.data;
-//     } catch (error) {
-//       return rejectWithValue(
-//         error.response?.data || { message: "Something went wrong" }
-//       );
-//     }
-//   }
-// );
-
-// // Async thunk to verify payment
-// export const verifyRazorpayPayment = createAsyncThunk(
-//   "checkout/verifyPayment",
-//   async (paymentData, { rejectWithValue }) => {
-//     try {
-//       const response = await axios.post(
-//         `${import.meta.env.VITE_BACKEND_URL}/api/orders/verify-payment`,
-//         paymentData,
-//         {
-//           headers: {
-//             Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-//           },
-//         }
-//       );
-//       return response.data;
-//     } catch (error) {
-//       return rejectWithValue(
-//         error.response?.data || { message: "Payment verification failed" }
-//       );
-//     }
-//   }
-// );
-
-// const checkoutSlice = createSlice({
-//   name: "checkout",
-//   initialState: {
-//     razorpayOrder: null,
-//     paymentStatus: null,
-//     loading: false,
-//     error: null,
-//   },
-//   reducers: {
-//     clearPaymentState: (state) => {
-//       state.razorpayOrder = null;
-//       state.paymentStatus = null;
-//       state.error = null;
-//     },
-//   },
-//   extraReducers: (builder) => {
-//     builder
-//       // Create Razorpay Order
-//       .addCase(createRazorpayOrder.pending, (state) => {
-//         state.loading = true;
-//         state.error = null;
-//       })
-//       .addCase(createRazorpayOrder.fulfilled, (state, action) => {
-//         state.loading = false;
-//         state.razorpayOrder = action.payload;
-//       })
-//       .addCase(createRazorpayOrder.rejected, (state, action) => {
-//         state.loading = false;
-//         state.error = action.payload?.message;
-//       })
-      
-//       // Verify Payment
-//       .addCase(verifyRazorpayPayment.pending, (state) => {
-//         state.loading = true;
-//         state.error = null;
-//       })
-//       .addCase(verifyRazorpayPayment.fulfilled, (state, action) => {
-//         state.loading = false;
-//         state.paymentStatus = "success";
-//       })
-//       .addCase(verifyRazorpayPayment.rejected, (state, action) => {
-//         state.loading = false;
-//         state.paymentStatus = "failed";
-//         state.error = action.payload?.message;
-//       });
-//   },
-// });
-
-// export const { clearPaymentState } = checkoutSlice.actions;
-// export default checkoutSlice.reducer;
-
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../api/apiClient";
 
-// Async thunk to create Razorpay order
+// ── Step 1: Create Razorpay order (get server-calculated amount) ──────────────
 export const createRazorpayOrder = createAsyncThunk(
   "checkout/createRazorpayOrder",
-  async (orderData, { rejectWithValue }) => {
+  async (orderItems, { rejectWithValue }) => {
     try {
-      const response = await api.post("/api/orders/create-razorpay-order", orderData);
+      const response = await api.post("/api/orders/create-razorpay-order", { orderItems });
       return response.data;
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data || { message: "Something went wrong" }
-      );
+      return rejectWithValue(error.response?.data || { message: "Failed to create order" });
     }
   }
 );
 
-// Async thunk to verify payment
-export const verifyRazorpayPayment = createAsyncThunk(
-  "checkout/verifyPayment",
-  async (paymentData, { rejectWithValue }) => {
+// ── Step 2: Verify payment + create order atomically (single endpoint) ────────
+// ✅ FIX (VULN-001, VULN-002, VULN-003): replaces separate /verify + /create calls
+// No totalAmount or paymentMethod sent — server handles both
+export const verifyAndCreateOrder = createAsyncThunk(
+  "checkout/verifyAndCreateOrder",
+  async (
+    { razorpay_payment_id, razorpay_order_id, razorpay_signature, orderItems, shipping, idempotencyKey },
+    { rejectWithValue }
+  ) => {
     try {
-      const response = await api.post("/api/orders/verify", paymentData);
+      const response = await api.post("/api/orders/verify-and-create", {
+        razorpay_payment_id,
+        razorpay_order_id,
+        razorpay_signature,
+        orderItems,    // [{productId, quantity}] — no price
+        shipping,
+        idempotencyKey,
+        // ✅ totalAmount intentionally omitted
+        // ✅ paymentMethod intentionally omitted — server always sets "razorpay"
+      });
       return response.data;
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data || { message: "Payment verification failed" }
-      );
+      return rejectWithValue(error.response?.data || { message: "Payment verification failed" });
     }
   }
 );
@@ -195,20 +45,22 @@ const checkoutSlice = createSlice({
   name: "checkout",
   initialState: {
     razorpayOrder: null,
-    paymentStatus: null,
+    createdOrder: null,
+    paymentStatus: null,   // null | "success" | "failed"
     loading: false,
     error: null,
   },
   reducers: {
     clearPaymentState: (state) => {
       state.razorpayOrder = null;
+      state.createdOrder = null;
       state.paymentStatus = null;
       state.error = null;
     },
   },
   extraReducers: (builder) => {
     builder
-      // Create Razorpay Order
+      // createRazorpayOrder
       .addCase(createRazorpayOrder.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -221,17 +73,18 @@ const checkoutSlice = createSlice({
         state.loading = false;
         state.error = action.payload?.message;
       })
-      
-      // Verify Payment
-      .addCase(verifyRazorpayPayment.pending, (state) => {
+
+      // verifyAndCreateOrder
+      .addCase(verifyAndCreateOrder.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(verifyRazorpayPayment.fulfilled, (state) => {
+      .addCase(verifyAndCreateOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.paymentStatus = "success";
+        state.createdOrder = action.payload.order;
       })
-      .addCase(verifyRazorpayPayment.rejected, (state, action) => {
+      .addCase(verifyAndCreateOrder.rejected, (state, action) => {
         state.loading = false;
         state.paymentStatus = "failed";
         state.error = action.payload?.message;

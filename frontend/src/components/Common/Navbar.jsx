@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { assets } from '../../assets/assets'; 
 import { HiOutlineUser, HiOutlineShoppingBag, HiBars3BottomRight } from "react-icons/hi2";
@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [navDrawerOpen, setNavDrawer] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
    
   const { cart } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
@@ -29,32 +30,47 @@ const Navbar = () => {
     { name: 'CONTACT US', path: '/contact' },
   ];
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <>
-      <nav className="container mx-auto flex items-center justify-between px-4 py-4 text-primary-950">
-        
-        {/* Left - Logo & Legal Info */}
-        <div className="flex flex-col items-center min-w-[280px]">
-          <Link to="/" className="flex-shrink-0">
-            <img src={assets.logo_maclienson_br} alt="Maclienson Logo" className="h-20 w-auto object-contain" />
-          </Link>
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+        isScrolled ? 'pt-6 px-4' : 'pt-0 px-0 bg-[#faf9f8]'
+      }`}>
+        <nav className={`mx-auto flex items-center justify-between text-primary-950 transition-all duration-500 ease-in-out ${
+          isScrolled 
+            ? 'max-w-6xl bg-white/60 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] rounded-full px-8 py-3 border border-white/40' 
+            : 'container px-4 py-4 bg-transparent'
+        }`}>
           
-          <div className="mt-2 flex flex-col items-center text-center leading-tight">
-            <div className="text-[9px] uppercase tracking-[0.2em] font-bold text-primary-900 leading-tight">
-              <span>A DIVISION OF MACLIENSON </span>
-              <br />
-              <span>LIFE SCIENCES INC.</span>
-            </div>
+          {/* Left - Logo & Legal Info */}
+          <div className={`flex flex-col justify-center transition-all duration-500 ${isScrolled ? 'items-start min-w-[150px]' : 'items-center min-w-[280px]'}`}>
+            <Link to="/" className="flex-shrink-0">
+              <img src={assets.logo_maclienson_br} alt="Maclienson Logo" className={`w-auto object-contain transition-all duration-500 ${isScrolled ? 'h-10' : 'h-20'}`} />
+            </Link>
+            
+            <div className={`flex flex-col items-center text-center leading-tight transition-all duration-500 overflow-hidden ${isScrolled ? 'h-0 opacity-0 mt-0' : 'h-auto opacity-100 mt-2'}`}>
+              <div className="text-[9px] uppercase tracking-[0.2em] font-bold text-primary-900 leading-tight">
+                <span>A DIVISION OF MACLIENSON </span>
+                <br />
+                <span>LIFE SCIENCES INC.</span>
+              </div>
 
-            <div className="mt-1 flex flex-col items-center text-[8px] font-semibold text-primary-700/90 leading-tight text-center">
-              <span>REGISTERED OFFICE:</span>
-              <span>30N GOULD STREET,</span>
-              <span>SHERIDAN, WYOMING- 82801, USA</span>
+              <div className="mt-1 flex flex-col items-center text-[8px] font-semibold text-primary-700/90 leading-tight text-center">
+                <span>REGISTERED OFFICE:</span>
+                <span>30N GOULD STREET,</span>
+                <span>SHERIDAN, WYOMING- 82801, USA</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Center - Navigation Links */}
+          {/* Center - Navigation Links */}
         <div className="hidden md:flex space-x-6 lg:space-x-8">
           {navLinks.map((link) => (
             <Link 
@@ -90,7 +106,8 @@ const Navbar = () => {
           </div>
           <button onClick={toggleNavDrawer} className="md:hidden text-primary-800 hover:text-gold-400"><HiBars3BottomRight className="h-7 w-7" /></button>
         </div>
-      </nav>
+        </nav>
+      </header>
 
       <CartDrawer drawerOpen={drawerOpen} toggleCartDrawer={toggleCartDrawer} />
 

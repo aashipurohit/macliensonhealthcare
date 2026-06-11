@@ -1085,13 +1085,85 @@ const saveCart = (cart) => {
   localStorage.setItem("cart", JSON.stringify(cart));
 };
 
-const getStoredCart = () => {
-  const raw = localStorage.getItem("cart");
-  return raw ? JSON.parse(raw) : { products: [], totalPrice: 0 };
-};
+const emptyCart = () => ({ products: [], totalPrice: 0 });
 
 const extractError = (error) =>
   error.response?.data?.message || error.message || "Something went wrong";
+
+const getProductKey = (item) =>
+  String(item?.productId || item?.product || item?._id || "");
+
+const calculateTotalPrice = (products) =>
+  products.reduce(
+    (total, item) => total + Number(item.price || 0) * Number(item.quantity || 0),
+    0
+  );
+
+const normalizeCartItem = (item) => ({
+  ...item,
+  productId: item.productId || item.product || item._id,
+  quantity: Number(item.quantity || 0),
+  price: Number(item.price || 0),
+});
+
+const normalizeCart = (payload) => {
+  const cart = payload?.cart || payload || emptyCart();
+  const products = Array.isArray(cart.products)
+    ? cart.products.map(normalizeCartItem)
+    : [];
+
+  return {
+    ...cart,
+    products,
+    totalPrice:
+      typeof cart.totalPrice === "number"
+        ? cart.totalPrice
+        : calculateTotalPrice(products),
+  };
+};
+
+const getStoredCart = () => {
+  const raw = localStorage.getItem("cart");
+
+  if (!raw) {
+    return emptyCart();
+  }
+
+  try {
+    return normalizeCart(JSON.parse(raw));
+  } catch {
+    return emptyCart();
+  }
+};
+
+const mergeAddedCart = (currentCart, payload) => {
+  const incomingCart = normalizeCart(payload);
+
+  if (!incomingCart.products.length) {
+    return normalizeCart(currentCart);
+  }
+
+  const mergedProducts = [...normalizeCart(currentCart).products];
+
+  for (const incomingItem of incomingCart.products) {
+    const incomingKey = getProductKey(incomingItem);
+    const existingIndex = mergedProducts.findIndex(
+      (item) => getProductKey(item) === incomingKey
+    );
+
+    if (existingIndex >= 0) {
+      mergedProducts[existingIndex] = incomingItem;
+    } else {
+      mergedProducts.push(incomingItem);
+    }
+  }
+
+  return {
+    ...incomingCart,
+    products: mergedProducts,
+    totalPrice: calculateTotalPrice(mergedProducts),
+  };
+};
 
 export const mergeCart = createAsyncThunk(
   "cart/merge",
@@ -1143,7 +1215,7 @@ export const fetchCart = createAsyncThunk(
       }
 
       if (!guestId) {
-        return { products: [], totalPrice: 0 };
+        return emptyCart();
       }
 
       const response = await axios.get(API, {
@@ -1209,7 +1281,7 @@ export const updateCartItemQuantity = createAsyncThunk(
         const guestId = getGuestId();
 
         if (!guestId) {
-          return { products: [], totalPrice: 0 };
+          return emptyCart();
         }
 
         body.guestId = guestId;
@@ -1242,7 +1314,7 @@ export const removeFromCart = createAsyncThunk(
         const guestId = getGuestId();
 
         if (!guestId) {
-          return { products: [], totalPrice: 0 };
+          return emptyCart();
         }
 
         config.data.guestId = guestId;
@@ -1266,7 +1338,7 @@ const cartSlice = createSlice({
   },
   reducers: {
     clearCart: (state) => {
-      state.cart = { products: [], totalPrice: 0 };
+      state.cart = emptyCart();
       state.error = null;
       localStorage.removeItem("cart");
     },
@@ -1280,7 +1352,7 @@ const cartSlice = createSlice({
       .addCase(fetchCart.fulfilled, (state, action) => {
         state.loading = false;
         state.initialized = true;
-        state.cart = action.payload || { products: [], totalPrice: 0 };
+        state.cart = normalizeCart(action.payload);
         saveCart(state.cart);
       })
       .addCase(fetchCart.rejected, (state, action) => {
@@ -1294,7 +1366,7 @@ const cartSlice = createSlice({
       })
       .addCase(addToCart.fulfilled, (state, action) => {
         state.loading = false;
-        state.cart = action.payload;
+        state.cart = mergeAddedCart(state.cart, action.payload);
         saveCart(state.cart);
       })
       .addCase(addToCart.rejected, (state, action) => {
@@ -1307,7 +1379,7 @@ const cartSlice = createSlice({
       })
       .addCase(updateCartItemQuantity.fulfilled, (state, action) => {
         state.loading = false;
-        state.cart = action.payload;
+        state.cart = normalizeCart(action.payload);
         saveCart(state.cart);
       })
       .addCase(updateCartItemQuantity.rejected, (state, action) => {
@@ -1320,7 +1392,7 @@ const cartSlice = createSlice({
       })
       .addCase(removeFromCart.fulfilled, (state, action) => {
         state.loading = false;
-        state.cart = action.payload;
+        state.cart = normalizeCart(action.payload);
         saveCart(state.cart);
       })
       .addCase(removeFromCart.rejected, (state, action) => {
@@ -1328,7 +1400,7 @@ const cartSlice = createSlice({
         state.error = action.payload || action.error.message;
       })
       .addCase(mergeCart.fulfilled, (state, action) => {
-        state.cart = action.payload;
+        state.cart = normalizeCart(action.payload);
         saveCart(state.cart);
       });
   },
