@@ -1,76 +1,37 @@
 import React from "react";
-import { assets } from "../../assets/assets";
 import { Link } from "react-router-dom";
 
-const Categories = () => {
+const AboutMaclienson = () => {
   return (
-       <>
-   <section className="bg-gray-50 py-12 px-4  lg:px-0">
-  <div className="container mx-auto text-center px-4">
-    <h2 className="mb-4 text-3xl font-bold text-gray-900 ">Maclienson Healthcare Pvt. Ltd.</h2>
-    <ul className="list-disc space-y-4 pl-8 text-left text-lg font-semibold leading-relaxed text-gray-700 ">
-      <li><p>We deliver innovative pharmaceutical solutions with unwavering commitment to quality and efficacy.</p></li>
-      <li><p>We provide international standard medicines at affordable prices, making quality healthcare accessible to all patients.</p></li>
-      <li><p>Our dedication to research, integrity, and patient well-being drives us to create meaningful health outcomes for communities worldwide.</p></li>
-    </ul>
-  </div>
-</section>
-
-
-
-    {/* <section className="navbar
-     py-16 px-4 lg:px-0">
-        <div className="container mx-auto flex flex-col md:flex-row gap-8">
-            */}
-            {/*  Medicine  */}
-         
-         {/* <div className="relative flex-1">
-            <img 
-            src={assets.medicine_cat}
-             alt="Medicine"
-             className="w-full h-[700px] object-cover" />
-             <div className="absolute bottom-8 left-8 bg-white bg-opacity-90 p-4">
-                <h2 className="text-2xl font-bold text-gray-900 mb-3">
-                    Medicine
-                </h2>
-                <Link 
-                to="/collections/all?type=Tablets"
-                className="text-gray-900 underline"
-                >
-                    Shop Now
-                </Link>
-             </div>
-         </div> */}
-
-           {/*Healthcare Essentials*/}
-
-           {/* <div className="relative flex-1">
-            <img 
-            src={assets.healthcare_cat}
-             alt="Healthcare Essentials"
-             className="w-full h-[700px] object-cover" />
-             <div className="absolute bottom-8 left-8 bg-white bg-opacity-90 p-4">
-                <h2 className="text-2xl font-bold text-gray-900 mb-3">
-                Healthcare Essentials
-                </h2>
-                <Link 
-                to="/collections/all?type=Tablets"
-                className="text-gray-900 underline"
-                >
-                    Shop Now
-                </Link>
-             </div> */}
-         {/* </div>
-
-          
-
-
+    <section className="bg-champagne-50 py-24 px-4 lg:px-0">
+      <div className="max-w-4xl mx-auto text-center px-4">
+        <h2 className="mb-8 text-4xl md:text-5xl font-serif font-medium text-gray-900 leading-tight">
+          Maclienson Healthcare Pvt. Ltd.
+        </h2>
+        
+        <div className="space-y-6 text-lg md:text-xl font-sans leading-relaxed text-gray-900/80">
+          <p>
+            We deliver innovative pharmaceutical solutions with an unwavering commitment to quality and efficacy.
+          </p>
+          <p>
+            We provide international standard medicines at accessible prices, ensuring premium healthcare is available to all patients.
+          </p>
+          <p>
+            Our dedication to clinical research, integrity, and patient well-being drives us to create meaningful health outcomes for communities worldwide.
+          </p>
         </div>
 
-    </section> */}
-    </>
+        <div className="mt-12">
+          <Link
+            to="/about"
+            className="inline-block border-b-2 border-primary-700 pb-1 text-lg font-medium text-primary-800 transition hover:text-primary-600 hover:border-primary-500"
+          >
+            Learn about our scientific approach
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 };
 
-export default Categories
-
+export default AboutMaclienson;

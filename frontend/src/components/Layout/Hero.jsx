@@ -118,7 +118,7 @@ const WebGLGlobe = () => {
   ];
 
   return (
-    <div ref={containerRef} className="w-full h-full flex justify-center items-center bg-[#faf9f8] cursor-grab active:cursor-grabbing overflow-hidden">
+    <div ref={containerRef} className="relative w-full h-full flex justify-center items-center bg-[#faf9f8] cursor-grab active:cursor-grabbing overflow-hidden">
       {dimensions.width > 0 && (
         <Globe
           ref={globeRef}
@@ -155,9 +155,9 @@ const WebGLGlobe = () => {
       )}
 
       {/* Soft helper text for interaction */}
-      <div className="absolute top-8 left-1/2 -translate-x-1/2 bg-white/70 backdrop-blur-md px-5 py-2.5 rounded-full shadow-sm flex items-center gap-2 pointer-events-none opacity-80 border border-white/40">
-        <span className="text-[10px] font-bold tracking-[0.15em] text-primary-900 uppercase">
-          Rotate to bring USA in front
+      <div className="absolute top-2 right-2 md:top-4 md:right-4 lg:top-24 lg:right-8 bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded shadow-sm flex items-center pointer-events-none opacity-90 border border-white/30 z-10">
+        <span className="text-[8px] md:text-[9px] font-bold tracking-[0.15em] text-primary-900 uppercase whitespace-nowrap">
+          Rotate to view USA Office
         </span>
       </div>
     </div>
@@ -225,10 +225,10 @@ const Hero = () => {
   }, [currentSlide, nextSlide, userPaused]);
 
   return (
-    <section className="relative w-full min-h-screen lg:min-h-[80vh] flex flex-col lg:flex-row overflow-hidden bg-[#faf9f8] pt-20 lg:pt-0">
+    <section className="relative w-full min-h-screen lg:min-h-[80vh] flex flex-col lg:flex-row overflow-hidden bg-[#faf9f8] pt-[130px] md:pt-[150px] lg:pt-0">
 
       {/* Mobile Image (Visible only on mobile/tablet) */}
-      <div className="w-full h-72 md:h-80 lg:hidden relative order-1">
+      <div className="w-full h-[45vh] min-h-[320px] lg:hidden relative order-1 mt-2">
         <AnimatePresence mode="wait">
           {slides[currentSlide].isGlobe ? (
             <motion.div
@@ -248,16 +248,29 @@ const Hero = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="absolute inset-0 w-full h-full bg-transparent flex items-center justify-center"
+              className="absolute inset-0 w-full h-full bg-transparent flex items-center justify-center px-4 pb-4"
             >
               <img
                 src={slides[currentSlide].image}
                 alt={slides[currentSlide].heading}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-[2rem] shadow-lg"
               />
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Mobile Pagination inside the relative container */}
+        <div className="absolute bottom-10 left-0 right-0 flex justify-center gap-3 z-20 pointer-events-auto">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`h-2 rounded-full transition-all duration-300 shadow-sm ${currentSlide === index ? 'bg-primary-600 w-6' : 'bg-gray-300/80 hover:bg-gray-400 w-2'
+                }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
 
       {/* LEFT SIDE - CONTENT */}
@@ -371,18 +384,6 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Mobile Pagination (Visible only on mobile/tablet) */}
-      <div className="lg:hidden absolute top-[calc(18rem+4rem)] md:top-[calc(20rem+4rem)] left-0 right-0 flex justify-center gap-3 z-20">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`h-2 rounded-full transition-all duration-300 shadow-sm ${currentSlide === index ? 'bg-primary-600 w-6' : 'bg-gray-300 w-2'
-              }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
 
     </section>
   );
