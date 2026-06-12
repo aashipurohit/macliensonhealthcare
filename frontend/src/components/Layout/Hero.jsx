@@ -219,13 +219,13 @@ const Hero = () => {
 
     const timer = setInterval(() => {
       nextSlide();
-    }, 5000); // Strict 5 seconds interval for all slides
+    }, 4000); // Strict 4 seconds interval for all slides
 
     return () => clearInterval(timer);
   }, [currentSlide, nextSlide, userPaused]);
 
   return (
-    <section className="relative w-full min-h-screen lg:min-h-[80vh] flex flex-col lg:flex-row overflow-hidden bg-[#faf9f8] pt-[130px] md:pt-[150px] lg:pt-0">
+    <section className="relative w-full min-h-screen lg:min-h-[75vh] flex flex-col lg:flex-row overflow-hidden bg-[#faf9f8] pt-[130px] md:pt-[150px] lg:pt-0">
 
       {/* Mobile Image (Visible only on mobile/tablet) */}
       <div className="w-full h-[45vh] min-h-[320px] lg:hidden relative order-1 mt-2">
@@ -274,7 +274,7 @@ const Hero = () => {
       </div>
 
       {/* LEFT SIDE - CONTENT */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-16 lg:p-24 min-h-[400px] order-2 lg:order-1 relative z-10 bg-[#faf9f8]">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-16 lg:px-24 lg:pt-[140px] lg:pb-12 min-h-[400px] order-2 lg:order-1 relative z-10 bg-[#faf9f8]">
         <div className="max-w-lg w-full">
           <AnimatePresence mode="wait">
             <motion.div
@@ -284,18 +284,18 @@ const Hero = () => {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
             >
-              <div className="text-sm font-bold tracking-[0.2em] text-primary-600 mb-6 uppercase">
+              <div className="text-[10px] md:text-xs font-bold tracking-[0.25em] text-primary-600 mb-6 uppercase font-sans">
                 {slides[currentSlide].eyebrow}
               </div>
-              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-gray-900 leading-tight mb-6">
+              <h1 className="font-serif text-5xl md:text-6xl lg:text-[4.5rem] text-primary-950 leading-[1.05] mb-6">
                 {slides[currentSlide].heading}
               </h1>
-              <p className="font-sans text-lg text-gray-600 mb-10 leading-relaxed">
+              <p className="font-sans text-base md:text-lg lg:text-xl text-primary-900/70 mb-8 leading-relaxed max-w-lg">
                 {slides[currentSlide].description}
               </p>
               <Link
                 to={slides[currentSlide].ctaLink}
-                className="inline-block px-8 py-4 bg-primary-600 text-white font-semibold rounded-full hover:bg-primary-700 transition-colors duration-300 shadow-md"
+                className="inline-block px-8 py-4 bg-primary-950 text-champagne-50 font-sans text-[10px] md:text-xs font-bold tracking-[0.15em] uppercase hover:bg-primary-800 transition-colors duration-300"
               >
                 {slides[currentSlide].ctaText}
               </Link>
@@ -305,7 +305,7 @@ const Hero = () => {
       </div>
 
       {/* RIGHT SIDE - MEDIA (Visible on lg and up) */}
-      <div className="hidden lg:block lg:w-1/2 relative min-h-[80vh] order-2 bg-transparent">
+      <div className="hidden lg:block lg:w-1/2 relative min-h-[75vh] order-2 bg-transparent">
         <AnimatePresence mode="wait">
           {slides[currentSlide].isGlobe ? (
             <motion.div

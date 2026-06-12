@@ -40,43 +40,36 @@ const Navbar = () => {
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-        isScrolled ? 'pt-6 px-4' : 'pt-0 px-0 bg-[#faf9f8]'
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out ${
+        isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-8'
       }`}>
-        <nav className={`mx-auto flex items-center justify-between text-primary-950 transition-all duration-500 ease-in-out ${
-          isScrolled 
-            ? 'max-w-6xl bg-white/60 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] rounded-full px-8 py-3 border border-white/40' 
-            : 'container px-4 py-6 lg:py-4 bg-transparent'
-        }`}>
+        <nav className="container mx-auto px-6 lg:px-12 flex items-center justify-between text-primary-950">
           
           {/* Left - Logo & Legal Info */}
-          <div className={`flex flex-col justify-center transition-all duration-500 ${isScrolled ? 'items-start lg:min-w-[150px]' : 'items-center lg:min-w-[280px]'}`}>
-            <Link to="/" className="flex-shrink-0">
-              <img src={assets.logo_maclienson_br} alt="Maclienson Logo" className={`w-auto object-contain transition-all duration-500 ${isScrolled ? 'h-10' : 'h-16 md:h-16 lg:h-20'}`} />
+          <div className="flex flex-col items-center transition-all duration-500 w-[25%] min-w-[220px]">
+            <Link to="/" className="flex-shrink-0 mb-1 -ml-4">
+              <img src={assets.logo_maclienson_br} alt="Maclienson Logo" className={`w-auto object-contain transition-all duration-500 ${isScrolled ? 'h-8 lg:h-10' : 'h-12 md:h-14 lg:h-[4.5rem]'}`} />
             </Link>
             
-            <div className={`flex flex-col items-center text-center leading-tight transition-all duration-500 overflow-hidden ${isScrolled ? 'h-0 opacity-0 mt-0' : 'h-auto opacity-100 mt-2'}`}>
-              <div className="text-[7px] md:text-[9px] uppercase tracking-[0.1em] lg:tracking-[0.2em] font-bold text-primary-900 leading-tight">
-                <span>A DIVISION OF MACLIENSON </span>
-                <br />
+            <div className={`flex flex-col items-center text-center leading-[1.3] transition-all duration-500 overflow-hidden ${isScrolled ? 'h-0 opacity-0 mt-0' : 'h-auto opacity-100 mt-2'}`}>
+              <div className="text-[6.5px] md:text-[7.5px] uppercase tracking-[0.25em] font-bold text-primary-900 flex flex-col mb-1.5">
+                <span>A DIVISION OF MACLIENSON</span>
                 <span>LIFE SCIENCES INC.</span>
               </div>
-
-              <div className="mt-0.5 lg:mt-1 flex flex-col items-center text-[6px] md:text-[8px] font-semibold text-primary-700/90 leading-tight">
-                <span>REGISTERED OFFICE:</span>
-                <span>30N GOULD STREET,</span>
+              <div className="flex flex-col items-center text-[5.5px] md:text-[6px] uppercase tracking-[0.15em] font-semibold text-primary-700/80">
+                <span>REGISTERED OFFICE: 30N GOULD STREET,</span>
                 <span>SHERIDAN, WYOMING- 82801, USA</span>
               </div>
             </div>
           </div>
 
           {/* Center - Navigation Links */}
-        <div className="hidden md:flex space-x-6 lg:space-x-8">
+        <div className="hidden lg:flex flex-1 justify-center items-center space-x-6 xl:space-x-10 px-4">
           {navLinks.map((link) => (
             <Link 
               key={link.name}
               to={link.path} 
-              className="text-sm font-semibold tracking-widest uppercase text-primary-800 transition-colors hover:text-gold-400 whitespace-nowrap"
+              className="text-[10px] xl:text-xs font-bold tracking-[0.15em] uppercase text-primary-900 transition-colors hover:text-gold-400 whitespace-nowrap"
             >
               {link.name}
             </Link>
@@ -84,16 +77,16 @@ const Navbar = () => {
         </div>
 
         {/* Right - Icons */}
-        <div className="flex items-center space-x-4 lg:space-x-5">
+        <div className="flex items-center space-x-5 lg:space-x-6 w-[25%] min-w-[180px] justify-end">
           {user?.role === 'admin' && (
-            <Link to="/admin" className="hidden lg:block rounded-full bg-primary-800 px-5 py-2 text-sm font-medium text-champagne-50 hover:bg-primary-900">Admin</Link>
+            <Link to="/admin" className="hidden lg:block rounded-full bg-primary-800 px-6 py-2.5 text-[10px] xl:text-xs font-bold tracking-widest uppercase text-champagne-50 hover:bg-primary-900 transition-colors shadow-sm">Admin</Link>
           )}
           {user ? (
-            <Link to="/profile" className="text-primary-800"><HiOutlineUser className="h-6 w-6" /></Link>
+            <Link to="/profile" className="text-primary-900 hover:text-gold-400 transition-colors"><HiOutlineUser className="h-6 w-6" /></Link>
           ) : (
-            <Link to="/login" className="hidden lg:block rounded-full bg-primary-800 px-5 py-2 text-sm font-medium text-champagne-50">Login</Link>
+            <Link to="/login" className="hidden lg:block rounded-full bg-primary-800 px-6 py-2.5 text-[10px] xl:text-xs font-bold tracking-widest uppercase text-champagne-50 hover:bg-primary-900 transition-colors shadow-sm">Login</Link>
           )}
-          <button onClick={toggleCartDrawer} className="relative text-primary-800 hover:text-gold-400 transition-colors">
+          <button onClick={toggleCartDrawer} className="relative text-primary-900 hover:text-gold-400 transition-colors">
             <HiOutlineShoppingBag className="h-6 w-6" />
             {cartItemCount > 0 && (
               <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-gold-400 text-[10px] font-bold text-primary-950 shadow-sm">
@@ -104,7 +97,7 @@ const Navbar = () => {
           <div className="overflow-hidden">
             <SearchBar />
           </div>
-          <button onClick={toggleNavDrawer} className="md:hidden text-primary-800 hover:text-gold-400"><HiBars3BottomRight className="h-7 w-7" /></button>
+          <button onClick={toggleNavDrawer} className="lg:hidden text-primary-900 hover:text-gold-400 transition-colors"><HiBars3BottomRight className="h-7 w-7" /></button>
         </div>
         </nav>
       </header>

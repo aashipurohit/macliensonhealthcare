@@ -47,23 +47,23 @@ const ResearchHighlights = () => {
               <div className="rounded-lg bg-primary-50 border border-primary-100 p-4">
                 <h4 className="mb-2 font-semibold text-primary-800">Menstrual Regularity</h4>
                 <p className="text-sm text-gray-700">
-                  <span className="font-bold">Myo-Inositol:</span> 78% improvement<br/>
+                  <span className="font-bold">Myo-Inositol:</span> 78% improvement<br />
                   <span className="font-bold">Metformin:</span> 72% improvement
                 </p>
               </div>
               <div className="rounded-lg bg-gray-50 border border-gray-200 p-4">
                 <h4 className="font-semibold text-gray-800 mb-2">Insulin Sensitivity</h4>
                 <p className="text-sm text-gray-700">
-                  <span className="font-bold">HOMA-IR Reduction:</span><br/>
-                  Myo-Inositol: 32% ↓<br/>
+                  <span className="font-bold">HOMA-IR Reduction:</span><br />
+                  Myo-Inositol: 32% ↓<br />
                   Metformin: 38% ↓
                 </p>
               </div>
               <div className="rounded-lg bg-primary-50 border border-primary-100 p-4">
                 <h4 className="mb-2 font-semibold text-primary-800">Androgen Levels</h4>
                 <p className="text-sm text-gray-700">
-                  <span className="font-bold">Free Testosterone:</span><br/>
-                  Myo-Inositol: 41% ↓<br/>
+                  <span className="font-bold">Free Testosterone:</span><br />
+                  Myo-Inositol: 41% ↓<br />
                   Metformin: 36% ↓
                 </p>
               </div>
@@ -117,7 +117,7 @@ const ResearchHighlights = () => {
 
             {/* Deep Dive Medical Details */}
             <h3 className="font-bold text-xl text-gray-900 mb-4 border-t border-gray-100 pt-6">🧬 Deep Dive: Clinical Implications</h3>
-            
+
             <div className="space-y-6">
               <div>
                 <h4 className="font-bold text-primary-800 mb-2">1. Long-Term Health Risks</h4>
@@ -170,7 +170,7 @@ const ResearchHighlights = () => {
               </p>
             </div>
           </div>
-    
+
           {/* Causes & Fetal Complications */}
           <div className="grid md:grid-cols-2 gap-6">
             <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -197,7 +197,7 @@ const ResearchHighlights = () => {
                 </li>
               </ul>
             </div>
-    
+
             <div className="rounded-xl border border-gray-200 bg-gray-50 p-6 shadow-sm">
               <div className="flex items-center mb-4">
                 <div className="mr-3 rounded-full bg-gray-200 p-2 text-xl">⚠️</div>
@@ -212,7 +212,7 @@ const ResearchHighlights = () => {
               </ul>
             </div>
           </div>
-    
+
           {/* Advanced Monitoring Process */}
           <div className="rounded-xl bg-white border border-primary-100 p-6 shadow-sm">
             <h3 className="mb-4 flex items-center font-bold text-gray-900 text-lg">
@@ -235,7 +235,7 @@ const ResearchHighlights = () => {
               </div>
             </div>
           </div>
-    
+
           {/* Management Strategies */}
           <div>
             <h3 className="mb-4 flex items-center text-lg font-bold text-gray-900">
@@ -274,8 +274,8 @@ const ResearchHighlights = () => {
     }
   ];
 
-  const filteredArticles = activeFilter === 'all' 
-    ? allArticles 
+  const filteredArticles = activeFilter === 'all'
+    ? allArticles
     : allArticles.filter(article => article.category === activeFilter);
 
   // Lock body scroll when an article is open
@@ -291,14 +291,19 @@ const ResearchHighlights = () => {
   const activeArticle = allArticles.find(a => a.id === selectedArticleId);
 
   return (
-    <section className="min-h-screen bg-[#faf9f8] px-6 py-16">
+    <section className="min-h-screen bg-champagne-50 px-6 py-24">
       <div className="max-w-7xl mx-auto">
-        
+
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="mb-4 text-4xl font-extrabold text-gray-900 tracking-tight">Research Highlights</h1>
-          <p className="mb-8 text-lg text-primary-700 font-medium">
-            Discover the latest medical research and clinical insights
+        <div className="text-center max-w-4xl mx-auto mb-16 lg:mb-24">
+          <h4 className="text-sm font-bold tracking-[0.2em] text-primary-600 mb-6 uppercase">
+            R&D & Innovation
+          </h4>
+          <h1 className="text-5xl md:text-6xl lg:text-[5rem] font-serif font-medium text-primary-950 leading-[1.05] mb-8">
+            We seek out, and solve, tough challenges.
+          </h1>
+          <p className="text-xl font-sans text-primary-900/80 leading-relaxed mb-10">
+            Discover the latest medical research and clinical insights.
           </p>
 
           {/* Filter Navigation */}
@@ -307,11 +312,10 @@ const ResearchHighlights = () => {
               <button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
-                className={`px-5 py-2.5 rounded-full capitalize font-medium transition-all duration-300 ${
-                  activeFilter === filter 
-                    ? 'bg-primary-600 text-white shadow-md' 
+                className={`px-5 py-2.5 rounded-full capitalize font-medium transition-all duration-300 ${activeFilter === filter
+                    ? 'bg-primary-600 text-white shadow-md'
                     : 'bg-white border border-gray-200 text-gray-600 hover:bg-primary-50 hover:text-primary-700'
-                }`}
+                  }`}
               >
                 {filter === 'all' ? 'All Articles' : filter}
               </button>
@@ -320,39 +324,35 @@ const ResearchHighlights = () => {
         </div>
 
         {/* ARTICLES GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
-          {filteredArticles.map((article) => (
+        <div className="flex flex-col gap-16 lg:gap-24 mt-12">
+          
+          {/* All Articles rendered identically in horizontal layout */}
+          {filteredArticles.map((article, index) => (
             <div
               key={article.id}
               onClick={() => setSelectedArticleId(article.id)}
-              className="group flex flex-col h-full relative overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-md cursor-pointer hover:shadow-xl transition-shadow"
+              className="group cursor-pointer grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
             >
-              {/* Grid Image */}
-              <div className="relative h-64 overflow-hidden">
+              {/* Image Side */}
+              <div className={`relative aspect-[4/3] lg:aspect-auto lg:h-[600px] w-full overflow-hidden bg-champagne-50 ${index % 2 !== 0 ? 'lg:order-2' : 'lg:order-1'}`}>
                 <img src={article.image} alt={article.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent" />
-                <div className="absolute bottom-4 left-6 right-6 flex justify-between items-center text-white">
-                  <span className="px-3 py-1 bg-primary-600/90 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
-                    {article.category}
-                  </span>
-                  <span className="text-sm font-medium opacity-90">
-                    {new Date(article.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                  </span>
-                </div>
               </div>
-
-              {/* Grid Text Body */}
-              <div className="flex flex-col flex-grow p-6">
-                <h3 className="font-bold text-gray-900 text-xl mb-3 line-clamp-2 transition-colors group-hover:text-primary-600">
+              
+              {/* Content Side */}
+              <div className={`flex flex-col justify-center py-6 ${index % 2 !== 0 ? 'lg:order-1' : 'lg:order-2'}`}>
+                <span className="text-xs font-bold tracking-[0.2em] text-primary-600 mb-6 uppercase font-sans">
+                  {article.category}
+                </span>
+                <h3 className="font-serif font-medium text-primary-950 text-4xl lg:text-5xl mb-6 leading-[1.1] transition-colors group-hover:text-gold-600">
                   {article.title}
                 </h3>
-                <p className="text-gray-600 mb-6 line-clamp-3">
+                <p className="text-primary-900/70 mb-10 font-sans leading-relaxed text-lg lg:text-xl max-w-xl">
                   {article.description}
                 </p>
-                <div className="mt-auto pt-4 border-t border-gray-100 text-primary-600 font-semibold flex items-center group-hover:text-primary-800">
+                <div className="text-xs font-bold tracking-[0.2em] uppercase text-primary-950 flex items-center transition-colors group-hover:text-gold-600">
                   Read Full Study
-                  <svg className="w-5 h-5 ml-2 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  <svg className="w-5 h-5 ml-4 transform transition-transform duration-300 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </div>
               </div>
@@ -365,7 +365,7 @@ const ResearchHighlights = () => {
       <AnimatePresence>
         {selectedArticleId && activeArticle && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8 pointer-events-auto">
-            
+
             {/* Smooth Blur Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -381,7 +381,7 @@ const ResearchHighlights = () => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }} 
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden z-10"
             >
               {/* Floating Close Button */}
@@ -403,7 +403,7 @@ const ResearchHighlights = () => {
                     <span className="inline-block mb-3 px-3 py-1 bg-primary-600 text-white rounded-full text-xs font-bold uppercase tracking-wider">
                       {activeArticle.category}
                     </span>
-                    <h2 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
+                    <h2 className="text-2xl sm:text-3xl font-serif font-semibold text-white leading-tight">
                       {activeArticle.title}
                     </h2>
                   </div>
@@ -412,7 +412,7 @@ const ResearchHighlights = () => {
                 {/* Expanded Content */}
                 <div className="p-6 sm:p-10">
                   {activeArticle.fullContent}
-                  
+
                   {/* Link Box */}
                   {activeArticle.link && (
                     <div className="mt-12 mb-4 flex justify-center">
