@@ -46,23 +46,23 @@ const Navbar = () => {
         <nav className={`mx-auto flex items-center justify-between text-primary-950 transition-all duration-500 ease-in-out ${
           isScrolled 
             ? 'max-w-6xl bg-white/60 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] rounded-full px-8 py-3 border border-white/40' 
-            : 'container px-4 py-4 bg-transparent'
+            : 'container px-4 py-6 lg:py-4 bg-transparent'
         }`}>
           
           {/* Left - Logo & Legal Info */}
-          <div className={`flex flex-col justify-center transition-all duration-500 ${isScrolled ? 'items-start min-w-[150px]' : 'items-center min-w-[280px]'}`}>
+          <div className={`flex flex-col justify-center transition-all duration-500 ${isScrolled ? 'items-start lg:min-w-[150px]' : 'items-center lg:min-w-[280px]'}`}>
             <Link to="/" className="flex-shrink-0">
-              <img src={assets.logo_maclienson_br} alt="Maclienson Logo" className={`w-auto object-contain transition-all duration-500 ${isScrolled ? 'h-10' : 'h-20'}`} />
+              <img src={assets.logo_maclienson_br} alt="Maclienson Logo" className={`w-auto object-contain transition-all duration-500 ${isScrolled ? 'h-10' : 'h-16 md:h-16 lg:h-20'}`} />
             </Link>
             
             <div className={`flex flex-col items-center text-center leading-tight transition-all duration-500 overflow-hidden ${isScrolled ? 'h-0 opacity-0 mt-0' : 'h-auto opacity-100 mt-2'}`}>
-              <div className="text-[9px] uppercase tracking-[0.2em] font-bold text-primary-900 leading-tight">
+              <div className="text-[7px] md:text-[9px] uppercase tracking-[0.1em] lg:tracking-[0.2em] font-bold text-primary-900 leading-tight">
                 <span>A DIVISION OF MACLIENSON </span>
                 <br />
                 <span>LIFE SCIENCES INC.</span>
               </div>
 
-              <div className="mt-1 flex flex-col items-center text-[8px] font-semibold text-primary-700/90 leading-tight text-center">
+              <div className="mt-0.5 lg:mt-1 flex flex-col items-center text-[6px] md:text-[8px] font-semibold text-primary-700/90 leading-tight">
                 <span>REGISTERED OFFICE:</span>
                 <span>30N GOULD STREET,</span>
                 <span>SHERIDAN, WYOMING- 82801, USA</span>
