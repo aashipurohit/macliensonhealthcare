@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 const ProtectedRoute = ({ 
-  isAuthPage = false,  // ← New prop for auth pages (login/register)
+  isAuthPage = false,  
   adminOnly = false,
   redirectPath = '/'
 }) => {

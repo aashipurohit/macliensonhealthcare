@@ -4,10 +4,10 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 
 export default [
-  // 🧹 Ignore build/dist files
+  //Ignore build/dist files
   { ignores: ['dist', 'node_modules'] },
 
-  // ⚙️ Config for Node.js files (like Tailwind, ESLint, etc.)
+  //Config for Node.js files (like Tailwind, ESLint, etc.)
   {
     files: ['*.config.js', '*.cjs', 'tailwind.config.js'],
     languageOptions: {
@@ -21,7 +21,7 @@ export default [
     },
   },
 
-  // 🌐 Config for browser/React app code
+  //Config for browser/React app code
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {

@@ -15,7 +15,7 @@ export const createRazorpayOrder = createAsyncThunk(
 );
 
 // ── Step 2: Verify payment + create order atomically (single endpoint) ────────
-// ✅ FIX (VULN-001, VULN-002, VULN-003): replaces separate /verify + /create calls
+//FIX (VULN-001, VULN-002, VULN-003): replaces separate /verify + /create calls
 // No totalAmount or paymentMethod sent — server handles both
 export const verifyAndCreateOrder = createAsyncThunk(
   "checkout/verifyAndCreateOrder",
@@ -31,8 +31,8 @@ export const verifyAndCreateOrder = createAsyncThunk(
         orderItems,    // [{productId, quantity}] — no price
         shipping,
         idempotencyKey,
-        // ✅ totalAmount intentionally omitted
-        // ✅ paymentMethod intentionally omitted — server always sets "razorpay"
+        // totalAmount intentionally omitted
+        // paymentMethod intentionally omitted — server always sets "razorpay"
       });
       return response.data;
     } catch (error) {

@@ -1,219 +1,288 @@
 const express = require('express');
 const router = express.Router();
-const Razorpay = require('razorpay');
-const crypto = require('crypto');
 const Order = require('../models/Order');
 const Product = require('../models/Product');
 const Cart = require('../models/Cart');
 const { protect } = require('../middleware/authMiddleware');
+const {
+  verifySignature,
+  createRazorpayOrder,
+  validatePaymentAmount,
+} = require('../utils/razorpay');
 
-// Razorpay Instance
-const razorpay = new Razorpay({
-  key_id: process.env.Razorpay_API_KEY,
-  key_secret: process.env.Razorpay_API_SECRET
-});
-
-// ----------------------------
-// CREATE RAZORPAY ORDER (SECURE + VALIDATED)
-// ----------------------------
-router.post('/create-razorpay-order', async (req, res) => {
+// ─────────────────────────────────────────────────────────────
+// STEP 1: Create Razorpay order (amount calculated server-side)
+// ─────────────────────────────────────────────────────────────
+router.post('/create-razorpay-order', protect, async (req, res) => {
   try {
-    console.log("Incoming Razorpay Order Body:", req.body);
-
     const { orderItems } = req.body;
 
     if (!orderItems || orderItems.length === 0) {
-      return res.status(400).json({ success: false, message: "No order items provided" });
+      return res.status(400).json({ success: false, message: 'No order items provided' });
     }
 
     let totalAmount = 0;
+    const validatedItems = [];
 
-    // VALIDATE PRODUCTS & CALCULATE TOTAL
+    // FIX (VULN-002, VULN-005): Validate products and calculate total entirely from DB
     for (let item of orderItems) {
       const product = await Product.findById(item.productId);
 
       if (!product) {
-        return res.status(400).json({
-          success: false,
-          message: `Invalid productId: ${item.productId}`
-        });
+        return res.status(400).json({ success: false, message: `Invalid productId: ${item.productId}` });
       }
-
       if (product.countInStock < item.quantity) {
-        return res.status(400).json({
-          success: false,
-          message: `Insufficient stock for ${product.name}`
-        });
+        return res.status(400).json({ success: false, message: `Insufficient stock for ${product.name}` });
       }
 
-      // Valid price from DB
       totalAmount += product.price * item.quantity;
+      validatedItems.push({
+        productId: product._id,
+        name: product.name,
+        image: (product.images && product.images.length > 0 && product.images[0].url) ? product.images[0].url : (product.image || 'https://via.placeholder.com/150'),
+        price: product.price,   // DB price, not client price
+        quantity: item.quantity,
+      });
     }
 
-    // Razorpay accepts paise → multiply by 100
-    const razorpayAmount = totalAmount * 100;
+    const amountPaise = Math.round(totalAmount * 100);
 
-    // CREATE RAZORPAY ORDER
-    const order = await razorpay.orders.create({
-      amount: razorpayAmount,
-      currency: "INR",
-      receipt: "receipt_" + Date.now(),
-      notes: { items: JSON.stringify(orderItems) },
-      payment_capture: 1
-    });
+    const razorpayOrder = await createRazorpayOrder(
+      amountPaise,
+      'INR',
+      `receipt_${Date.now()}`,
+      { userId: req.user._id.toString() }
+    );
 
-    console.log("RAZORPAY ORDER CREATED:", order);
-
+    // Return razorpay order + the server-calculated total the frontend can display
     res.json({
       success: true,
-      order,
-      totalAmount
+      order: razorpayOrder,         // contains id, amount (in paise), currency
+      totalAmount,                  // ₹ value for UI display only
+      validatedItems,               // send back so frontend doesn't need to recalculate
     });
 
   } catch (error) {
-    console.error("Error creating Razorpay order:", error);
-    res.status(500).json({ success: false, message: "Failed to create order" });
+    console.error('Error creating Razorpay order:', error);
+    res.status(500).json({ success: false, message: 'Failed to create Razorpay order' });
   }
 });
 
 
+// ─────────────────────────────────────────────────────────────────────────────
+// STEP 2: Verify payment + create order atomically (replaces /verify + /create)
+// ─────────────────────────────────────────────────────────────────────────────
+router.post('/verify-and-create', protect, async (req, res) => {
+  const {
+    razorpay_payment_id,
+    razorpay_order_id,
+    razorpay_signature,
+    orderItems,          // [{productId, quantity}] — NO price from client
+    shipping,
+    idempotencyKey,      // client-generated: `${userId}_${razorpayOrderId}`
+  } = req.body;
 
+  // ── Basic input validation ────────────────────────────────
+  if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature) {
+    return res.status(400).json({ success: false, message: 'Missing payment credentials' });
+  }
+  if (!orderItems || orderItems.length === 0) {
+    return res.status(400).json({ success: false, message: 'No order items' });
+  }
+  
+  // PRODUCTION FIX: Strict validation for all customer contact & shipping details
+  if (
+    !shipping?.firstName || 
+    !shipping?.lastName || 
+    !shipping?.email || 
+    !shipping?.phone || 
+    !shipping?.address || 
+    !shipping?.city || 
+    !shipping?.postalCode || 
+    !shipping?.country
+  ) {
+    return res.status(400).json({ success: false, message: 'Incomplete shipping and contact details' });
+  }
 
-// VERIFY PAYMENT & UPDATE STOCK
-router.post('/verify', async (req, res) => {
   try {
-    const { razorpay_payment_id, razorpay_order_id, razorpay_signature, orderItems } = req.body;
-
-    // 1. VERIFY SIGNATURE
-    const sign = razorpay_order_id + "|" + razorpay_payment_id;
-    const expectedSign = crypto
-      .createHmac("sha256", process.env.Razorpay_API_SECRET)
-      .update(sign)
-      .digest("hex");
-
-    if (expectedSign !== razorpay_signature) {
-      return res.status(400).json({ success: false, message: "Payment verification failed" });
+    // ── 1. Idempotency: return existing order on duplicate submit ─
+    if (idempotencyKey) {
+      const existing = await Order.findOne({ idempotencyKey });
+      if (existing) {
+        return res.status(200).json({ success: true, order: existing, duplicate: true });
+      }
     }
 
-    res.json({
-      success: true,
-      message: "Payment verified successfully"
-    });
+    // Also check by payment ID (hard guard)
+    const paymentUsed = await Order.findOne({ 'paymentResult.razorpayPaymentId': razorpay_payment_id });
+    if (paymentUsed) {
+      return res.status(409).json({ success: false, message: 'Payment already used for an order' });
+    }
+
+    // ── 2. Verify HMAC signature ──────────────────────────────
+    const signatureValid = verifySignature(razorpay_order_id, razorpay_payment_id, razorpay_signature);
+    if (!signatureValid) {
+      return res.status(400).json({ success: false, message: 'Payment signature verification failed' });
+    }
+
+    // ── 3. Re-calculate total from DB (never trust client) ────
+    let serverTotal = 0;
+    const resolvedItems = [];
+
+    for (let item of orderItems) {
+      const product = await Product.findById(item.productId);
+      if (!product) {
+        return res.status(400).json({ success: false, message: `Product not found: ${item.productId}` });
+      }
+      serverTotal += product.price * item.quantity;
+      resolvedItems.push({ product, quantity: item.quantity });
+    }
+
+    const expectedPaise = Math.round(serverTotal * 100);
+
+    // ── 4. Validate payment amount via Razorpay API ───────────
+    let paymentDetails;
+    try {
+      paymentDetails = await validatePaymentAmount(razorpay_payment_id, expectedPaise);
+    } catch (amountErr) {
+      console.error('Payment amount validation failed:', amountErr.message);
+      return res.status(400).json({ success: false, message: amountErr.message });
+    }
+
+    // ── 5. Atomic stock deduction (check + decrement in one query) ──
+    const stockErrors = [];
+    const orderItemsForDB = [];
+
+    for (let { product, quantity } of resolvedItems) {
+      const updated = await Product.findOneAndUpdate(
+        { _id: product._id, countInStock: { $gte: quantity } }, // atomic check
+        { $inc: { countInStock: -quantity } },
+        { new: true }
+      );
+
+      if (!updated) {
+        stockErrors.push(product.name);
+      } else {
+        orderItemsForDB.push({
+          productId: product._id,
+          name: product.name,
+          image: (product.images && product.images.length > 0 && product.images[0].url) ? product.images[0].url : (product.image || 'https://via.placeholder.com/150'),
+          price: product.price,   // DB price
+          quantity,
+        });
+      }
+    }
+
+    // If any stock deduction failed, roll back the ones that succeeded
+    if (stockErrors.length > 0) {
+      for (let { product, quantity } of resolvedItems) {
+        const alreadyDecremented = orderItemsForDB.find(
+          (i) => i.productId.toString() === product._id.toString()
+        );
+        if (alreadyDecremented) {
+          await Product.findByIdAndUpdate(product._id, { $inc: { countInStock: quantity } });
+        }
+      }
+      return res.status(400).json({
+        success: false,
+        message: `Insufficient stock for: ${stockErrors.join(', ')}`,
+      });
+    }
+
+    // ── 6. Create order in DB ─────────────────────────────────
+    let order;
+    try {
+      order = await Order.create({
+        user: req.user._id,
+        orderItems: orderItemsForDB,
+        
+        //PRODUCTION FIX: Save complete customer contact & shipping info
+        shippingAddress: {
+          firstName:  shipping.firstName,
+          lastName:   shipping.lastName,
+          email:      shipping.email,
+          phone:      shipping.phone,
+          address:    shipping.address,
+          city:       shipping.city,
+          postalCode: shipping.postalCode,
+          country:    shipping.country,
+        },
+        
+        paymentMethod: 'razorpay',
+        totalPrice: serverTotal,
+
+        isPaid:        true,
+        paidAt:        new Date(),
+        paymentStatus: 'Paid',
+
+        paymentResult: {
+          razorpayPaymentId: razorpay_payment_id,
+          razorpayOrderId:   razorpay_order_id,
+          razorpaySignature: razorpay_signature,
+          amount:     paymentDetails.amount,
+          currency:   paymentDetails.currency,
+          status:     paymentDetails.status,
+          method:     paymentDetails.method,
+          capturedAt: new Date(paymentDetails.created_at * 1000),
+        },
+
+        idempotencyKey: idempotencyKey || `${req.user._id}_${razorpay_payment_id}`,
+      });
+    } catch (dbErr) {
+      // Order creation failed after stock deducted — roll back stock
+      console.error('Order DB creation failed, rolling back stock:', dbErr.message);
+      for (let { product, quantity } of resolvedItems) {
+        await Product.findByIdAndUpdate(product._id, { $inc: { countInStock: quantity } });
+      }
+      // Duplicate key error = replay attempt
+      if (dbErr.code === 11000) {
+        return res.status(409).json({ success: false, message: 'Duplicate order detected' });
+      }
+      throw dbErr;
+    }
+
+    // ── 7. Clear cart ─────────────────────────────────────────
+    try {
+      await Cart.findOneAndDelete({ user: req.user._id });
+    } catch (cartErr) {
+      console.warn('Cart deletion failed (non-critical):', cartErr.message);
+    }
+
+    res.status(201).json({ success: true, order });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Server error",
-      error: error.message
-    });
+    console.error('verify-and-create error:', error);
+    res.status(500).json({ success: false, message: 'Order processing failed', error: error.message });
   }
 });
 
 
-
-
-// GET USER ORDERS
+// ─────────────────────────────────────────────────────────────
+// GET: User's orders
+// ─────────────────────────────────────────────────────────────
 router.get('/my-orders', protect, async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id }).sort({ createdAt: -1 });
     res.json(orders);
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Server error",
-      error: error.message
-    });
+    res.status(500).json({ success: false, message: 'Server error', error: error.message });
   }
 });
 
-// GET ORDER DETAILS
+// ─────────────────────────────────────────────────────────────
+// GET: Single order detail
+// ─────────────────────────────────────────────────────────────
 router.get('/:id', protect, async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
-
-    if (!order) {
-      return res.status(404).json({ message: "Order not found" });
-    }
-
+    if (!order) return res.status(404).json({ message: 'Order not found' });
     if (order.user.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ message: "Not authorized to access this order" });
+      return res.status(403).json({ message: 'Not authorized' });
     }
-
     res.json(order);
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Server error",
-      error: error.message
-    });
+    res.status(500).json({ success: false, message: 'Server error', error: error.message });
   }
 });
-
-
-// ----------------------------
-// CREATE ORDER IN DATABASE
-router.post('/create', protect, async (req, res) => {
-  try {
-    console.log("------ ORDER CREATE ROUTE HIT -------");
-    console.log("Order Payload Received:", req.body);
-    console.log("User from protect middleware:", req.user);
-
-    const { shipping, cart, paymentMethod, razorpayPaymentId, totalAmount } = req.body;
-
-    // Validate
-    if (!shipping || !cart || !cart.products || cart.products.length === 0) {
-      return res.status(400).json({ success: false, message: "Missing order data" });
-    }
-    console.log("Cart products for orderItems:", cart.products);
-    // Convert cart.products → orderItems for schema
-    const orderItems = cart.products.map(p => ({
-      productId: p.productId,
-      name: p.name,
-      image: typeof p.image === "string" && p.image.trim() ? p.image.trim() : "",
-      price: p.price,
-      quantity: p.quantity
-    }));
-
-    const order = await Order.create({
-      user: req.user._id,        
-      orderItems,                
-      shippingAddress: {
-        address: shipping.address,
-        city: shipping.city,
-        postalCode: shipping.postalCode,
-        country: shipping.country,
-      },
-      paymentMethod,
-      totalPrice: totalAmount,
-      isPaid: paymentMethod === "razorpay",
-      paidAt: paymentMethod === "razorpay" ? Date.now() : null,
-      paymentStatus: paymentMethod === "razorpay" ? "Paid" : "Pending"
-    });
-
-    // Update stock
-    for (let item of cart.products) {
-      await Product.findByIdAndUpdate(item.productId, {
-        $inc: { countInStock: -item.quantity }
-      });
-    }
-
-    await Cart.findOneAndDelete({ user: req.user._id });
-
-    res.status(201).json({
-      success: true,
-      order,
-      message: "Order created successfully"
-    });
-
-  } catch (error) {
-    console.error("Error creating order:", error);
-    res.status(500).json({
-      success: false,
-      message: "Failed to create order",
-      error: error.message
-    });
-  }
-});
-
 
 module.exports = router;

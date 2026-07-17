@@ -7,7 +7,7 @@ import {
   updateUser,
   deleteUser
   
-} from '../../redux/slices/adminSlice';  // Adjust path as needed
+} from '../../redux/slices/adminSlice';  
 
 
 const UserManagement = () => {
@@ -24,15 +24,6 @@ const UserManagement = () => {
             navigate("/")
         }
     }, [user, navigate, dispatch]);
-
-// const users = [
-//     {   
-//         _id : 123213,
-//         name  : "Shivam Tiwari",
-//         email : "shivam@example.com",
-//         role  : "admin",
-//     },
-// ];
 
 const [formData , setFormData] = useState ({
     name: "",

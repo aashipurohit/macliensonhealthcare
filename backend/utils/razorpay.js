@@ -1,10 +1,9 @@
-// backend/utils/razorpay.js
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
 
 /**
- * Initialize Razorpay instance
- * Throws error if API keys are missing
+ * Initialize Razorpay instance.
+ * Throws if keys are missing.
  */
 const initializeRazorpay = () => {
   const key_id = process.env.Razorpay_API_KEY;
@@ -12,58 +11,80 @@ const initializeRazorpay = () => {
 
   if (!key_id || !key_secret) {
     throw new Error(
-      'Razorpay credentials not configured. Please set Razorpay_API_KEY and Razorpay_API_SECRET in your .env file.'
+      'Razorpay credentials not configured. Set Razorpay_API_KEY and Razorpay_API_SECRET in .env'
     );
   }
 
-  return new Razorpay({
-    key_id,
-    key_secret
-  });
+  return new Razorpay({ key_id, key_secret });
 };
 
 /**
- * Verify Razorpay payment signature
- * Returns true if signature matches
+ * Verify Razorpay HMAC signature.
+ * Returns true if valid.
  */
-const verifyPayment = (razorpay_order_id, razorpay_payment_id, razorpay_signature) => {
+const verifySignature = (razorpay_order_id, razorpay_payment_id, razorpay_signature) => {
   const key_secret = process.env.Razorpay_API_SECRET;
-  if (!key_secret) {
-    throw new Error('Razorpay_API_SECRET not configured.');
-  }
+  if (!key_secret) throw new Error('Razorpay_API_SECRET not configured.');
 
-  const body = razorpay_order_id + '|' + razorpay_payment_id;
-  const expectedSignature = crypto
+  const body = `${razorpay_order_id}|${razorpay_payment_id}`;
+  const expected = crypto
     .createHmac('sha256', key_secret)
-    .update(body.toString())
+    .update(body)
     .digest('hex');
 
-  return expectedSignature === razorpay_signature;
+  return expected === razorpay_signature;
 };
 
 /**
- * Create Razorpay order
- * @param {number} amount - in paise (INR * 100)
- * @param {string} currency - default 'INR'
- * @param {string} receipt - unique receipt ID
- * @param {object} notes - optional metadata
+ * Create a Razorpay order.
+ * @param {number} amount   - Amount in paise (₹ × 100)
+ * @param {string} currency - Default 'INR'
+ * @param {string} receipt  - Unique receipt string
+ * @param {object} notes    - Optional metadata
  */
 const createRazorpayOrder = async (amount, currency = 'INR', receipt, notes = {}) => {
   const razorpay = initializeRazorpay();
-
-  const options = {
+  return await razorpay.orders.create({
     amount,
     currency,
     receipt,
     notes,
-    payment_capture: 1
-  };
-
-  return await razorpay.orders.create(options);
+    payment_capture: 1,
+  });
 };
 
 /**
- * Fetch payment details by payment ID
+ * FIX (VULN-004): Fetch payment from Razorpay API and validate amount + status.
+ *
+ * @param {string} paymentId         - razorpay_payment_id from client
+ * @param {number} expectedAmountPaise - amount we calculated server-side (in paise)
+ * @returns {object} payment details from Razorpay
+ * @throws if amount mismatches or payment is not captured
+ */
+const validatePaymentAmount = async (paymentId, expectedAmountPaise) => {
+  const razorpay = initializeRazorpay();
+  const payment = await razorpay.payments.fetch(paymentId);
+
+  if (payment.status !== 'captured') {
+    throw new Error(`Payment not captured. Status: ${payment.status}`);
+  }
+
+  if (payment.amount !== expectedAmountPaise) {
+    throw new Error(
+      `Payment amount mismatch. Expected: ${expectedAmountPaise} paise, Got: ${payment.amount} paise`
+    );
+  }
+
+  if (payment.currency !== 'INR') {
+    throw new Error(`Unexpected currency: ${payment.currency}`);
+  }
+
+  return payment; // safe to use — verified server-to-server
+};
+
+/**
+ * Fetch raw payment details (without validation).
+ * Use validatePaymentAmount for security-critical flows.
  */
 const getPaymentDetails = async (paymentId) => {
   const razorpay = initializeRazorpay();
@@ -71,10 +92,10 @@ const getPaymentDetails = async (paymentId) => {
 };
 
 /**
- * Refund payment
+ * Refund a payment.
  * @param {string} paymentId - Razorpay payment ID
- * @param {number} amount - amount in paise
- * @param {object} notes - optional notes
+ * @param {number} amount    - Amount in paise
+ * @param {object} notes     - Optional notes
  */
 const refundPayment = async (paymentId, amount, notes = {}) => {
   const razorpay = initializeRazorpay();
@@ -83,8 +104,9 @@ const refundPayment = async (paymentId, amount, notes = {}) => {
 
 module.exports = {
   initializeRazorpay,
-  verifyPayment,
+  verifySignature,
   createRazorpayOrder,
+  validatePaymentAmount,
   getPaymentDetails,
-  refundPayment
+  refundPayment,
 };
