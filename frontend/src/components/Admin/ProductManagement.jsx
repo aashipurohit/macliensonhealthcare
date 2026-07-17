@@ -21,17 +21,6 @@ const ProductManagement = () => {
     
     }, [dispatch]);
 
-
-
-// const products =[
-//     {
-//     _id: 123123,
-//     name: "Shirt",
-//     price: 110,
-//     sku: "123123213",
-//     },
-// ];
-
 const handleDelete = (id) => {
     if(window.confirm("Are you sure you want to delete the Product"))
     {

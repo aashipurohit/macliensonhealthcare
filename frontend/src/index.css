@@ -49,9 +49,6 @@
   }
 }
 
-/* ─────────────────────────────────────────────────────────
-   EXISTING UTILITIES (KEPT PERFECTLY SAFE)
-   ───────────────────────────────────────────────────────── */
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
