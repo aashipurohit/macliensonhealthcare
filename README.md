@@ -42,7 +42,7 @@ The project was developed to simulate a real-world healthcare e-commerce solutio
 ## Product Details Page
 
 <p align="center">
-  <img src="docs/images/product-details.png" alt="Product Details" width="100%">
+  <img src="docs/images/product_details.png" alt="Product Details" width="100%">
 </p>
 
 ## Cart
