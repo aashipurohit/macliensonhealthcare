@@ -1,59 +1,35 @@
-import React from "react";
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
-  Container,
-  Typography,
-  Box,
-  Grid,
-  Paper,
-  TextField,
-  Button,
-  ThemeProvider,
-  createTheme,
-} from "@mui/material";
-import {
-  Email as EmailIcon,
-  LocationOn as LocationIcon,
-  Send as SendIcon,
-  Schedule as HoursIcon,
-  Chat as SupportIcon,
-  VerifiedUser as VerifiedIcon,
-  Business as BusinessIcon,
-} from "@mui/icons-material";
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  ShieldCheck,
+  MessageSquare,
+  Building2,
+} from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
-// Corporate Pastel Theme (Trust-oriented palette)
-const pastelTheme = createTheme({
-  palette: {
-    primary: {
-      main: "#85C1E9",
-      light: "#D6EAF8",
-      contrastText: "#000",
-    },
-    secondary: {
-      main: "#F5B7B1",
-      light: "#FADBD8",
-      contrastText: "#000",
-    },
-    background: {
-      default: "#FAF9F6",
-      paper: "#FFFFFF",
-    },
-    text: {
-      primary: "#1A1A1A",
-      secondary: "#555",
-    },
-  },
-  typography: {
-    fontFamily: '"Quicksand", "Helvetica", "Arial", sans-serif',
-    h2: { fontWeight: 700 },
-  },
-});
+// ── Animation helpers ──────────────────────────────────────────────────────────
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, delay: i * 0.1, ease: 'easeOut' },
+  }),
+};
 
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.6 } },
+};
+
+// ── Component ─────────────────────────────────────────────────────────────────
 const ContactUs = () => {
-  const [formData, setFormData] = React.useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -61,263 +37,305 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Thank you for contacting us. Our team will respond shortly.");
-    setFormData({ name: "", email: "", message: "" });
+    setSubmitted(true);
+    setFormData({ name: '', email: '', message: '' });
   };
 
   return (
-    <ThemeProvider theme={pastelTheme}>
-      <Container maxWidth="lg" sx={{ py: 10 }}>
+    <>
+      <Helmet>
+        <title>Contact Us | Maclienson Healthcare</title>
+        <meta
+          name="description"
+          content="Get in touch with Maclienson Healthcare for verified communication, product queries, and official inquiries. All queries are responded to by authorised personnel."
+        />
+      </Helmet>
 
-        {/* Company Identity Banner */}
-        <Paper
-          elevation={0}
-          sx={{
-            p: 4,
-            mb: 8,
-            borderRadius: 3,
-            border: "1px solid #e0e0e0",
-            background: "#FFFFFFAA",
-            textAlign: "center",
-          }}
+      {/* ── Hero ── */}
+      <section className="relative bg-champagne-50 pt-36 pb-20 px-4 overflow-hidden">
+        <div className="pointer-events-none absolute -top-24 -right-24 h-96 w-96 rounded-full bg-primary-100 opacity-40 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-0 left-0 h-64 w-64 rounded-full bg-gold-100 opacity-50 blur-2xl" />
+
+        <motion.div
+          className="relative mx-auto max-w-3xl text-center"
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
         >
-          <BusinessIcon sx={{ fontSize: 40, mb: 1, color: "#5DADE2" }} />
-
-          <Typography variant="h4" sx={{ fontWeight: 700 }}>
-            Maclienson Healthcare Pvt. Ltd.
-          </Typography>
-
-          <Typography variant="body1" sx={{ color: "#666", mt: 1 }}>
-            A Registered Pharmaceutical Entity · Committed to Quality & Ethics
-          </Typography>
-        </Paper>
-
-        {/* Title Section */}
-        <Box textAlign="center" mb={8}>
-          <Typography variant="h2" gutterBottom>
+          <span className="mh-eyebrow mb-4 block">Reach Out</span>
+          <h1 className="font-serif text-5xl font-bold text-primary-950 md:text-6xl">
             Contact Us
-          </Typography>
-          <Typography
-            variant="h6"
-            sx={{ color: "text.secondary", maxWidth: 600, mx: "auto", mt: 2 }}
-          >
-            For verified communication and official queries, connect with our
-            corporate desk. Every message is evaluated and responded to by
-            authorized personnel only.
-          </Typography>
-        </Box>
+          </h1>
+          <div className="mx-auto mt-5 h-1 w-20 rounded-full bg-gold-400" />
+          <p className="mt-6 text-lg text-primary-900/70 max-w-xl mx-auto">
+            For verified communication and official queries, connect with our corporate
+            desk. Every message is reviewed and responded to by authorised personnel.
+          </p>
+        </motion.div>
+      </section>
 
-        <Grid container spacing={6}>
+      {/* ── Company Identity Banner ── */}
+      <section className="bg-white py-8 px-4 border-b border-gold-200">
+        <motion.div
+          className="mx-auto max-w-3xl text-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeIn}
+        >
+          <div className="inline-flex items-center gap-3 mb-2">
+            <Building2 className="h-6 w-6 text-primary-800" />
+            <h2 className="font-serif text-2xl font-semibold text-primary-950">
+              Maclienson Healthcare Pvt. Ltd.
+            </h2>
+          </div>
+          <p className="mh-body-muted">
+            A Division of Maclienson Life Sciences Inc. &nbsp;·&nbsp; Committed to Quality &amp; Ethics
+          </p>
+        </motion.div>
+      </section>
+
+      {/* ── Main Content ── */}
+      <section className="bg-champagne-50 py-20 px-4">
+        <div className="mx-auto max-w-6xl grid grid-cols-1 gap-10 lg:grid-cols-5 items-stretch">
+
           {/* Contact Form */}
-          <Grid item xs={12} md={7}>
-            <Paper
-              elevation={0}
-              sx={{
-                p: 6,
-                borderRadius: 4,
-                border: "1px solid #e6e6e6",
-                background: "#ffffff",
-              }}
-            >
-              <Typography variant="h4" sx={{ fontWeight: 600, mb: 4 }}>
+          <motion.div
+            className="lg:col-span-3"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+          >
+            <div className="rounded-2xl border border-primary-100 bg-white p-8 shadow-regal md:p-10 h-full flex flex-col">
+              <h2 className="font-serif text-2xl font-semibold text-primary-950 mb-1">
                 Send an Official Inquiry
-              </Typography>
+              </h2>
+              <p className="mh-body-muted mb-8">
+                All submissions are reviewed by our corporate team.
+              </p>
 
-              <Typography
-                variant="body2"
-                sx={{ mb: 3, color: "#555", fontStyle: "italic" }}
-              >
-                All submissions are reviewed by our corporate compliance team.
-              </Typography>
+              {submitted ? (
+                <div className="rounded-xl border border-gold-200 bg-champagne-100 p-8 text-center">
+                  <ShieldCheck className="mx-auto mb-3 h-10 w-10 text-primary-800" />
+                  <p className="font-serif text-xl font-semibold text-primary-950 mb-2">
+                    Message Received
+                  </p>
+                  <p className="mh-body-muted">
+                    Thank you for contacting us. Our team will respond to your inquiry shortly.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <div>
+                      <label className="mb-1.5 block text-sm font-semibold text-primary-900">
+                        Full Name <span className="text-primary-700">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        required
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Your full name"
+                        className="w-full rounded-lg border border-primary-200 bg-champagne-50 px-4 py-3 text-sm text-primary-950 placeholder:text-primary-900/40 focus:border-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-700/20 transition"
+                      />
+                    </div>
+                    <div>
+                      <label className="mb-1.5 block text-sm font-semibold text-primary-900">
+                        Email Address <span className="text-primary-700">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="your@email.com"
+                        className="w-full rounded-lg border border-primary-200 bg-champagne-50 px-4 py-3 text-sm text-primary-950 placeholder:text-primary-900/40 focus:border-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-700/20 transition"
+                      />
+                    </div>
+                  </div>
 
-              <form onSubmit={handleSubmit}>
-                <Grid container spacing={4}>
-                  <Grid item xs={12} md={6}>
-                    <TextField
-                      fullWidth
-                      label="Full Name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} md={6}>
-                    <TextField
-                      fullWidth
-                      label="Email Address"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Message"
+                  <div>
+                    <label className="mb-1.5 block text-sm font-semibold text-primary-900">
+                      Message <span className="text-primary-700">*</span>
+                    </label>
+                    <textarea
                       name="message"
-                      multiline
+                      required
                       rows={5}
                       value={formData.message}
                       onChange={handleChange}
-                      required
+                      placeholder="Describe your inquiry in detail..."
+                      className="w-full rounded-lg border border-primary-200 bg-champagne-50 px-4 py-3 text-sm text-primary-950 placeholder:text-primary-900/40 focus:border-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-700/20 transition resize-none"
                     />
-                  </Grid>
+                  </div>
 
-                  <Grid item xs={12}>
-                    <Button
-                      type="submit"
-                      size="large"
-                      variant="contained"
-                      endIcon={<SendIcon />}
-                      sx={{
-                        backgroundColor: "#F5B7B1",
-                        "&:hover": { backgroundColor: "#EC7063" },
-                        fontWeight: 600,
-                      }}
-                    >
-                      Submit Inquiry
-                    </Button>
-                  </Grid>
-                </Grid>
-              </form>
+                  <button
+                    type="submit"
+                    className="flex items-center gap-2 rounded-full bg-primary-800 px-8 py-3 text-sm font-semibold text-champagne-50 shadow-regal transition hover:bg-primary-900 active:scale-95"
+                  >
+                    <Send className="h-4 w-4" />
+                    Submit Inquiry
+                  </button>
 
-              {/* Legal Statement */}
-              <Box mt={4} p={2} borderRadius={2} bgcolor="#F8F9F9">
-                <Typography
-                  variant="caption"
-                  sx={{ color: "#666", display: "block", lineHeight: 1.6 }}
-                >
-                  <VerifiedIcon
-                    sx={{ fontSize: 18, verticalAlign: "middle", mr: 0.5 }}
-                  />
-                  By contacting us, you acknowledge that the information shared
-                  will be reviewed in accordance with our corporate policies and
-                  applicable Indian regulations.
-                </Typography>
-              </Box>
-            </Paper>
-          </Grid>
+                  {/* Legal note */}
+                  <div className="mt-4 rounded-lg bg-champagne-50 border border-gold-200 p-4">
+                    <p className="flex items-start gap-2 text-xs text-primary-900/60 leading-relaxed">
+                      <ShieldCheck className="h-4 w-4 flex-shrink-0 mt-0.5 text-primary-700" />
+                      By contacting us, you acknowledge that the information shared will be
+                      reviewed in accordance with our corporate policies and applicable Indian
+                      regulations.
+                    </p>
+                  </div>
+                </form>
+              )}
+            </div>
+          </motion.div>
 
           {/* Contact Details */}
-          <Grid item xs={12} md={5}>
-            <Paper
-              elevation={0}
-              sx={{
-                p: 5,
-                borderRadius: 4,
-                borderLeft: "4px solid #EC7063",
-                background: "#FFF4F2",
-              }}
-            >
-              <Typography variant="h4" sx={{ fontWeight: 600, mb: 4 }}>
-                Corporate Communication
-              </Typography>
-
-              {/* Address */}
-              <Box mb={5}>
-                <Box display="flex" alignItems="center" mb={2}>
-                  <LocationIcon sx={{ fontSize: 30, mr: 2 }} />
-                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                    Registered Office
-                  </Typography>
-                </Box>
-                <Typography variant="body1" sx={{ pl: 6, lineHeight: 1.8 }}>
-                  Maclienson Healthcare Pvt. Ltd.<br />
-                  123 Pharma Park, Sector 22<br />
-                  Indore, Madhya Pradesh 452012<br />
-                  India
-                </Typography>
-              </Box>
-
-              {/* Email */}
-              <Box mb={5}>
-                <Box display="flex" alignItems="center" mb={2}>
-                  <EmailIcon sx={{ fontSize: 30, mr: 2 }} />
-                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                    Official Email
-                  </Typography>
-                </Box>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    pl: 6,
-                    fontWeight: 600,
-                    fontSize: "1.05rem",
-                    color: "#000",
-                  }}
-                >
-                  manish.kalpiwar@macliensonhealthcare.com
-                </Typography>
-
-                <Typography
-                  variant="caption"
-                  sx={{ pl: 6, color: "#666", mt: 1, display: "block" }}
-                >
-                  This is our verified corporate communication channel.
-                </Typography>
-              </Box>
-
-              {/* Hours */}
-              <Box mb={5}>
-                <Box display="flex" alignItems="center" mb={2}>
-                  <HoursIcon sx={{ fontSize: 30, mr: 2 }} />
-                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                    Business Hours
-                  </Typography>
-                </Box>
-                <Typography variant="body1" sx={{ pl: 6, lineHeight: 1.8 }}>
-                  Monday – Friday: 9:00 AM – 6:00 PM<br />
-                  Saturday: 10:00 AM – 2:00 PM<br />
-                  Sunday: Closed
-                </Typography>
-              </Box>
-
-              {/* Support Note */}
-              <Box>
-                <Box display="flex" alignItems="center" mb={2}>
-                  <SupportIcon sx={{ fontSize: 30, mr: 2 }} />
-                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                    Response Protocol
-                  </Typography>
-                </Box>
-                <Typography variant="body1" sx={{ pl: 6, color: "#444" }}>
-                  Each query is assigned to an authorized support officer.  
-                  Response time may vary depending on verification requirements.
-                </Typography>
-              </Box>
-            </Paper>
-          </Grid>
-        </Grid>
-
-        {/* Email Button */}
-        <Box textAlign="center" mt={10}>
-          <Button
-            variant="outlined"
-            size="large"
-            href="mailto:manish.kalpiwar@macliensonhealthcare.com"
-            sx={{
-              borderColor: "#000",
-              color: "#000",
-              "&:hover": { borderColor: "#000", background: "#f6f6f6" },
-            }}
+          <motion.div
+            className="lg:col-span-2"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={1}
           >
-            <EmailIcon sx={{ mr: 1 }} /> Send Email
-          </Button>
-        </Box>
+            <div className="rounded-2xl border-l-4 border-gold-400 bg-white p-8 shadow-regal h-full">
+              <h2 className="font-serif text-2xl font-semibold text-primary-950 mb-8">
+                Corporate Communication
+              </h2>
 
-        {/* Footer Legal Note */}
-        <Box mt={8} textAlign="center" sx={{ color: "#777", fontSize: "0.85rem" }}>
-          Maclienson Healthcare Pvt. Ltd. © All Rights Reserved ·  
-          Compliant with Indian Pharmaceutical Communication Standards
-        </Box>
+              {/* Corporate Office — India */}
+              <div className="mb-7">
+                <div className="mb-3 flex items-center gap-3">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary-100 text-primary-800">
+                    <MapPin className="h-5 w-5" />
+                  </div>
+                  <h3 className="font-serif text-lg font-semibold text-primary-950">
+                    Corporate Office
+                  </h3>
+                </div>
+                <p className="pl-[52px] text-sm leading-relaxed text-primary-900/80">
+                  Maclienson Healthcare Pvt. Ltd.<br />
+                  Pharmaceutical Complex, Rau Circle<br />
+                  Indore – 453331, Madhya Pradesh
+                </p>
+              </div>
 
-      </Container>
-    </ThemeProvider>
+              <div className="mb-7 h-px w-full bg-gold-200" />
+
+              {/* Registered Office — USA */}
+              <div className="mb-7">
+                <div className="mb-3 flex items-center gap-3">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary-100 text-primary-800">
+                    <MapPin className="h-5 w-5" />
+                  </div>
+                  <h3 className="font-serif text-lg font-semibold text-primary-950">
+                    Registered Office
+                  </h3>
+                </div>
+                <p className="pl-[52px] text-sm leading-relaxed text-primary-900/80">
+                  A Division of Maclienson Life Sciences Inc.<br />
+                  30N Gould Street, Sheridan,<br />
+                  Wyoming – 82801, USA
+                </p>
+              </div>
+
+              <div className="mb-7 h-px w-full bg-gold-200" />
+
+              {/* Official Email */}
+              <div className="mb-7">
+                <div className="mb-3 flex items-center gap-3">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary-100 text-primary-800">
+                    <Mail className="h-5 w-5" />
+                  </div>
+                  <h3 className="font-serif text-lg font-semibold text-primary-950">
+                    Official Email
+                  </h3>
+                </div>
+                <a
+                  href="mailto:info@maclienson.com"
+                  className="pl-[52px] block text-sm font-semibold text-primary-800 hover:text-gold-400 transition break-all"
+                >
+                  info@maclienson.com
+                </a>
+                <p className="pl-[52px] mt-1 text-xs text-primary-900/50">
+                  Verified corporate communication channel.
+                </p>
+              </div>
+
+              <div className="mb-7 h-px w-full bg-gold-200" />
+
+              {/* Phone */}
+              <div className="mb-7">
+                <div className="mb-3 flex items-center gap-3">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary-100 text-primary-800">
+                    <Phone className="h-5 w-5" />
+                  </div>
+                  <h3 className="font-serif text-lg font-semibold text-primary-950">
+                    Phone / WhatsApp
+                  </h3>
+                </div>
+                <a
+                  href="tel:+918770751559"
+                  className="pl-[52px] block text-sm font-semibold text-primary-800 hover:text-gold-400 transition"
+                >
+                  +91 8770751559
+                </a>
+              </div>
+
+              <div className="mb-7 h-px w-full bg-gold-200" />
+
+              {/* Response Protocol */}
+              <div>
+                <div className="mb-3 flex items-center gap-3">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary-100 text-primary-800">
+                    <MessageSquare className="h-5 w-5" />
+                  </div>
+                  <h3 className="font-serif text-lg font-semibold text-primary-950">
+                    Response Protocol
+                  </h3>
+                </div>
+                <p className="pl-[52px] text-sm text-primary-900/70 leading-relaxed">
+                  Each query is assigned to an authorised support officer. Response time
+                  may vary depending on verification requirements.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <section className="bg-primary-800 py-16 px-4">
+        <motion.div
+          className="mx-auto max-w-3xl text-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+        >
+          <h2 className="font-serif text-3xl font-bold text-champagne-50 md:text-4xl">
+            Prefer to Email Directly?
+          </h2>
+          <p className="mt-4 text-champagne-100/80 text-base max-w-lg mx-auto">
+            Reach our corporate desk for product inquiries, partnership proposals or
+            any official communication.
+          </p>
+          <a
+            href="mailto:info@maclienson.com"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold-400 px-8 py-3 text-sm font-semibold text-primary-950 shadow-regal transition hover:bg-gold-200 active:scale-95"
+          >
+            <Mail className="h-4 w-4" />
+            info@maclienson.com
+          </a>
+        </motion.div>
+      </section>
+    </>
   );
 };
 
