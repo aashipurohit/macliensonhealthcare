@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { MapPin, Leaf, FlaskConical, HeartPulse, Baby, Activity } from 'lucide-react';
+import { Leaf, FlaskConical, HeartPulse, Baby, Activity } from 'lucide-react';
 
 export default function AboutUs() {
   const products = [
@@ -20,7 +20,7 @@ export default function AboutUs() {
         transition={{ duration: 0.8 }}
         className="max-w-7xl mx-auto text-center mb-16"
       >
-        <h1 className="text-4xl font-bold text-indigo-900 mb-6">
+        <h1 className="text-4xl font-serif font-bold text-primary-950 mb-6">
           About Maclienson Healthcare
         </h1>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -38,14 +38,16 @@ export default function AboutUs() {
           className="bg-white rounded-lg shadow-sm overflow-hidden"
         >
           <div className="p-8 sm:p-8">
-            <h2 className="text-2xl font-semibold text-indigo-800 mb-6">
+            <h2 className="text-2xl font-serif font-semibold text-primary-900 mb-6">
               Our Story
             </h2>
-            <div className="prose prose-indigo max-w-none">
+            <div className="prose prose-stone max-w-none">
               <p className="text-gray-700 mb-6">
-                Founded in the pharmaceutical hub of Rau, Indore, Maclienson Healthcare specializes in 
-                women's wellness products combining modern science with traditional wisdom. Our GMP-certified 
-                facility develops formulations that address the unique nutritional needs of Indian women.
+                Founded in the pharmaceutical hub of Rau, Indore, Maclienson Healthcare Pvt. Ltd. is a proud
+                Indian division of <strong>Maclienson Life Sciences Inc.</strong> — a globally registered company
+                headquartered in Wyoming, USA. We specialize in women's wellness products combining modern
+                science with traditional wisdom. Our GMP-certified facility develops formulations that address
+                the unique nutritional needs of Indian women.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -78,9 +80,9 @@ export default function AboutUs() {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="bg-indigo-50 rounded-lg p-8"
+          className="bg-primary-50 rounded-lg p-8"
         >
-          <h3 className="text-xl font-semibold text-indigo-800 mb-4">
+          <h3 className="text-xl font-serif font-semibold text-primary-900 mb-4">
             Our Vision
           </h3>
           <p className="text-gray-700">
@@ -94,9 +96,9 @@ export default function AboutUs() {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="bg-amber-50 rounded-lg p-8"
+          className="bg-gold-100 rounded-lg p-8"
         >
-          <h3 className="text-xl font-semibold text-amber-800 mb-4">
+          <h3 className="text-xl font-serif font-semibold text-primary-900 mb-4">
             Our Mission
           </h3>
           <p className="text-gray-700">
@@ -106,60 +108,7 @@ export default function AboutUs() {
         </motion.div>
       </section>
 
-      {/* Location Map */}
-      <section className="max-w-7xl mx-auto mb-20">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-2xl font-semibold text-indigo-800 mb-6 text-center">
-            Our Headquarters
-          </h2>
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <div className="p-6">
-              <div className="flex items-center justify-center mb-4">
-                <MapPin className="text-red-500 mr-2" />
-                <span className="text-gray-700 font-medium">
-                  Rau, Indore - The Pharmaceutical Hub of Central India
-                </span>
-              </div>
-              
-              {/* Precise Rau Map */}
-              <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117763.257382556!2d75.7927404!3d22.6115936!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fcad1b410ddb%3A0x96ec4da356240f4!2sRau%2C%20Indore%2C%20Madhya%20Pradesh!5e0!3m2!1sen!2sin!4v1718754321754!5m2!1sen!2sin" 
-                  width="100%" 
-                  height="450" 
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  aria-label="Map showing Maclienson Healthcare headquarters in Rau, Indore"
-                  title="Company Location Map"
-                ></iframe>
-              </div>
 
-              {/* Address Box */}
-              <div className="mt-6 bg-gray-50 p-4 rounded-lg">
-                <h3 className="text-lg font-medium text-gray-700 mb-2">
-                  Maclienson Healthcare Pvt. Ltd.
-                </h3>
-                <address className="not-italic text-gray-600">
-                  Pharmaceutical Complex, Rau Circle<br />
-                  Indore - 453331, Madhya Pradesh<br />
-                  <a 
-                    href="mailto:info@maclienson.com" 
-                    className="text-indigo-600 hover:underline"
-                  >
-                    info@maclienson.com
-                  </a>
-                </address>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </section>
 
       {/* Accessibility Features */}
       <div className="sr-only" aria-hidden="true">
