@@ -9,6 +9,7 @@ const NewArrivals = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(0);
   const [newArrivals, setNewArrivals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -93,6 +94,20 @@ const NewArrivals = () => {
     setIsDragging(false);
   };
 
+  // Touch handlers for mobile swipe
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.touches[0].clientX);
+    const container = scrollRef.current;
+    if (container) setScrollLeft(container.scrollLeft);
+  };
+
+  const handleTouchMove = (e) => {
+    const container = scrollRef.current;
+    if (!container) return;
+    const dx = touchStartX - e.touches[0].clientX;
+    container.scrollLeft = scrollLeft + dx;
+  };
+
   // Loading and error states
   if (loading) {
     return (
@@ -122,8 +137,8 @@ const NewArrivals = () => {
           Stay ahead in health with our most recent pharmaceutical additions.
         </p>
 
-        {/* Scroll buttons */}
-        <div className="absolute right-0 bottom-[-30px] flex space-x-2">
+        {/* Scroll buttons — only on md+ */}
+        <div className="hidden md:flex absolute right-0 bottom-[-30px] space-x-2">
           <button
             className="p-2 rounded border bg-white text-black hover:bg-gray-50 transition"
             onClick={() => scroll("left")}
@@ -149,6 +164,8 @@ const NewArrivals = () => {
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUpOrLeave}
         onMouseLeave={handleMouseUpOrLeave}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
         className={`container mx-auto overflow-x-auto flex space-x-6 pb-4 snap-x ${isDragging ? "cursor-grabbing" : "cursor-grab"
           }`}
         style={{

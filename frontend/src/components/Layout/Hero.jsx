@@ -225,7 +225,7 @@ const Hero = () => {
   }, [currentSlide, nextSlide, userPaused]);
 
   return (
-    <section className="relative w-full min-h-screen lg:min-h-[75vh] flex flex-col lg:flex-row overflow-hidden bg-[#faf9f8] pt-[130px] md:pt-[150px] lg:pt-0">
+    <section className="relative w-full min-h-screen lg:min-h-[75vh] flex flex-col lg:flex-row overflow-hidden bg-[#faf9f8] pt-[80px] md:pt-[110px] lg:pt-0">
 
       {/* Mobile Image (Visible only on mobile/tablet) */}
       <div className="w-full h-[45vh] min-h-[320px] lg:hidden relative order-1 mt-2">
@@ -287,7 +287,7 @@ const Hero = () => {
               <div className="text-[10px] md:text-xs font-bold tracking-[0.25em] text-primary-600 mb-6 uppercase font-sans">
                 {slides[currentSlide].eyebrow}
               </div>
-              <h1 className="font-serif text-5xl md:text-6xl lg:text-[4.5rem] text-primary-950 leading-[1.05] mb-6">
+              <h1 className="font-serif text-4xl md:text-6xl lg:text-[4.5rem] text-primary-950 leading-[1.05] mb-6">
                 {slides[currentSlide].heading}
               </h1>
               <p className="font-sans text-base md:text-lg lg:text-xl text-primary-900/70 mb-8 leading-relaxed max-w-lg">
